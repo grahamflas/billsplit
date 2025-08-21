@@ -51,6 +51,7 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   gem 'capybara', '>= 3.36'
+  gem 'cuprite'
   gem 'db-query-matchers'
   gem 'dotenv'
   gem 'factory_bot_rails'
