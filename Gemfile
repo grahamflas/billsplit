@@ -52,18 +52,21 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
-  gem 'capybara', '>= 3.36'
-  gem 'cuprite'
-  gem 'db-query-matchers'
   gem 'dotenv'
-  gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 8.0.0'
-  gem 'shoulda-matchers'
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+end
+
+group :test do
+  gem 'capybara', '>= 3.36'
+  gem 'cuprite'
+  gem 'db-query-matchers'
+  gem 'factory_bot_rails'
+  gem 'shoulda-matchers'
 end
 
 gem "tailwindcss-ruby", "~> 4.1"
