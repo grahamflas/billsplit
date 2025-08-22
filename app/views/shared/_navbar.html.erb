@@ -1,19 +1,39 @@
-<nav class="border border-red-500">
-  <div>Billsplit</div>
+<nav class="flex items-center justify-between bg-gray-800 text-white">
+  <div class="p-6">
 
-  <% if current_user %>
-    <div><%= current_user.email %></div>
+    <%= link_to(root_path, class: "text-indigo-300 text-2xl font-bold") do %>
+      Bill <span class="tracking-[0.3rem]">Split</span>
+    <% end %>
+  </div>
 
-    <%= link_to 'Edit profile', edit_user_registration_path %>
+  <div class="flex items-center gap-4 px-4">
+    <% if current_user %>
+      <div class="text-indigo-300"><%= current_user.email %></div>
 
-    <%= link_to 'Log out', destroy_user_session_path, data: { turbo_method: :delete } %>
-  <% else %>
-    <div>
-      <%= link_to 'Sign up', new_user_registration_path %>
-    </div>
+      <%= link_to(
+        'Edit profile',
+        edit_user_registration_path,
+        class: "rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-white/15",
+      ) %>
 
-    <div>
-      <%= link_to 'Log in', new_user_session_path %>
-    </div>
-  <% end %>
+      <%= link_to(
+        'Log out',
+        destroy_user_session_path,
+        data: { turbo_method: :delete },
+        class: "rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-white/15",
+      ) %>
+    <% else %>
+      <%= link_to(
+        'Sign up',
+        new_user_registration_path,
+        class: "rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-white/15",
+      ) %>
+
+      <%= link_to(
+        'Log in',
+        new_user_session_path,
+        class: "rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-white/15",
+      ) %>
+    <% end %>
+  </div>
 </nav>
