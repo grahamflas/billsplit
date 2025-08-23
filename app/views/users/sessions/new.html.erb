@@ -1,45 +1,69 @@
-<div class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-gray-200">
-  <!-- Left column: Marketing text -->
-  <div class="flex flex-col justify-center">
-    <h1>Share your expenses without any hassle</h1>
+<div class="flex justify-center items-center px-6 bg-gray-200 h-screen">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl">
+    <!-- Left column: Marketing text -->
+    <div class="flex flex-col justify-center">
+      <h1 class="text-6xl">
+        Share your expenses
+        <br>
+        <span class="text-indigo-400">without any hassle</span>
+      </h1>
 
-    <p>Use this application to split your bills or expenses with friends, housemates, or anyone when sharing expenses on trips, food, or rent</p>
-  </div>
+      <p class="mt-6 text-gray-500 max-w-lg">
+        Use this application to split your bills or expenses with friends,
+        housemates, or anyone when sharing expenses on trips, food, or rent
+      </p>
+    </div>
 
-  <!-- Right column: Login form card -->
-  <div class="bg-white shadow rounded-lg p-8">
-    <h1 class="text-xl font-bold mb-6">Login to your account</h1>
+    <!-- Right column: Login form card -->
+    <div class="flex flex-col bg-white shadow rounded-lg p-8">
+      <h2 class="text-4xl mb-6">Login to your account</h2>
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="field">
-        <%= f.label :email %><br />
-        <%= f.email_field :email,
-          autofocus: true,
-          autocomplete: "email",
-          class: "border rounded-md px-3 py-2"
-        %>
-      </div>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="field mb-6">
+          <%= f.email_field :email,
+            autofocus: true,
+            autocomplete: "email",
+            class: "border border-indigo-50 rounded-md bg-indigo-50 focus:outline-indigo-400 px-3 py-2 w-full"
+          %>
+          <%= f.label :email, class:"text-gray-500" %>
+        </div>
 
-      <div class="field">
-        <%= f.label :password %><br />
-        <%= f.password_field :password,
-          autocomplete: "current-password",
-          class: "border rounded-md px-3 py-2"
-        %>
-      </div>
+        <div class="field mb-6">
+          <%= f.password_field :password,
+            autocomplete: "current-password",
+            class: "border border-indigo-50 rounded-md bg-indigo-50 focus:outline-indigo-400 px-3 py-2 w-full"
+          %>
+          <%= f.label :password, class:"text-gray-500" %>
+        </div>
 
-      <% if devise_mapping.rememberable? %>
-        <div class="field">
-          <%= f.check_box :remember_me %>
-          <%= f.label :remember_me %>
+        <% if devise_mapping.rememberable? %>
+          <div class="field mb-6">
+            <%= f.check_box :remember_me, class:"focus:outline-indigo-400" %>
+            <%= f.label :remember_me, class:"text-gray-500" %>
+          </div>
+        <% end %>
+
+        <div class="actions">
+          <%= f.submit "Log in",
+            class: "w-full bg-indigo-500 hover:bg-indigo-600 focus:outline-indigo-900 rounded-md text-white py-2 mb-6 cursor:pointer"
+          %>
         </div>
       <% end %>
 
-      <div class="actions">
-        <%= f.submit "Log in", class: "w-full bg-indigo-500 rounded-md text-white" %>
+      <div class="mb-6 text-gray-500">
+        Don't have an account?
+        <%= link_to "Sign up",
+          new_registration_path(resource_name),
+          class: "text-indigo-400"
+        %> now
       </div>
-    <% end %>
 
-    <%= render "users/shared/links" %>
+      <div>
+        <%= link_to "Forgot your password?",
+          new_password_path(resource_name),
+          class: "text-indigo-400"
+        %>
+      </div>
+    </div>
   </div>
 </div>
