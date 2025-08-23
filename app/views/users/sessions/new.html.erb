@@ -1,26 +1,45 @@
-<h2>Log in</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-gray-200">
+  <!-- Left column: Marketing text -->
+  <div class="flex flex-col justify-center">
+    <h1>Share your expenses without any hassle</h1>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <p>Use this application to split your bills or expenses with friends, housemates, or anyone when sharing expenses on trips, food, or rent</p>
   </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
+  <!-- Right column: Login form card -->
+  <div class="bg-white shadow rounded-lg p-8">
+    <h1 class="text-xl font-bold mb-6">Login to your account</h1>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email,
+          autofocus: true,
+          autocomplete: "email",
+          class: "border rounded-md px-3 py-2"
+        %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password %><br />
+        <%= f.password_field :password,
+          autocomplete: "current-password",
+          class: "border rounded-md px-3 py-2"
+        %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="field">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+        </div>
+      <% end %>
+
+      <div class="actions">
+        <%= f.submit "Log in", class: "w-full bg-indigo-500 rounded-md text-white" %>
+      </div>
+    <% end %>
+
+    <%= render "users/shared/links" %>
   </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+</div>
