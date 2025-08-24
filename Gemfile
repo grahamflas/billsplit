@@ -55,6 +55,8 @@ group :development, :test do
   gem 'db-query-matchers'
   gem 'dotenv'
   gem 'factory_bot_rails'
+  gem "pry"
+  gem "pry-byebug"
   gem 'rspec-rails', '~> 8.0.0'
   gem 'shoulda-matchers'
 end
