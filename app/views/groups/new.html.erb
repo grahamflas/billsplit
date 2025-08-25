@@ -11,6 +11,23 @@
         <%= f.label :name, "Group name", class:"text-gray-500" %>
       </div>
 
+      <% if @addable_users %>
+        <div class="mb-6">
+          <%= f.label :user_ids, "Group members", class:"text-gray-500" %>
+
+          <%= f.collection_select :user_ids,
+            @addable_users,
+            :id,
+            :email,
+            {},
+            {
+              class: "border border-indigo-50 rounded-md bg-indigo-50 focus:outline-indigo-400 px-3 py-2 w-full",
+              multiple: true
+            }
+          %>
+        </div>
+      <% end %>
+
       <%= f.submit class: "w-full bg-indigo-500 hover:bg-indigo-600 focus:outline-indigo-900 rounded-md text-white py-2 mb-6 cursor:pointer" %>
     <% end %>
   </div>

@@ -11,6 +11,7 @@ class GroupsController < ApplicationController
 
   def new
     @group = Group.new
+    @addable_users = User.where.not(id: current_user)
   end
 
   def create
@@ -18,8 +19,6 @@ class GroupsController < ApplicationController
 
     if @group.save
       current_user.groups << @group
-
-      flash[:success] = "#{@group.name} created!"
 
       redirect_to @group
     else
@@ -30,6 +29,11 @@ class GroupsController < ApplicationController
   private
 
   def group_params
-    params.expect(group: %i[name])
+    params.
+      require(:group).
+      permit(
+        :name,
+        user_ids: [],
+      )
   end
 end

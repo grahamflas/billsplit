@@ -1,3 +1,10 @@
 <div>
-  <h1><%= @group.name %></h1>
+  <h1 class="text-4xl"><%= @group.name %></h1>
+
+  <h2 class="text-2xl">Group members</h2>
+  <ul>
+    <% @group.users.each do |user| %>
+      <li><%= user.email %></li>
+    <% end %>
+  </ul>
 </div>
