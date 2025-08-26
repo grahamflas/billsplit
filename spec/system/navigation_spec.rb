@@ -11,7 +11,7 @@ RSpec.describe "Navigation", type: :system, js: true do
         visit root_path
 
         within "nav" do
-          expect(page).to have_content("Billsplit")
+          expect(page).to have_content("BillSp/it")
 
           expect(page).to have_content(user.email)
           expect(page).to have_link("Edit profile", href: edit_user_registration_path)
@@ -30,7 +30,7 @@ RSpec.describe "Navigation", type: :system, js: true do
         visit root_path
 
         within "nav" do
-          expect(page).to have_content("Billsplit")
+          expect(page).to have_content("BillSp/it")
 
           expect(page).to have_link("Sign up", href: new_user_registration_path)
           expect(page).to have_link("Log in", href: new_user_session_path)
