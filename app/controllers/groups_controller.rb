@@ -7,6 +7,8 @@ class GroupsController < ApplicationController
     unless @group
       redirect_to root_path
     end
+
+    @expenses = @group.expenses.includes(:user)
   end
 
   def new
