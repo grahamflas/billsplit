@@ -20,6 +20,8 @@ class GroupsController < ApplicationController
     if @group.save
       current_user.groups << @group
 
+      flash[:success] = "#{@group.name} created"
+
       redirect_to @group
     else
       render :new, status: :unprocessable_content
