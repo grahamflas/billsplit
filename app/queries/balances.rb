@@ -4,15 +4,17 @@ class Balances
   end
 
   def compute
-    balances = {}
+    if @group
+      balances = {}
 
-    group_members.each do |member|
-      balances[member.email] = (
-        share_per_member - expenses_paid(member)
-      ).round(2)
+      group_members.each do |member|
+        balances[member.email] = (
+          share_per_member - expenses_paid(member)
+        ).round(2)
+      end
+
+      balances
     end
-
-    balances
   end
 
   private
