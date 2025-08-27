@@ -60,7 +60,7 @@ RSpec.describe "Group Show Page", type: :system, js: true do
   end
 
   describe "Balances section" do
-    it "shows how much each group member owes or is owed" do
+    scenario "shows how much each group member owes or is owed" do
       group_1 = create(:group, name: "Group 1")
 
       group_1_user_1 = create(
@@ -97,7 +97,7 @@ RSpec.describe "Group Show Page", type: :system, js: true do
   end
 
   context "when no expenses have been added to the group" do
-    it "does not show the balances section" do
+    scenario "does not show the balances section" do
       group = create(:group)
       user_1 = create(:user, groups: [ group ])
       user_2 = create(:user, groups: [ group ])
@@ -116,7 +116,7 @@ RSpec.describe "Group Show Page", type: :system, js: true do
   end
 
   context "when expenses exist, but they are equally shared (each member has paid their share and no one is owed anything)" do
-    it "displays 'all settled up copy'" do
+    scenario "displays 'all settled up copy'" do
       group = create(:group)
 
       user_1 = create(:user, groups: [ group ])
@@ -141,6 +141,44 @@ RSpec.describe "Group Show Page", type: :system, js: true do
 
       expect(page).to have_content("#{user_1.email} is all settled up")
       expect(page).to have_content("#{user_2.email} is all settled up")
+    end
+  end
+
+  describe "creating a new expense" do
+    context "when no expenses exist" do
+      scenario "user sees link to add a new expense" do
+        group = create(:group)
+        user = create(:user, groups: [ group ])
+
+        sign_in user
+
+        visit group_path(group)
+
+        expect(page).to have_link("+ Add Expense", href: new_expense_path)
+      end
+    end
+
+    context "when expenses exist" do
+      scenario "user sees link under the expenses heading to add a new expense" do
+        group = create(:group)
+        user = create(:user, groups: [ group ])
+        _other_user = create(:user, groups: [ group ])
+
+
+        create(
+          :expense,
+          user:,
+          group:
+        )
+
+        sign_in user
+
+        visit group_path(group)
+
+        within "#expenses" do
+          expect(page).to have_link("+ Add Expense", href: new_expense_path)
+        end
+      end
     end
   end
 end

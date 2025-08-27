@@ -27,12 +27,24 @@
       </ul>
     </div>
 
-    <div>
-      <h2 class="text-2xl mb-4">Expenses</h2>
+    <div id="expenses">
+      <h2 class="text-2xl mb-4">Expense</h2>
 
-      <div class="flex flex-col gap-4">
+      <%= link_to '+ Add Expense',
+        new_expense_path,
+        class: "rounded-md px-3 py-2 bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-white text-2xl"
+      %>
+
+      <div class="flex flex-col gap-4 mt-4">
         <%= render @expenses %>
       </div>
+    </div>
+  <% else %>
+    <div>
+      <%= link_to '+ Add Expense',
+        new_expense_path,
+        class: "rounded-md px-3 py-2 bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-white text-2xl"
+      %>
     </div>
   <% end %>
 </>
