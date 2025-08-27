@@ -8,6 +8,9 @@ class GroupsController < ApplicationController
       redirect_to root_path
     end
 
+    @balances_by_member_email = Balances.new(group: @group).compute
+
+
     @expenses = @group.expenses.includes(:user)
   end
 

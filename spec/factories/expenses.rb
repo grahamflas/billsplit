@@ -1,7 +1,8 @@
 FactoryBot.define do
   factory :expense do
-    user { nil }
-    group { nil }
+    user
+    group
     amount { 1 }
+    sequence(:reference) { |n| "Reference #{n}"}
   end
 end

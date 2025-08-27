@@ -10,10 +10,28 @@
     </ul>
   </div>
 
-  <h2 class="text-2xl mb-4">Expenses</h2>
+  <% if @expenses.any? %>
+    <div>
+      <h2 class="text-2xl mb-4">Balances</h2>
 
-  <div class="flex flex-col gap-4">
-    <%= render @expenses %>
-  </div>
-</div>
+      <ul>
+        <% @balances_by_member_email.each do |member_email, balance| %>
+          <% if balance.to_f.positive? %>
+            <li><%= member_email %> owes <%= number_to_currency(balance.abs, unit: "") %></li>
+          <% else %>
+            <li><%= member_email %> is owed <%= number_to_currency(balance.abs, unit: "") %></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-2xl mb-4">Expenses</h2>
+
+      <div class="flex flex-col gap-4">
+        <%= render @expenses %>
+      </div>
+    </div>
+  <% end %>
+</>
 
