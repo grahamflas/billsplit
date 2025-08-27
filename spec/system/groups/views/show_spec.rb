@@ -114,4 +114,33 @@ RSpec.describe "Group Show Page", type: :system, js: true do
       expect(page).not_to have_content("Expenses")
     end
   end
+
+  context "when expenses exist, but they are equally shared (each member has paid their share and no one is owed anything)" do
+    it "displays 'all settled up copy'" do
+      group = create(:group)
+
+      user_1 = create(:user, groups: [ group ])
+      user_2 = create(:user, groups: [ group ])
+
+      create(
+        :expense,
+        amount: 1,
+        user: user_1,
+        group:,
+      )
+      create(
+        :expense,
+        amount: 1,
+        user: user_2,
+        group:,
+      )
+
+      sign_in user_1
+
+      visit group_path(group)
+
+      expect(page).to have_content("#{user_1.email} is all settled up")
+      expect(page).to have_content("#{user_2.email} is all settled up")
+    end
+  end
 end

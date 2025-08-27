@@ -16,7 +16,9 @@
 
       <ul>
         <% @balances_by_member_email.each do |member_email, balance| %>
-          <% if balance.to_f.positive? %>
+          <% if balance.to_f.zero? %>
+            <li><%= member_email %> is all settled up</li>
+          <% elsif balance.to_f.positive? %>
             <li><%= member_email %> owes <%= number_to_currency(balance.abs, unit: "") %></li>
           <% else %>
             <li><%= member_email %> is owed <%= number_to_currency(balance.abs, unit: "") %></li>
