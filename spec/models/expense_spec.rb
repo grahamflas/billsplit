@@ -2,6 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Expense, type: :model do
   describe "validations" do
+    subject { build(:expense) }
+    it { should validate_presence_of(:reference) }
+    it { should validate_numericality_of(:amount) }
+
     describe "#user_must_be_group_member" do
       it "is invalid if the user is not a member of the group" do
         group = create(:group)

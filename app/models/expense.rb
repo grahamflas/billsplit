@@ -4,6 +4,9 @@ class Expense < ApplicationRecord
   belongs_to :user
   belongs_to :group
 
+  validates :reference, presence: true
+  validates :amount, numericality: true
+
   validate :user_must_be_group_member
 
   def user_must_be_group_member
