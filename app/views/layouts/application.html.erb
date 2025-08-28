@@ -23,13 +23,14 @@
   </head>
 
   <body class="bg-gray-200 min-h-screen">
-    <% flash.each do |message_type, message| %>
-        <div class="alert alert-<%= message_type %>">
-          <%= message %>
-        </div>
-      <% end %>
-
     <%= render 'shared/navbar' %>
+
+    <% flash.each do |message_type, message| %>
+      <div class="alert alert-<%= message_type %>">
+        <%= message %>
+      </div>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
