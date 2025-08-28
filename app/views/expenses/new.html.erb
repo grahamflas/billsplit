@@ -23,18 +23,21 @@
         <%= f.label :amount, "Amount", class:"text-gray-500" %>
       </div>
 
+      <% group = Group.where(id: params[:group_id]) %>
+
       <div>
         <%= f.label :group_id, "Group", class:"text-gray-500" %>
 
         <%= f.collection_select :group_id,
-          current_user.groups,
+          group.any? ? group : current_user.groups,
           :id,
           :name,
+
           {
-            selected: @selected
+            selected: group.any? ? group.first : nil,
           },
           {
-            class: "border border-indigo-50 rounded-md bg-indigo-50 focus:outline-indigo-400 px-3 py-2 w-full",
+            class: "border border-indigo-50 rounded-md bg-indigo-50 #{group.present? ? "cursor-not-allowed" : "" } focus:outline-indigo-400 px-3 py-2 w-full",
           }
         %>
       </div>
@@ -43,6 +46,7 @@
         <%= f.label :user_id, "User", class:"text-gray-500" %>
 
         <%= f.collection_select :user_id,
+          group.any? ? group.first.users :
           User.
             joins(:groups).
             merge(current_user.groups).
