@@ -154,7 +154,10 @@ RSpec.describe "Group Show Page", type: :system, js: true do
 
         visit group_path(group)
 
-        expect(page).to have_link("+ Add Expense", href: new_expense_path)
+        expect(page).to have_link(
+          "+ Add Expense",
+          href: new_expense_path(group_id: group.id),
+        )
       end
     end
 
@@ -176,7 +179,10 @@ RSpec.describe "Group Show Page", type: :system, js: true do
         visit group_path(group)
 
         within "#expenses" do
-          expect(page).to have_link("+ Add Expense", href: new_expense_path)
+          expect(page).to have_link(
+            "+ Add Expense",
+            href: new_expense_path(group_id: group.id)
+          )
         end
       end
     end
