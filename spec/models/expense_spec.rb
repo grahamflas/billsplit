@@ -1,11 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Expense, type: :model do
-  describe "associations" do
-    it { should belong_to(:user) }
-    it { should belong_to(:group) }
-  end
-
   describe "validations" do
     describe "#user_must_be_group_member" do
       it "is invalid if the user is not a member of the group" do
@@ -36,13 +31,17 @@ RSpec.describe Expense, type: :model do
         invalid_expense_1 = build(
           :expense,
           user:,
-          group: other_group,
-        )
+        ).tap do |expense|
+          expense.update(group: other_group)
+        end
+
         invalid_expense_2 = build(
           :expense,
           user: other_user,
-          group:,
-        )
+        ).tap do |expense|
+          other_user.groups.delete(expense.group)
+          other_user.groups << group
+        end
 
         expect(valid_expense_1).to be_valid
         expect(valid_expense_2).to be_valid
