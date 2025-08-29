@@ -1,2 +1,2 @@
 vite: bin/vite dev
-tsc: yarn tsc --noEmit --watch
+tsc: bin/watch_typescript_types

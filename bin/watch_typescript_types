@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+help() {
+cat << EOF
+
+Watch TypeScript codebase for errors.
+Like bin/check_types, except it runs in watch mode and appends new output after a file change.
+
+Press Ctrl+C to exit
+
+EOF
+}
+
+# if passed in help flag, print help and exit
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+  help
+  exit
+fi
+
+tsc --noEmit --skipLibCheck --incremental --pretty --watch --preserveWatchOutput
