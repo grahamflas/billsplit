@@ -12,6 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "incremental": true,
+    "tsBuildInfoFile": "tmp/tsconfig.tsbuildinfo",
     "types": ["vite/client"]
   },
   "include": [
