@@ -1,3 +1,3 @@
-class GroupSerializer < ActiveModel::Serializer
+class UserSerializer < ActiveModel::Serializer
   attributes :id, :email
 end
