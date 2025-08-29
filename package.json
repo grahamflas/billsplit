@@ -6,10 +6,16 @@
   "author": "Graham Flaspoehler <grahamflas@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react-swc": "^4.0.1",
     "typescript": "^5.9.2",
     "vite": "^5.0.0",
     "vite-plugin-rails": "^0.5.0",
     "vite-plugin-ruby": "^5.1.0"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   }
 }
