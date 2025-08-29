@@ -1,7 +1,5 @@
 class GroupSerializer < ActiveModel::Serializer
-  attributes :id, :name, :users
+  attributes :id, :name
 
-  def users
-    object.users.to_api
-  end
+  has_many :users
 end
