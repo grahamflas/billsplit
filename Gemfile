@@ -42,8 +42,8 @@ gem "thruster", require: false
 
 gem 'active_model_serializers', '~> 0.10.0'
 gem "devise", "~> 4.9"
-gem "tailwindcss-ruby", "~> 4.1"
-gem "tailwindcss-rails", "~> 4.3"
+# gem "tailwindcss-ruby", "~> 4.1"
+# gem "tailwindcss-rails", "~> 4.3"
 gem "vite_rails", "~> 3.0"
 
 group :development, :test do
