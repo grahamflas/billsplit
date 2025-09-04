@@ -4,6 +4,7 @@ class HomeController < ApplicationController
   def index
     @groups = current_user.
       groups.
+      includes(:users).
       to_api.
       serializable_hash
   end
