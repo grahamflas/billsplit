@@ -1,3 +1,8 @@
+import { format, max } from "date-fns";
+
+import GroupDetailsSection from "./GroupDetailsSection";
+import GroupedAvatars from "./GroupedAvatars";
+
 import { Group } from "../types/BaseInterfaces";
 
 interface Props {
@@ -5,21 +10,77 @@ interface Props {
 }
 
 const GroupDetails = ({ group }: Props) => {
+  const groupMembersList = () => {
+    return group.users.map((user) => user.firstName).join(", ");
+  };
+
+  const latestDate = () => {
+    if (group.expenses.length > 0) {
+      const dates = group.expenses.map(
+        (expense) => new Date(expense.createdAt)
+      );
+
+      return format(max(dates), "MMM d");
+    }
+
+    return "None";
+  };
+
   return (
     <div className="p-6 max-w-2xl mx-auto">
-      <div className="flex flex-col">
-        <div className="flex flex-row justify-between items-center">
-          <h1 className="text-4xl">{group.name}</h1>
+      <div className="flex flex-col gap-6">
+        <GroupDetailsSection>
+          <>
+            <div className="flex flex-row justify-between">
+              <div className="flex flex-col gap-1">
+                <h2 className="text-4xl">{group.name}</h2>
 
-          <a
-            className="rounded-md px-3 py-2 bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-white text-2xl"
-            href="/expenses/new?"
-          >
-            + Add Expense
-          </a>
-        </div>
+                <span className="text-neutral-500">{groupMembersList()}</span>
+              </div>
 
-        <div>GROUP DETAILS GO HERE</div>
+              <div className="flex flex-row -space-x-2">
+                <GroupedAvatars users={group.users} />
+              </div>
+            </div>
+
+            <div className="rounded-2xl bg-neutral-100 p-6 mx-4">
+              <h3 className="text-neutral-500 text-xl">Total Expenses</h3>
+
+              <div className="text-3xl mt-2">$500 [placeholder]</div>
+            </div>
+
+            <div className="flex flex-row justify-between">
+              <div>
+                <h3 className="text-xl text-neutral-500">Members</h3>
+
+                <div className="text-xl">{group.users.length}</div>
+              </div>
+
+              <div>
+                <h3 className="text-xl text-neutral-500">Expenses</h3>
+
+                <div className="text-xl">{group.expenses.length}</div>
+              </div>
+
+              <div>
+                <h3 className="text-xl text-neutral-500">Latest Activity</h3>
+
+                <div className="text-xl">{latestDate()}</div>
+              </div>
+            </div>
+          </>
+        </GroupDetailsSection>
+
+        <a
+          className="rounded-md px-3 py-2 bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-white text-2xl text-center"
+          href={`/expenses/new?group_id=${group.id}`}
+        >
+          + Add Expense
+        </a>
+
+        <GroupDetailsSection>
+          <div>Expenses go here</div>
+        </GroupDetailsSection>
       </div>
     </div>
   );
