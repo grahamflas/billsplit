@@ -4,6 +4,7 @@ import GroupDetailsSection from "./GroupDetailsSection";
 import GroupedAvatars from "./GroupedAvatars";
 
 import { Group } from "../types/BaseInterfaces";
+import GroupDetailsData from "./GroupDetailsData";
 
 interface Props {
   group: Group;
@@ -23,7 +24,7 @@ const GroupDetails = ({ group }: Props) => {
       return format(max(dates), "MMM d");
     }
 
-    return "None";
+    return "-";
   };
 
   return (
@@ -44,28 +45,33 @@ const GroupDetails = ({ group }: Props) => {
             </div>
 
             <div className="rounded-2xl bg-neutral-100 p-6 mx-4">
-              <h3 className="text-neutral-500 text-xl">Total Expenses</h3>
-
-              <div className="text-3xl mt-2">$500 [placeholder]</div>
+              <GroupDetailsData
+                headingData="Total Expenses"
+                subHeadingData="$500 [placeholder]"
+                subHeadingClasses="text-3xl mt-2"
+              />
             </div>
 
             <div className="flex flex-row justify-between">
               <div>
-                <h3 className="text-xl text-neutral-500">Members</h3>
-
-                <div className="text-xl">{group.users.length}</div>
+                <GroupDetailsData
+                  headingData="Members"
+                  subHeadingData={group.users.length}
+                />
               </div>
 
               <div>
-                <h3 className="text-xl text-neutral-500">Expenses</h3>
-
-                <div className="text-xl">{group.expenses.length}</div>
+                <GroupDetailsData
+                  headingData="Expenses"
+                  subHeadingData={group.expenses.length || "-"}
+                />
               </div>
 
               <div>
-                <h3 className="text-xl text-neutral-500">Latest Activity</h3>
-
-                <div className="text-xl">{latestDate()}</div>
+                <GroupDetailsData
+                  headingData="Latest Activity"
+                  subHeadingData={latestDate()}
+                />
               </div>
             </div>
           </>
