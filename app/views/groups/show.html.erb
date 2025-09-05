@@ -1,51 +1,6 @@
-<div class="flex flex-col gap-4">
-  <h1 class="text-4xl"><%= @group.name %></h1>
-
-  <div>
-    <h2 class="text-2xl">Group members</h2>
-    <ul>
-      <% @group.users.each do |user| %>
-        <li><%= user.email %></li>
-      <% end %>
-    </ul>
-  </div>
-
-  <% if @expenses.any? %>
-    <div>
-      <h2 class="text-2xl mb-4">Balances</h2>
-
-      <ul>
-        <% @balances_by_member_email.each do |member_email, balance| %>
-          <% if balance.to_f.zero? %>
-            <li><%= member_email %> is all settled up</li>
-          <% elsif balance.to_f.positive? %>
-            <li><%= member_email %> owes <%= number_to_currency(balance.abs, unit: "") %></li>
-          <% else %>
-            <li><%= member_email %> is owed <%= number_to_currency(balance.abs, unit: "") %></li>
-          <% end %>
-        <% end %>
-      </ul>
-    </div>
-
-    <div id="expenses">
-      <h2 class="text-2xl mb-4">Expenses</h2>
-
-      <%= link_to '+ Add Expense',
-        new_expense_path(group_id: @group.id),
-        class: "rounded-md px-3 py-2 bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-white text-2xl"
-      %>
-
-      <div class="flex flex-col gap-4 mt-4">
-        <%= render @expenses %>
-      </div>
-    </div>
-  <% else %>
-    <div>
-      <%= link_to '+ Add Expense',
-        new_expense_path(group_id: @group.id),
-        class: "rounded-md px-3 py-2 bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-white text-2xl"
-      %>
-    </div>
-  <% end %>
-</>
+<%= mount_react_app(
+  "GroupDetails", props: {
+    group: @group,
+  })
+%>
 
