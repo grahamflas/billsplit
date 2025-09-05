@@ -5,7 +5,7 @@ interface Props {
   group: Group;
 }
 
-const GroupCard = ({ group }: Props) => {
+const GroupsListCard = ({ group }: Props) => {
   const renderAvatars = () => {
     return group.users.map((user) => {
       const userName = `${user.firstName} ${user.lastName}`;
@@ -51,4 +51,4 @@ const GroupCard = ({ group }: Props) => {
   );
 };
 
-export default GroupCard;
+export default GroupsListCard;
