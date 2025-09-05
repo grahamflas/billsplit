@@ -5,6 +5,7 @@ class HomeController < ApplicationController
     @groups = current_user.
       groups.
       includes(:users).
+      includes(:expenses).
       to_api.
       serializable_hash
   end
