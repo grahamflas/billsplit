@@ -86,17 +86,19 @@ const GroupDetails = ({ balances, group }: Props) => {
           + Add Expense
         </a>
 
-        <GroupDetailsSection>
-          <>
-            {group.expenses.map((expense, i) => (
-              <Expense
-                expense={expense}
-                isInitialExpense={i === 0}
-                key={expense.id}
-              />
-            ))}
-          </>
-        </GroupDetailsSection>
+        {group.expenses.length > 0 && (
+          <GroupDetailsSection>
+            <>
+              {group.expenses.map((expense, i) => (
+                <Expense
+                  expense={expense}
+                  isInitialExpense={i === 0}
+                  key={expense.id}
+                />
+              ))}
+            </>
+          </GroupDetailsSection>
+        )}
       </div>
     </div>
   );
