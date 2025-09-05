@@ -15,6 +15,7 @@ export interface Group {
 
 export interface Expense {
   amount: number;
+  createdAt: string;
   groupId: number;
   id: number;
   reference: string;
