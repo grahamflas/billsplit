@@ -1,6 +1,6 @@
 <%= mount_react_app(
   "GroupDetails", props: {
-    group: @group,
+    group: @group.to_api.serializable_hash
   })
 %>
 

@@ -6,9 +6,6 @@ class GroupsController < ApplicationController
 
     if @group
       @balances_by_member_email = Balances.new(group: @group).compute
-
-
-      @expenses = @group.expenses.includes(:user)
     else
       redirect_to root_path
     end
