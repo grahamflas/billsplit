@@ -2,4 +2,7 @@ import GroupsContainer from "../apps/GroupsContainer"
 
 import { mountComponent } from "../utils/reactHelper"
 
-mountComponent(GroupsContainer, "GroupsContainer")
+document.addEventListener("turbo:load", () => {
+  mountComponent(GroupsContainer, "GroupsContainer")
+})
+
