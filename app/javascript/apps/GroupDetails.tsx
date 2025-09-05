@@ -3,14 +3,16 @@ import { format, max } from "date-fns";
 import GroupDetailsSection from "./GroupDetailsSection";
 import GroupedAvatars from "./GroupedAvatars";
 
-import { Group } from "../types/BaseInterfaces";
+import { Balances, Group } from "../types/BaseInterfaces";
 import GroupDetailsData from "./GroupDetailsData";
+import Expense from "./Expense";
 
 interface Props {
+  balances: Balances;
   group: Group;
 }
 
-const GroupDetails = ({ group }: Props) => {
+const GroupDetails = ({ balances, group }: Props) => {
   const groupMembersList = () => {
     return group.users.map((user) => user.firstName).join(", ");
   };
@@ -21,7 +23,7 @@ const GroupDetails = ({ group }: Props) => {
         (expense) => new Date(expense.createdAt)
       );
 
-      return format(max(dates), "MMM d");
+      return format(max(dates), "MMM d, yyyy");
     }
 
     return "-";
@@ -47,7 +49,7 @@ const GroupDetails = ({ group }: Props) => {
             <div className="rounded-2xl bg-neutral-100 p-6 mx-4">
               <GroupDetailsData
                 headingData="Total Expenses"
-                subHeadingData="$500 [placeholder]"
+                subHeadingData={`$${balances.totalExpenses}`}
                 subHeadingClasses="text-3xl mt-2"
               />
             </div>
@@ -85,7 +87,15 @@ const GroupDetails = ({ group }: Props) => {
         </a>
 
         <GroupDetailsSection>
-          <div>Expenses go here</div>
+          <>
+            {group.expenses.map((expense, i) => (
+              <Expense
+                expense={expense}
+                isInitialExpense={i === 0}
+                key={expense.id}
+              />
+            ))}
+          </>
         </GroupDetailsSection>
       </div>
     </div>

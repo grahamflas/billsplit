@@ -20,4 +20,15 @@ export interface Expense {
   id: number;
   reference: string;
   userId: number;
+  user: User;
+}
+
+export interface UserBalance {
+  balance: number;
+  firstName: string;
+  lastName: string;
+}
+export interface Balances {
+  [userId: number]: UserBalance;
+  totalExpenses: number;
 }

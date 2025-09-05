@@ -7,4 +7,10 @@ class ExpenseSerializer < ActiveModel::Serializer
     amount
     reference
   ]
+
+  attribute :user
+
+  def user
+    object.user.to_api
+  end
 end
