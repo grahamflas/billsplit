@@ -23,6 +23,7 @@
     "vite-plugin-ruby": "^5.1.0"
   },
   "dependencies": {
+    "date-fns": "^4.1.0",
     "prop-types": "^15.8.1",
     "react": "^19.1.1",
     "react-avatar": "^5.0.4",
