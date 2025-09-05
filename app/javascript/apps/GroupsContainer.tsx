@@ -7,7 +7,7 @@ interface Props {
 
 const GroupsContainer = ({ groups }: Props) => {
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="p-6 max-w-7xl mx-auto">
       <div className="flex flex-col sm:flex-row gap-4 items-center justify-between mb-6">
         <h1 className="text-4xl font-bold">My Groups</h1>
 
