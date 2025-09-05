@@ -5,4 +5,3 @@ import { mountComponent } from "../utils/reactHelper"
 document.addEventListener("turbo:load", () => {
   mountComponent(GroupsListContainer, "GroupsListContainer")
 })
-
