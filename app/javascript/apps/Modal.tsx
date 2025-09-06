@@ -1,0 +1,80 @@
+import { PropsWithChildren, useEffect, useRef } from "react";
+
+import { IoMdClose } from "react-icons/io";
+
+interface Props {
+  isOpen: boolean;
+  onCloseModal: () => void;
+  title: string;
+}
+
+const Modal = ({
+  children,
+  isOpen,
+  onCloseModal,
+  title,
+}: PropsWithChildren<Props>) => {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  const handleEscapeKeyPress = (event: KeyboardEvent) => {
+    console.log("key pressed");
+    if (event.key === "Escape") {
+      console.log("...it was escape");
+      event.preventDefault();
+
+      closeModal();
+    }
+  };
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+
+    if (dialog) {
+      const openModal = () => {
+        if (!dialog.open) {
+          dialog.showModal();
+        }
+      };
+
+      if (isOpen) {
+        openModal();
+
+        document.addEventListener("keydown", handleEscapeKeyPress);
+      } else if (dialog.open) {
+        closeModal();
+      }
+    }
+
+    return () => document.removeEventListener("keydown", handleEscapeKeyPress);
+  }, [isOpen]);
+
+  const closeModal = () => {
+    const dialog = dialogRef.current;
+
+    if (dialog) {
+      dialog.close();
+
+      onCloseModal();
+    }
+  };
+
+  return (
+    <dialog
+      className="rounded-2xl max-h-none w-full max-w-full md:max-w-none md:w-fit"
+      id="dialog"
+      ref={dialogRef}
+    >
+      <header className="flex items-center flex-start px-6 py-4">
+        <button onClick={onCloseModal}>
+          <IoMdClose size={18} />
+        </button>
+
+        <h2>{title}</h2>
+      </header>
+
+      <div className="px-6 py-8 overflow-auto">{children}</div>
+    </dialog>
+  );
+};
+
+export default Modal;

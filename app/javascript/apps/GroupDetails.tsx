@@ -7,6 +7,8 @@ import GroupDetailsSection from "./GroupDetailsSection";
 import GroupedAvatars from "./GroupedAvatars";
 
 import { Balances, Group, User } from "../types/BaseInterfaces";
+import Modal from "./Modal";
+import { useState } from "react";
 
 interface Props {
   balances: Balances;
@@ -15,6 +17,9 @@ interface Props {
 }
 
 const GroupDetails = ({ balances, currentUser, group }: Props) => {
+  const [showNewExpenseModal, setShowNewExpenseModal] =
+    useState<boolean>(false);
+
   const groupMembersList = () => {
     return group.users.map((user) => user.firstName).join(", ");
   };
@@ -88,12 +93,12 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
           </>
         </GroupDetailsSection>
 
-        <a
+        <button
           className="rounded-md px-3 py-2 bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-white text-2xl text-center"
-          href={`/expenses/new?group_id=${group.id}`}
+          onClick={() => setShowNewExpenseModal(true)}
         >
           + Add Expense
-        </a>
+        </button>
 
         {group.expenses.length > 0 && (
           <GroupDetailsSection>
@@ -109,6 +114,14 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
           </GroupDetailsSection>
         )}
       </div>
+
+      <Modal
+        isOpen={showNewExpenseModal}
+        onCloseModal={() => setShowNewExpenseModal(false)}
+        title={`New Expense for ${group.name}`}
+      >
+        I'm the modal's content
+      </Modal>
     </div>
   );
 };
