@@ -40,13 +40,33 @@ RSpec.describe Balances do
       result = Balances.new(group:).compute
 
       expect(result).to eq({
-        user_1.email => -19.33,
-        user_2.email => -6.33,
-        user_3.email => 25.67,
+        totalExpenses: 92,
+        userBalances: [
+          {
+            balance: -19.33,
+            firstName: user_1.first_name,
+            lastName: user_1.last_name,
+            userId: user_1.id,
+          },
+          {
+            balance: -6.33,
+            firstName: user_2.first_name,
+            lastName: user_2.last_name,
+            userId: user_2.id,
+          },
+          {
+            balance: 25.67,
+            firstName: user_3.first_name,
+            lastName: user_3.last_name,
+            userId: user_3.id,
+          },
+        ]
       })
 
       expect(
-        result.values.sum.to_i
+        result[:userBalances].map do |user_balance_hash|
+          user_balance_hash[:balance]
+        end.sum.to_i
       ).to eq(0)
     end
   end
