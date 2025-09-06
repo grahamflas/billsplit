@@ -12,7 +12,10 @@ const Expense = ({ expense, isInitialExpense }: Props) => {
     <>
       {!isInitialExpense && <hr />}
 
-      <div className="flex justify-between items-center">
+      <div
+        className="flex justify-between items-center"
+        id={`expense-${expense.id}`}
+      >
         <GroupDetailsData
           headingData={expense.reference}
           headingClasses="text-2xl"
