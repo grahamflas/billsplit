@@ -66,7 +66,10 @@ const BalancesData = ({ balances, currentUser }: Props) => {
           <div className="mx-8">
             {otherUserBalances.map((otherUserBalance) => {
               return (
-                <div className={`${balanceClassNames(otherUserBalance)}`}>
+                <div
+                  className={`${balanceClassNames(otherUserBalance)}`}
+                  key={otherUserBalance.userId}
+                >
                   {`${otherUserBalance.firstName} ${
                     otherUserBalance.lastName
                   } ${oweOrReceive(otherUserBalance)}`}
