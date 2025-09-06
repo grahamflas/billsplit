@@ -30,9 +30,9 @@ RSpec.describe "Home Page", type: :system, js: true do
     expect(page).to have_content(group_3.name)
     expect(page).not_to have_content(other_group.name)
 
-    within "#group-#{group_1.id}" do
-      expect(page).to have_link("View group", href: group_path(group_1))
-    end
+    expect(page).to have_link(href: group_path(group_1))
+    expect(page).to have_link(href: group_path(group_2))
+    expect(page).to have_link(href: group_path(group_3))
 
     add_new_group_button_text = "+ Add Group"
     expect(page).to have_link(add_new_group_button_text, href: new_group_path)
