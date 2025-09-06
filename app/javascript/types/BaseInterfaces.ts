@@ -27,8 +27,9 @@ export interface UserBalance {
   balance: number;
   firstName: string;
   lastName: string;
+  userId: number;
 }
 export interface Balances {
-  [userId: number]: UserBalance;
   totalExpenses: number;
+  userBalances: UserBalance[];
 }

@@ -1,18 +1,20 @@
 import { format, max } from "date-fns";
 
+import BalancesData from "./BalancesData";
+import Expense from "./Expense";
+import GroupDetailsData from "./GroupDetailsData";
 import GroupDetailsSection from "./GroupDetailsSection";
 import GroupedAvatars from "./GroupedAvatars";
 
-import { Balances, Group } from "../types/BaseInterfaces";
-import GroupDetailsData from "./GroupDetailsData";
-import Expense from "./Expense";
+import { Balances, Group, User } from "../types/BaseInterfaces";
 
 interface Props {
   balances: Balances;
+  currentUser: User;
   group: Group;
 }
 
-const GroupDetails = ({ balances, group }: Props) => {
+const GroupDetails = ({ balances, currentUser, group }: Props) => {
   const groupMembersList = () => {
     return group.users.map((user) => user.firstName).join(", ");
   };
@@ -49,9 +51,16 @@ const GroupDetails = ({ balances, group }: Props) => {
             <div className="rounded-2xl bg-neutral-100 p-6 mx-4">
               <GroupDetailsData
                 headingData="Total Expenses"
-                subHeadingData={`$${balances.totalExpenses}`}
+                subHeadingData={Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                }).format(balances.totalExpenses)}
                 subHeadingClasses="text-3xl mt-2"
               />
+
+              <div className="mt-8">
+                <BalancesData balances={balances} currentUser={currentUser} />
+              </div>
             </div>
 
             <div className="flex flex-row justify-between">

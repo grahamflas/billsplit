@@ -5,15 +5,19 @@ class Balances
 
   def compute
     if @group
-      balances = {}
-
-      group_members.each do |member|
-        balances[member.email] = (
-          share_per_member - expenses_paid(member)
-        ).round(2)
-      end
-
-      balances
+      {
+        totalExpenses: total_expenses,
+        userBalances: group_members.map do |member|
+          {
+            balance: (
+              share_per_member - expenses_paid(member)
+            ).round(2),
+            firstName: member.first_name,
+            lastName: member.last_name,
+            userId: member.id,
+          }
+        end
+      }
     end
   end
 
