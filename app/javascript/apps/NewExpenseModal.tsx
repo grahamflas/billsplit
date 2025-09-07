@@ -1,7 +1,16 @@
 import { Field, Form, Formik } from "formik";
 
 import Modal from "./Modal";
+
+import ExpensesRepository from "../repositories/ExpensesRepository";
+
 import { Group } from "../types/BaseInterfaces";
+
+interface NewExpenseFormValues {
+  amount: number | undefined;
+  reference: string;
+  userId: number | undefined;
+}
 
 interface Props {
   group: Group;
@@ -10,8 +19,17 @@ interface Props {
 }
 
 const NewExpenseModal = ({ group, handleModalClose, isOpen }: Props) => {
-  const handleSumbit = (values) => {
-    console.log(values);
+  const handleSubmit = async (values: NewExpenseFormValues) => {
+    const newExpenseCreated = await ExpensesRepository.create({
+      ...values,
+      groupId: group.id,
+    });
+
+    debugger;
+
+    if (newExpenseCreated) {
+      window.location.href = `/groups/${group.id}`;
+    }
   };
 
   return (
@@ -21,8 +39,12 @@ const NewExpenseModal = ({ group, handleModalClose, isOpen }: Props) => {
       title={`New Expense for ${group.name}`}
     >
       <Formik
-        initialValues={{ reference: "", amount: "", userId: "" }}
-        onSubmit={handleSumbit}
+        initialValues={{
+          reference: "",
+          amount: undefined,
+          userId: group.users[0].id,
+        }}
+        onSubmit={handleSubmit}
       >
         <Form className="flex flex-col">
           <label htmlFor="reference" className="text-gray-500">
