@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { format, max } from "date-fns";
 
 import BalancesData from "./BalancesData";
@@ -5,11 +7,9 @@ import Expense from "./Expense";
 import GroupDetailsData from "./GroupDetailsData";
 import GroupDetailsSection from "./GroupDetailsSection";
 import GroupedAvatars from "./GroupedAvatars";
+import NewExpenseModal from "./NewExpenseModal";
 
 import { Balances, Group, User } from "../types/BaseInterfaces";
-import Modal from "./Modal";
-import { useState } from "react";
-import { Field, Form, Formik } from "formik";
 
 interface Props {
   balances: Balances;
@@ -35,10 +35,6 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
     }
 
     return "-";
-  };
-
-  const handleSumbit = (values) => {
-    console.log(values);
   };
 
   return (
@@ -120,61 +116,11 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
         )}
       </div>
 
-      <Modal
+      <NewExpenseModal
+        group={group}
+        handleModalClose={() => setShowNewExpenseModal(false)}
         isOpen={showNewExpenseModal}
-        onCloseModal={() => setShowNewExpenseModal(false)}
-        title={`New Expense for ${group.name}`}
-      >
-        <Formik
-          initialValues={{ reference: "", amount: "", userId: "" }}
-          onSubmit={handleSumbit}
-        >
-          <Form className="flex flex-col">
-            <label htmlFor="reference" className="text-gray-500">
-              Reference
-            </label>
-
-            <Field
-              className="border border-indigo-50 rounded-md bg-indigo-50 focus:outline-indigo-400 px-3 py-2 w-full mb-6"
-              name="reference"
-              type="text"
-            />
-
-            <label htmlFor="amount" className="text-gray-500">
-              Amount
-            </label>
-
-            <Field
-              className="border border-indigo-50 rounded-md bg-indigo-50 focus:outline-indigo-400 px-3 py-2 w-full mb-6"
-              name="amount"
-              type="number"
-            />
-
-            <label htmlFor="userId" className="text-gray-500">
-              Paid by
-            </label>
-
-            <Field
-              className="border border-indigo-50 rounded-md bg-indigo-50 focus:outline-indigo-400 px-3 py-2 w-full mb-6"
-              name="userId"
-              as="select"
-            >
-              {group.users.map((user) => (
-                <option
-                  value={user.id}
-                >{`${user.firstName} ${user.lastName}`}</option>
-              ))}
-            </Field>
-
-            <button
-              type="submit"
-              className="w-full bg-indigo-500 hover:bg-indigo-600 focus:outline-indigo-900 rounded-md text-white py-2 mb-6 cursor:pointer"
-            >
-              Submit
-            </button>
-          </Form>
-        </Formik>
-      </Modal>
+      />
     </div>
   );
 };
