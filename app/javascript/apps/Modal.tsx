@@ -64,15 +64,17 @@ const Modal = ({
       id="dialog"
       ref={dialogRef}
     >
-      <header className="flex items-center flex-start px-6 py-4">
-        <button onClick={onCloseModal}>
-          <IoMdClose size={18} />
-        </button>
+      <div className="flex flex-col">
+        <header className="flex items-center justify-start gap-6 px-6 py-4 border border-cream border-b border-t-0 border-x-0">
+          <button onClick={onCloseModal}>
+            <IoMdClose size={18} />
+          </button>
 
-        <h2>{title}</h2>
-      </header>
+          <h2 className="text-2xl text-center flex-grow">{title}</h2>
+        </header>
 
-      <div className="px-6 py-8 overflow-auto">{children}</div>
+        <div className="px-6 py-8 overflow-auto">{children}</div>
+      </div>
     </dialog>
   );
 };
