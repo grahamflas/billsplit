@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { format, max } from "date-fns";
 
 import BalancesData from "./BalancesData";
@@ -7,7 +5,6 @@ import Expense from "./Expense";
 import GroupDetailsData from "./GroupDetailsData";
 import GroupDetailsSection from "./GroupDetailsSection";
 import GroupedAvatars from "./GroupedAvatars";
-import NewExpenseModal from "./NewExpenseModal";
 
 import { Balances, Group, User } from "../types/BaseInterfaces";
 
@@ -18,9 +15,6 @@ interface Props {
 }
 
 const GroupDetails = ({ balances, currentUser, group }: Props) => {
-  const [showNewExpenseModal, setShowNewExpenseModal] =
-    useState<boolean>(false);
-
   const groupMembersList = () => {
     return group.users.map((user) => user.firstName).join(", ");
   };
@@ -94,12 +88,12 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
           </>
         </GroupDetailsSection>
 
-        <button
+        <a
           className="rounded-md px-3 py-2 bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-white text-2xl text-center"
-          onClick={() => setShowNewExpenseModal(true)}
+          href={`/expenses/new?group_id=${group.id}`}
         >
           + Add Expense
-        </button>
+        </a>
 
         {group.expenses.length > 0 && (
           <GroupDetailsSection>
@@ -115,12 +109,6 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
           </GroupDetailsSection>
         )}
       </div>
-
-      <NewExpenseModal
-        group={group}
-        handleModalClose={() => setShowNewExpenseModal(false)}
-        isOpen={showNewExpenseModal}
-      />
     </div>
   );
 };
