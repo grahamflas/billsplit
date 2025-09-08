@@ -11,8 +11,8 @@ class ExpensesRepository {
     userId,
   }: {
     amount: number | undefined;
-    groupId: number;
-    reference: string;
+    groupId: number | undefined;
+    reference: string | undefined;
     userId: number | undefined;
   }): Promise<boolean> {
     try {
@@ -24,8 +24,6 @@ class ExpensesRepository {
           group_id: groupId
         }
       }
-
-      console.log("Creating expense", data)
 
       await ajax.post(this.baseUrl,data)
 

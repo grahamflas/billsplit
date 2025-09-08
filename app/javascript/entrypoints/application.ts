@@ -1,6 +1,7 @@
 ;
 import { mountGroupDetails } from './GroupDetails';
 import { mountGroupsListContainer } from './GroupsListContainer';
+import { mountNewExpenseForm } from './NewExpenseForm';
 import './tailwind.css'
 
 document.addEventListener("turbo:load", () => {
@@ -10,5 +11,9 @@ document.addEventListener("turbo:load", () => {
 
   if (document.getElementById("GroupsListContainer")) {
     mountGroupsListContainer();
+  }
+
+  if (document.getElementById("NewExpenseForm")) {
+    mountNewExpenseForm();
   }
 });

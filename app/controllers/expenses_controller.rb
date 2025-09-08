@@ -4,7 +4,8 @@ class ExpensesController < ApplicationController
   end
 
   def new
-    @expense = Expense.new
+    @groups = current_user.groups
+    @initial_group_id = @groups.find_by(id: params[:group_id])&.id
   end
 
   def create

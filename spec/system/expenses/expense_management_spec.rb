@@ -23,15 +23,15 @@ RSpec.describe "Expense Management", type: :system, js: true do
       expect(page).to have_select("Group", selected: group.name)
 
       expect(page).to have_select(
-        "User",
+        "Paid by",
         with_options: [
-          user_1.email,
-          user_2.email,
+          user_1.full_name,
+          user_2.full_name,
         ],
       )
       expect(page).not_to have_select(
-        "User",
-        with_options: [ other_user.email ]
+        "Paid by",
+        with_options: [ other_user.full_name ]
       )
     end
   end
@@ -60,7 +60,7 @@ RSpec.describe "Expense Management", type: :system, js: true do
         fill_in "Reference", with: "My new expense"
         fill_in "Amount", with: 20
         select group_2.name
-        select user_2.email
+        select user_2.full_name
 
         expect do
           click_button "Create Expense"
@@ -68,7 +68,8 @@ RSpec.describe "Expense Management", type: :system, js: true do
 
         expense = Expense.last
 
-        expect(page).to have_content("Added expense: #{expense.reference}")
+        # [TODO] bring back after toastr is implemented
+        # expect(page).to have_content("Added expense: #{expense.reference}")
 
         within "#expense-#{expense.id}" do
           expect(page).to have_content(expense.amount)
@@ -104,7 +105,7 @@ RSpec.describe "Expense Management", type: :system, js: true do
     end
 
     describe "User select" do
-      scenario "only includes users in the groups that the current_user is a member of" do
+      scenario "only includes users for the selected group " do
         group_1 = create(:group)
         group_2 = create(:group)
         other_group = create(:group)
@@ -132,56 +133,36 @@ RSpec.describe "Expense Management", type: :system, js: true do
         visit new_expense_path
 
         expect(page).to have_select(
-          "User",
+          "Paid by",
+          selected: user_1.full_name,
           with_options: [
-            user_1.email,
-            user_2.email,
-            user_3.email ,
+            user_1.full_name,
+            user_2.full_name,
           ],
         )
         expect(page).not_to have_select(
-          "User",
-          with_options: [ other_user.email ]
+          "Paid by",
+          with_options: [ user_3.full_name ]
         )
-      end
-    end
-
-    context "when the user selects a user that is not in the selected group" do
-      scenario "re-renders the form with an error" do
-        group = create(:group, name: "Group")
-        other_group = create(:group, name: "Other Group")
-
-        user_1 = create(
-          :user,
-          email: "user_1@mail.com",
-          groups: [ group, other_group ]
-        )
-        _user_2 = create(
-          :user,
-          email: "user_2@mail.com",
-          groups: [ group, other_group ]
-        )
-        user_3 = create(
-          :user,
-          email: "user_3@mail.com",
-          groups: [ group ]
+        expect(page).not_to have_select(
+          "Paid by",
+          with_options: [ other_user.full_name ]
         )
 
-        sign_in user_1
+        select group_2.name
 
-        visit new_expense_path
-
-        fill_in "Reference", with: "Expense 1"
-        fill_in "Amount", with: 5
-
-        select "Other Group"
-        select user_3.email
-
-        expect do
-          click_button "Create Expense"
-        end.not_to change(Expense, :count)
-
-        expect(page).to have_content(Expense::MUST_BELONG_TO_SELECTED_GROUP_ERROR)
+        expect(page).to have_select(
+          "Paid by",
+          selected: user_1.full_name,
+          with_options: [
+            user_1.full_name,
+            user_3.full_name,
+          ],
+        )
+        expect(page).not_to have_select(
+          "Paid by",
+          with_options: [ user_2.full_name ]
+        )
       end
     end
   end

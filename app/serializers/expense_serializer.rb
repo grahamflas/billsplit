@@ -1,4 +1,4 @@
-class ExpenseSerializer < ActiveModel::Serializer
+class ExpenseSerializer < ApplicationSerializer
   attributes %i[
     id
     created_at
@@ -11,6 +11,8 @@ class ExpenseSerializer < ActiveModel::Serializer
   attribute :user
 
   def user
-    object.user.to_api
+    unless without?(:user)
+      object.user.to_api
+    end
   end
 end
