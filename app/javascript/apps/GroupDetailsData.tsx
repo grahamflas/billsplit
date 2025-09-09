@@ -1,6 +1,8 @@
+import { JSX } from "react";
+
 interface Props {
   headingClasses?: string;
-  headingData: string;
+  headingData: string | JSX.Element;
   subHeadingClasses?: string;
   subHeadingData: string | number;
 }

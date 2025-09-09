@@ -2,7 +2,7 @@ import axios from "axios";
 import ajax from "../utils/ajax";
 
 class ExpensesRepository {
-  static readonly baseUrl = `/expenses`;
+  static readonly baseUrl = `/api/expenses`;
 
   static async create({
     amount,
@@ -32,6 +32,34 @@ class ExpensesRepository {
       return false;
     }
   };
+
+  static async update({
+    amount,
+    id,
+    reference,
+    userId,
+  }: {
+    amount: number;
+    id: number;
+    reference: string;
+    userId: number;
+  }): Promise<boolean> {
+    try {
+      const data = {
+        expense: {
+          amount,
+          reference,
+          user_id: userId,
+        }
+      }
+
+      await ajax.put(`${this.baseUrl}/${id}`, data)
+
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }
 
 export default ExpensesRepository;

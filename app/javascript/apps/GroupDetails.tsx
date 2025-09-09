@@ -101,6 +101,7 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
               {group.expenses.map((expense, i) => (
                 <Expense
                   expense={expense}
+                  group={group}
                   isInitialExpense={i === 0}
                   key={expense.id}
                 />

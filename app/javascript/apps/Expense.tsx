@@ -1,13 +1,22 @@
+import { useState } from "react";
+
 import { format } from "date-fns";
-import { Expense } from "../types/BaseInterfaces";
+import { BsBoxArrowUpRight } from "react-icons/bs";
+
 import GroupDetailsData from "./GroupDetailsData";
+
+import { Expense, Group } from "../types/BaseInterfaces";
+import ExpenseModal from "./ExpenseModal";
 
 interface Props {
   expense: Expense;
+  group: Group;
   isInitialExpense: boolean;
 }
 
-const Expense = ({ expense, isInitialExpense }: Props) => {
+const Expense = ({ expense, group, isInitialExpense }: Props) => {
+  const [showExpenseModal, setShowExpenseModal] = useState(false);
+
   return (
     <>
       {!isInitialExpense && <hr />}
@@ -17,7 +26,15 @@ const Expense = ({ expense, isInitialExpense }: Props) => {
         id={`expense-${expense.id}`}
       >
         <GroupDetailsData
-          headingData={expense.reference}
+          headingData={
+            <div className="flex gap-4 items-center">
+              {expense.reference}
+
+              <button onClick={() => setShowExpenseModal(true)} type="button">
+                <BsBoxArrowUpRight size={15} />
+              </button>
+            </div>
+          }
           headingClasses="text-2xl"
           subHeadingData={`Paid by ${expense.user.firstName} ${
             expense.user.lastName
@@ -25,8 +42,17 @@ const Expense = ({ expense, isInitialExpense }: Props) => {
           subHeadingClasses="text-neutral-500"
         />
 
-        <div className="text-2xl">${expense.amount}</div>
+        <div>
+          <div className="text-2xl">${expense.amount}</div>
+        </div>
       </div>
+
+      <ExpenseModal
+        expense={expense}
+        group={group}
+        isOpen={showExpenseModal}
+        onClose={() => setShowExpenseModal(false)}
+      />
     </>
   );
 };
