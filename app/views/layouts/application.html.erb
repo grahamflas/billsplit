@@ -38,13 +38,9 @@
   </head>
 
   <body class="bg-gray-200 min-h-screen">
-    <%= render 'shared/navbar' %>
+    <%= render 'shared/messages' %>
 
-    <% flash.each do |message_type, message| %>
-      <div class="alert alert-<%= message_type %>">
-        <%= message %>
-      </div>
-    <% end %>
+    <%= render 'shared/navbar' %>
 
     <%= yield %>
   </body>

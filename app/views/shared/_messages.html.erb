@@ -1,0 +1,7 @@
+<% toasts = [] %>
+
+<% flash.each do |message_type, message| %>
+  <% toasts << message %>
+<% end %>
+
+<%= mount_react_app("Toaster", props: { toasts: }) %>
