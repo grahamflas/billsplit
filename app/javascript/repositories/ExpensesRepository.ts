@@ -1,4 +1,7 @@
-import axios from "axios";
+import { AxiosError } from "axios";
+
+import { toast } from "react-toastify";
+
 import ajax from "../utils/ajax";
 
 class ExpensesRepository {
@@ -28,7 +31,14 @@ class ExpensesRepository {
       await ajax.post(this.baseUrl,data)
 
       return true;
-    } catch (error) {
+    } catch (error: unknown) {
+        if (error instanceof AxiosError){
+          error
+            .response
+            ?.data
+            .errors
+            .forEach(error => toast(`Error: ${error}`))
+        }
       return false;
     }
   };
@@ -56,7 +66,14 @@ class ExpensesRepository {
       await ajax.put(`${this.baseUrl}/${id}`, data)
 
       return true;
-    } catch (error) {
+    } catch (error: unknown) {
+        if (error instanceof AxiosError){
+          error
+            .response
+            ?.data
+            .errors
+            .forEach(error => toast(`Error: ${error}`))
+        }
       return false;
     }
   }

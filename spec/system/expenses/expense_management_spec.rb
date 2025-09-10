@@ -33,6 +33,13 @@ RSpec.describe "Expense Management", type: :system, js: true do
         "Paid by",
         with_options: [ other_user.full_name ]
       )
+
+      fill_in "Reference", with: "My new expense"
+      fill_in "Amount", with: 50
+
+      click_button "Create Expense"
+
+      expect(page).to have_content("Added My new expense")
     end
   end
 

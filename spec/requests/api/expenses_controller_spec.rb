@@ -1,6 +1,28 @@
 require "rails_helper"
 
 RSpec.describe Api::ExpensesController, type: :request do
+  describe "POST /api/expenses" do
+    it "creates an expense" do
+      group = create(:group)
+      user = create(:user, groups: [ group ])
+
+      sign_in user
+
+      new_expense_data = {
+        amount: 500,
+        reference: "Rent",
+        user_id: user.id,
+        group_id: group.id,
+      }
+
+      expect do
+        post api_expenses_path, params: {
+          expense: new_expense_data
+        }
+      end.to change(Expense, :count).by(1)
+    end
+  end
+
   describe "PUT /api/expenses/:id" do
     context "with valid params" do
       it "responds with OK status and updates the expense" do

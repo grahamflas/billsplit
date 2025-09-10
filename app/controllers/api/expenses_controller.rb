@@ -1,10 +1,24 @@
 class Api::ExpensesController < Api::BaseController
   before_action :authenticate_user!
-  before_action :get_expense_or_render_error
-  before_action :authorize_user
+  before_action :get_expense_or_render_error, only: :update
+  before_action :authorize_user, only: :update
+
+  def create
+    expense = Expense.new(expense_params)
+
+    if expense.save
+      flash[:success] = "Added #{expense.reference}"
+      render json: expense
+    else
+      render json: {
+        errors: expense.errors.full_messages
+      }, status: :unprocessable_content
+    end
+  end
 
   def update
     if expense.update(expense_params)
+      flash[:success] = "Updated expense: #{expense.reference}"
       render json: expense
     else
       render json: {
@@ -38,6 +52,7 @@ class Api::ExpensesController < Api::BaseController
         :amount,
         :reference,
         :user_id,
+        :group_id,
       )
   end
 end
