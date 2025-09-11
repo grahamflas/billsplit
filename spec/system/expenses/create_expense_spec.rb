@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Expense Management", type: :system, js: true do
+RSpec.describe "Create Expense", type: :system, js: true do
   describe "when creating an expense through a group page" do
     scenario "user can create an expense, group name is pre-filled and user select includes only group members" do
       other_group = create(:group, name: "Other Group")
