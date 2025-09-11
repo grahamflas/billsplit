@@ -1,5 +1,6 @@
 import NewExpenseForm from "../apps/NewExpenseForm";
 
-import { mountComponent } from "../utils/reactHelper"
+import { mountComponent } from "../utils/reactHelper";
 
-export const mountNewExpenseForm = () => mountComponent(NewExpenseForm, "NewExpenseForm");
+export const mountNewExpenseForm = () =>
+  mountComponent(NewExpenseForm, "NewExpenseForm");

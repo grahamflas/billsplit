@@ -21,7 +21,7 @@ export interface Expense {
   groupId: number;
   id: number;
   reference: string;
-  status: ExpenseStatus,
+  status: ExpenseStatus;
   userId: number;
   user: User;
 }

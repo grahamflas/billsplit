@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 // import axiosRetry from 'axios-retry';
-import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosRequestConfig, AxiosResponse } from "axios";
 
 /*
  * Only retry GET/HEAD/OPTIONS requests (safe)
@@ -83,7 +83,7 @@ export default {
       return token.content;
     }
 
-    return '';
+    return "";
   },
 
   injectRequestHeaders(
@@ -92,8 +92,8 @@ export default {
     return {
       ...(config || axios.defaults),
       headers: {
-        'X-CSRF-Token': this.authenticityToken(),
-        'X-Requested-With': 'XMLHttpRequest',
+        "X-CSRF-Token": this.authenticityToken(),
+        "X-Requested-With": "XMLHttpRequest",
       },
     };
   },

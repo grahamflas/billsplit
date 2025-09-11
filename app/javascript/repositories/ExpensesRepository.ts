@@ -24,24 +24,22 @@ class ExpensesRepository {
           reference,
           amount,
           user_id: userId,
-          group_id: groupId
-        }
-      }
+          group_id: groupId,
+        },
+      };
 
-      await ajax.post(this.baseUrl,data)
+      await ajax.post(this.baseUrl, data);
 
       return true;
     } catch (error: unknown) {
-        if (error instanceof AxiosError){
-          error
-            .response
-            ?.data
-            .errors
-            .forEach(error => toast(`Error: ${error}`))
-        }
+      if (error instanceof AxiosError) {
+        error.response?.data.errors.forEach((error: string) =>
+          toast(`Error: ${error}`)
+        );
+      }
       return false;
     }
-  };
+  }
 
   static async update({
     amount,
@@ -60,23 +58,21 @@ class ExpensesRepository {
           amount,
           reference,
           user_id: userId,
-        }
-      }
+        },
+      };
 
-      await ajax.put(`${this.baseUrl}/${id}`, data)
+      await ajax.put(`${this.baseUrl}/${id}`, data);
 
       return true;
     } catch (error: unknown) {
-        if (error instanceof AxiosError){
-          error
-            .response
-            ?.data
-            .errors
-            .forEach(error => toast(`Error: ${error}`))
-        }
+      if (error instanceof AxiosError) {
+        error.response?.data.errors.forEach((error: string) =>
+          toast(`Error: ${error}`)
+        );
+      }
       return false;
     }
-  };
+  }
 
   static async delete(expenseId: number): Promise<boolean> {
     try {
@@ -84,17 +80,13 @@ class ExpensesRepository {
 
       return true;
     } catch (error) {
-      if (error instanceof AxiosError){
-        error
-          .response
-          ?.data
-          .errors
-          .forEach(toast)
+      if (error instanceof AxiosError) {
+        error.response?.data.errors.forEach(toast);
       }
 
       return false;
     }
-  };
+  }
 }
 
 export default ExpensesRepository;
