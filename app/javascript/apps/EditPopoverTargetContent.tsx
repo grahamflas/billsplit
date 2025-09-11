@@ -50,13 +50,11 @@ const EditPopoverTargetContent = ({ expense, onEdit }: Props) => {
     <Target placement="bottomLeft">
       <div ref={popoverRef} className="bg-white shadow-lg rounded-2xl p-2">
         <ul className="flex flex-col gap-2 items-center">
-          <li>
+          <li className="w-full">
             <button
               id={`edit-expense-${expense.id}-button`}
-              className="hover:bg-neutral-200 focus:bg-neutral-200 px-6 py-1 rounded w-full"
-              onClick={(event) => {
-                debugger;
-                console.log("Edit button click event fired");
+              className="hover:bg-neutral-200 px-6 py-1 rounded w-full"
+              onClick={() => {
                 popover.close();
                 onEdit();
               }}
@@ -65,7 +63,7 @@ const EditPopoverTargetContent = ({ expense, onEdit }: Props) => {
             </button>
           </li>
 
-          <li>
+          <li className="w-full">
             <button className="hover:bg-rose-200 focus:bg-rose-200 px-6 py-1 rounded w-full">
               Delete
             </button>
