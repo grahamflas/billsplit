@@ -1,5 +1,8 @@
 import { Field, Form, Formik } from "formik";
+
 import ExpensesRepository from "../repositories/ExpensesRepository";
+
+import { Expense, Group } from "../types/BaseInterfaces";
 
 interface Props {
   expense: Expense;
