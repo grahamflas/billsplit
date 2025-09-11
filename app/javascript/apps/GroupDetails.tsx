@@ -7,6 +7,7 @@ import GroupDetailsSection from "./GroupDetailsSection";
 import GroupedAvatars from "./GroupedAvatars";
 
 import { Balances, Group, User } from "../types/BaseInterfaces";
+import { ExpenseStatus } from "../enums/ExpenseStatus";
 
 interface Props {
   balances: Balances;
@@ -18,6 +19,10 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
   const groupMembersList = () => {
     return group.users.map((user) => user.firstName).join(", ");
   };
+
+  const openExpenses = group.expenses.filter(
+    (expense) => expense.status === ExpenseStatus.Open
+  );
 
   const latestDate = () => {
     if (group.expenses.length > 0) {
@@ -51,6 +56,7 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
             <div id="balances" className="rounded-2xl bg-neutral-100 p-6 mx-4">
               <GroupDetailsData
                 headingData="Total Expenses"
+                id={"total-expenses"}
                 subHeadingData={Intl.NumberFormat("en-US", {
                   style: "currency",
                   currency: "USD",
@@ -95,10 +101,10 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
           + Add Expense
         </a>
 
-        {group.expenses.length > 0 && (
-          <GroupDetailsSection>
+        {openExpenses.length > 0 && (
+          <GroupDetailsSection id="open-expenses">
             <>
-              {group.expenses.map((expense, i) => (
+              {openExpenses.map((expense, i) => (
                 <Expense
                   expense={expense}
                   group={group}

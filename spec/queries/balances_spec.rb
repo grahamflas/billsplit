@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Balances do
-  context "when expenses are split evenly between all memebers of the group" do
-    it "returns a hash showing which member owes what" do
+  context "when expenses are split evenly between all members of the group" do
+    it "returns a hash with the total expenses and an array containing balance information for each user" do
       group = create(:group)
 
       user_1 = create(
@@ -68,6 +68,63 @@ RSpec.describe Balances do
           user_balance_hash[:balance]
         end.sum.to_i
       ).to eq(0)
+    end
+
+    it "only includes open expenses" do
+      group = create(:group)
+
+      user = create(
+        :user,
+        groups: [ group ],
+      )
+      other_user = create(
+        :user,
+        groups: [ group ],
+      )
+
+      create(
+        :expense,
+        reference: "Open Expense",
+        amount: 1,
+        user:,
+        group:
+      )
+      create(
+        :expense,
+        :settled,
+        reference: "Settled Expense",
+        amount: 1,
+        user:,
+        group:
+      )
+      create(
+        :expense,
+        :deleted,
+        reference: "Deleted Expense",
+        amount: 1,
+        user:,
+        group:
+      )
+
+      result = Balances.new(group:).compute
+
+      expect(result).to eq({
+        totalExpenses: 1,
+        userBalances: [
+          {
+            balance: -0.50,
+            firstName: user.first_name,
+            lastName: user.last_name,
+            userId: user.id,
+          },
+          {
+            balance: 0.50,
+            firstName: other_user.first_name,
+            lastName: other_user.last_name,
+            userId: other_user.id,
+          },
+        ]
+      })
     end
   end
 end

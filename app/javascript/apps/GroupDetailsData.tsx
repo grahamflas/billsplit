@@ -4,6 +4,7 @@ interface Props {
   containerClasses?: string;
   headingClasses?: string;
   headingData: string | JSX.Element;
+  id?: string;
   subHeadingClasses?: string;
   subHeadingData: string | number;
 }
@@ -11,11 +12,12 @@ const GroupDetailsData = ({
   containerClasses,
   headingClasses,
   headingData,
+  id,
   subHeadingClasses,
   subHeadingData,
 }: Props) => {
   return (
-    <div className={containerClasses}>
+    <div id={id} className={containerClasses}>
       <h3 className={headingClasses || "text-xl text-neutral-500"}>
         {headingData}
       </h3>

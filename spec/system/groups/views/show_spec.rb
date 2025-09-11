@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Group Show Page", type: :system, js: true do
+RSpec.describe "Group Show Page", :aggregate_failures, type: :system, js: true  do
   scenario "displays group name, a list of members, their balances, and a list of expenses" do
     group = create(:group, name: "Roommates Group")
 
@@ -141,6 +141,41 @@ RSpec.describe "Group Show Page", type: :system, js: true do
       expect(page).to have_content("#{user_2.full_name} is settled up")
 
       expect(page).not_to have_content("#{user_1.full_name} is all settled up")
+    end
+  end
+
+  scenario "does not show deleted expenses" do
+    group = create(:group)
+
+    user = create(:user, groups: [ group ])
+
+    expense = create(
+      :expense,
+      reference: "Open Expense",
+      amount: 1,
+      group:,
+      user:
+    )
+
+    deleted_expense = create(
+      :expense,
+      :deleted,
+      reference: "Deleted Expense",
+      amount: 1,
+      group:,
+      user:
+    )
+
+    sign_in user
+
+    visit group_path(group)
+
+    within "#total-expenses" do
+      expect(page).to have_content("$1.00")
+    end
+
+    within "#open-expenses" do
+      expect(page).not_to have_content(deleted_expense.reference)
     end
   end
 

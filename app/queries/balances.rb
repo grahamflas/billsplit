@@ -34,12 +34,13 @@ class Balances
   end
 
   def total_expenses
-    @total_expenses ||= group.expenses.sum(:amount)
+    @total_expenses ||= group.expenses.open.sum(:amount)
   end
 
   def expenses_paid(member)
     member.
       expenses.
+      open.
       where(group:).
       sum(:amount)
   end

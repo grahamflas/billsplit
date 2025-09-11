@@ -10,5 +10,13 @@ FactoryBot.define do
         expense.user.groups << expense.group
       end
     end
+
+    trait :deleted do
+      status { :deleted }
+    end
+
+    trait :settled do
+      status { :settled }
+    end
   end
 end
