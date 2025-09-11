@@ -1,14 +1,19 @@
 class ExpenseSerializer < ApplicationSerializer
   attributes %i[
-    id
-    created_at
-    user_id
-    group_id
     amount
+    created_at
+    group_id
+    id
     reference
+    status
+    user_id
   ]
 
   attribute :user
+
+  def status
+    Expense.statuses[object.status]
+  end
 
   def user
     unless without?(:user)

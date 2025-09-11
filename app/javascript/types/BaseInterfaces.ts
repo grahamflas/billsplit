@@ -1,3 +1,5 @@
+import { ExpenseStatus } from "../enums/ExpenseStatus";
+
 export interface User {
   email: string;
   firstName: string;
@@ -19,6 +21,7 @@ export interface Expense {
   groupId: number;
   id: number;
   reference: string;
+  status: ExpenseStatus,
   userId: number;
   user: User;
 }

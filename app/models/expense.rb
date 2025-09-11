@@ -9,6 +9,12 @@ class Expense < ApplicationRecord
 
   validate :user_must_be_group_member
 
+  enum :status, {
+    open: 0,
+    settled: 1,
+    deleted: 2,
+  }
+
   def user_must_be_group_member
     unless user.groups.include?(group)
       errors.add(:user, MUST_BELONG_TO_SELECTED_GROUP_ERROR)
