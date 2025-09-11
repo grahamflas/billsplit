@@ -1,6 +1,6 @@
 import { Field, Form, Formik } from "formik";
-import { Expense, Group } from "../types/BaseInterfaces";
-import NewExpenseFormUserSelect from "./NeWExpenseFormUserSelect";
+import { Group } from "../types/BaseInterfaces";
+import NewExpenseFormUserSelect from "./NewExpenseFormUserSelect";
 import ExpensesRepository from "../repositories/ExpensesRepository";
 import GroupDetailsSection from "./GroupDetailsSection";
 
