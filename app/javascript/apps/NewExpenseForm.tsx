@@ -1,8 +1,11 @@
 import { Field, Form, Formik } from "formik";
-import { Group } from "../types/BaseInterfaces";
-import NewExpenseFormUserSelect from "./NewExpenseFormUserSelect";
-import ExpensesRepository from "../repositories/ExpensesRepository";
+
 import GroupDetailsSection from "./GroupDetailsSection";
+import NewExpenseFormUserSelect from "./NewExpenseFormUserSelect";
+
+import ExpensesRepository from "../repositories/ExpensesRepository";
+
+import { Group } from "../types/BaseInterfaces";
 
 interface Props {
   groups: Group[];
