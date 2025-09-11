@@ -23,6 +23,7 @@
     "vite-plugin-ruby": "^5.1.0"
   },
   "dependencies": {
+    "@accessible/popover": "^3.5.1",
     "axios": "^1.11.0",
     "date-fns": "^4.1.0",
     "formik": "^2.4.6",
