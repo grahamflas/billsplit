@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 import { format } from "date-fns";
-import { BsBoxArrowUpRight } from "react-icons/bs";
 
+import ExpenseEditPopover from "./ExpenseEditPopover";
+import ExpenseModal from "./ExpenseModal";
 import GroupDetailsData from "./GroupDetailsData";
 
 import { Expense, Group } from "../types/BaseInterfaces";
-import ExpenseModal from "./ExpenseModal";
 
 interface Props {
   expense: Expense;
@@ -26,15 +26,7 @@ const Expense = ({ expense, group, isInitialExpense }: Props) => {
         id={`expense-${expense.id}`}
       >
         <GroupDetailsData
-          headingData={
-            <div className="flex gap-4 items-center">
-              {expense.reference}
-
-              <button onClick={() => setShowExpenseModal(true)} type="button">
-                <BsBoxArrowUpRight size={15} />
-              </button>
-            </div>
-          }
+          headingData={expense.reference}
           headingClasses="text-2xl"
           subHeadingData={`Paid by ${expense.user.firstName} ${
             expense.user.lastName
@@ -42,8 +34,13 @@ const Expense = ({ expense, group, isInitialExpense }: Props) => {
           subHeadingClasses="text-neutral-500"
         />
 
-        <div>
+        <div className="flex gap-4">
           <div className="text-2xl">${expense.amount}</div>
+
+          <ExpenseEditPopover
+            expense={expense}
+            onEdit={() => setShowExpenseModal(true)}
+          />
         </div>
       </div>
 
