@@ -9,7 +9,7 @@ interface Props {
   onClose: () => void;
 }
 
-const ExpenseModal = ({ expense, group, isOpen, onClose }: Props) => {
+const EditExpenseModal = ({ expense, group, isOpen, onClose }: Props) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -21,4 +21,4 @@ const ExpenseModal = ({ expense, group, isOpen, onClose }: Props) => {
   );
 };
 
-export default ExpenseModal;
+export default EditExpenseModal;

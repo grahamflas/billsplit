@@ -3,7 +3,7 @@ import { useState } from "react";
 import { format } from "date-fns";
 
 import ExpenseEditPopover from "./ExpenseEditPopover";
-import ExpenseModal from "./ExpenseModal";
+import EditExpenseModal from "./EditExpenseModal";
 import GroupDetailsData from "./GroupDetailsData";
 
 import { Expense, Group } from "../types/BaseInterfaces";
@@ -44,7 +44,7 @@ const Expense = ({ expense, group, isInitialExpense }: Props) => {
         </div>
       </div>
 
-      <ExpenseModal
+      <EditExpenseModal
         expense={expense}
         group={group}
         isOpen={showExpenseModal}
