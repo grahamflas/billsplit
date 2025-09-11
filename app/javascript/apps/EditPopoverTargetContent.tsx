@@ -11,9 +11,10 @@ import { Expense } from "../types/BaseInterfaces";
 interface Props {
   expense: Expense;
   onEdit: () => void;
+  onDelete: () => void;
 }
 
-const EditPopoverTargetContent = ({ expense, onEdit }: Props) => {
+const EditPopoverTargetContent = ({ expense, onEdit, onDelete }: Props) => {
   const popover = usePopover();
 
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -64,7 +65,13 @@ const EditPopoverTargetContent = ({ expense, onEdit }: Props) => {
           </li>
 
           <li className="w-full">
-            <button className="hover:bg-rose-200 focus:bg-rose-200 px-6 py-1 rounded w-full">
+            <button
+              className="hover:bg-rose-200 focus:bg-rose-200 px-6 py-1 rounded w-full"
+              onClick={() => {
+                popover.close();
+                onDelete();
+              }}
+            >
               Delete
             </button>
           </li>

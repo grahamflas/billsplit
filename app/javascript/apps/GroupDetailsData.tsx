@@ -1,19 +1,21 @@
 import { JSX } from "react";
 
 interface Props {
+  containerClasses?: string;
   headingClasses?: string;
   headingData: string | JSX.Element;
   subHeadingClasses?: string;
   subHeadingData: string | number;
 }
 const GroupDetailsData = ({
+  containerClasses,
   headingClasses,
   headingData,
   subHeadingClasses,
   subHeadingData,
 }: Props) => {
   return (
-    <div>
+    <div className={containerClasses}>
       <h3 className={headingClasses || "text-xl text-neutral-500"}>
         {headingData}
       </h3>

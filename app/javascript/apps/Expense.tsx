@@ -4,6 +4,7 @@ import { format } from "date-fns";
 
 import ExpenseEditPopover from "./ExpenseEditPopover";
 import EditExpenseModal from "./EditExpenseModal";
+import DeleteExpenseModal from "./DeleteExpenseModal";
 import GroupDetailsData from "./GroupDetailsData";
 
 import { Expense, Group } from "../types/BaseInterfaces";
@@ -15,7 +16,8 @@ interface Props {
 }
 
 const Expense = ({ expense, group, isInitialExpense }: Props) => {
-  const [showExpenseModal, setShowExpenseModal] = useState(false);
+  const [showEditExpenseModal, setShowEditExpenseModal] = useState(false);
+  const [showDeleteExpenseModal, setShowDeleteExpenseModal] = useState(false);
 
   return (
     <>
@@ -39,7 +41,8 @@ const Expense = ({ expense, group, isInitialExpense }: Props) => {
 
           <ExpenseEditPopover
             expense={expense}
-            onEdit={() => setShowExpenseModal(true)}
+            onEdit={() => setShowEditExpenseModal(true)}
+            onDelete={() => setShowDeleteExpenseModal(true)}
           />
         </div>
       </div>
@@ -47,8 +50,14 @@ const Expense = ({ expense, group, isInitialExpense }: Props) => {
       <EditExpenseModal
         expense={expense}
         group={group}
-        isOpen={showExpenseModal}
-        onClose={() => setShowExpenseModal(false)}
+        isOpen={showEditExpenseModal}
+        onClose={() => setShowEditExpenseModal(false)}
+      />
+
+      <DeleteExpenseModal
+        expense={expense}
+        isOpen={showDeleteExpenseModal}
+        onClose={() => setShowDeleteExpenseModal(false)}
       />
     </>
   );
