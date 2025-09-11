@@ -166,4 +166,25 @@ RSpec.describe Api::ExpensesController, type: :request do
       end
     end
   end
+
+  describe "DELETE /api/expenses/id" do
+    it "changes the status to :deleted", :aggregate_failures do
+      group = create(:group)
+      user = create(:user, groups: [ group ])
+      expense = create(
+        :expense,
+        user:,
+        group:,
+      )
+
+      sign_in user
+
+      delete api_expense_path(expense)
+
+      expect(expense.reload.deleted?).to eq(true)
+
+      expect(response.parsed_body).to include({ status: "deleted" })
+      expect(response).to have_http_status(:ok)
+    end
+  end
 end

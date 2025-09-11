@@ -4,6 +4,7 @@ import Modal from "./Modal";
 import GroupDetailsData from "./GroupDetailsData";
 
 import { Expense } from "../types/BaseInterfaces";
+import ExpensesRepository from "../repositories/ExpensesRepository";
 
 interface Props {
   expense: Expense;
@@ -12,8 +13,12 @@ interface Props {
 }
 
 const DeleteExpenseModal = ({ expense, isOpen, onClose }: Props) => {
-  const handleDelete = () => {
-    console.log(`Deleting ${expense.reference}`);
+  const handleDelete = async () => {
+    const success = await ExpensesRepository.delete(expense.id);
+
+    if (success) {
+      window.location.href = `/groups/${expense.groupId}`;
+    }
   };
 
   return (

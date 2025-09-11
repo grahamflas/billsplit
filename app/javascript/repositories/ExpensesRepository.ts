@@ -76,7 +76,25 @@ class ExpensesRepository {
         }
       return false;
     }
-  }
+  };
+
+  static async delete(expenseId: number): Promise<boolean> {
+    try {
+      await ajax.delete(`${this.baseUrl}/${expenseId}`);
+
+      return true;
+    } catch (error) {
+      if (error instanceof AxiosError){
+        error
+          .response
+          ?.data
+          .errors
+          .forEach(toast)
+      }
+
+      return false;
+    }
+  };
 }
 
 export default ExpensesRepository;

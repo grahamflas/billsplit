@@ -1,7 +1,7 @@
 class Api::ExpensesController < Api::BaseController
   before_action :authenticate_user!
-  before_action :get_expense_or_render_error, only: :update
-  before_action :authorize_user, only: :update
+  before_action :get_expense_or_render_error, only: %i[ update  ]
+  before_action :authorize_user, only: %i[ update  ]
 
   def create
     expense = Expense.new(expense_params)
@@ -23,6 +23,20 @@ class Api::ExpensesController < Api::BaseController
     else
       render json: {
         errors: expense.errors.full_messages
+      }, status: :unprocessable_content
+    end
+  end
+
+  def destroy
+    if expense.update(status: :deleted)
+      flash[:success] = "Deleted expense: #{expense.reference}"
+      render json: {status: "deleted"}
+    else
+      errors = ["Something went wrong"]
+      errors << expense.errors.full_messages
+
+      render json: {
+        errors: errors.flatten.compact
       }, status: :unprocessable_content
     end
   end

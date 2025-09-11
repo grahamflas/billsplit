@@ -17,6 +17,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   namespace :api, defaults: { format: :json } do
-    resources :expenses, only: %i[create update]
+    resources :expenses, only: %i[create update destroy]
   end
 end
