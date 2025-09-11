@@ -48,7 +48,7 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
               </div>
             </div>
 
-            <div className="rounded-2xl bg-neutral-100 p-6 mx-4">
+            <div id="balances" className="rounded-2xl bg-neutral-100 p-6 mx-4">
               <GroupDetailsData
                 headingData="Total Expenses"
                 subHeadingData={Intl.NumberFormat("en-US", {

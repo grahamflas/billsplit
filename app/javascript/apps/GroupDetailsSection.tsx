@@ -2,11 +2,15 @@ import { JSX } from "react";
 
 interface Props {
   children: JSX.Element;
+  id?: string;
 }
 
-const GroupDetailsSection = ({ children }: Props) => {
+const GroupDetailsSection = ({ children, id = undefined }: Props) => {
   return (
-    <div className="flex flex-col rounded-2xl bg-white px-10 py-6 gap-6">
+    <div
+      id={id}
+      className="flex flex-col rounded-2xl bg-white px-10 py-6 gap-6"
+    >
       {children}
     </div>
   );
