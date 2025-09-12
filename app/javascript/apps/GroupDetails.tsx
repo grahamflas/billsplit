@@ -1,5 +1,7 @@
 import { format, max } from "date-fns";
 
+import { FaArrowLeft } from "react-icons/fa";
+
 import BalancesData from "./BalancesData";
 import BillSplitAccordion from "./BillSplitAccordion";
 import Expense from "./Expense";
@@ -9,6 +11,8 @@ import GroupedAvatars from "./GroupedAvatars";
 
 import { Balances, Group, User } from "../types/BaseInterfaces";
 import { ExpenseStatus } from "../enums/ExpenseStatus";
+import { useState } from "react";
+import SettleExpensesModal from "./SettleExpensesModal";
 
 interface Props {
   balances: Balances;
@@ -17,6 +21,8 @@ interface Props {
 }
 
 const GroupDetails = ({ balances, currentUser, group }: Props) => {
+  const [showSettleExpensesModal, setShowSettleExpensesModal] = useState(false);
+
   const groupMembersList = () => {
     return group.users.map((user) => user.firstName).join(", ");
   };
@@ -43,7 +49,11 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
 
   return (
     <div className="p-6 max-w-2xl mx-auto">
-      <div className="flex flex-col gap-6">
+      <a className="flex items-center gap-1 text-indigo-600 text-xl" href="/">
+        <FaArrowLeft /> Back to My Groups
+      </a>
+
+      <div className="flex flex-col gap-6 mt-6">
         <GroupDetailsSection>
           <>
             <div className="flex flex-row justify-between">
@@ -73,6 +83,15 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
                 <BalancesData balances={balances} currentUser={currentUser} />
               </div>
             </div>
+
+            {openExpenses.length > 0 && (
+              <button
+                className="self-start mx-4 rounded-md px-2 py-1 bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-l text-white text-center"
+                onClick={() => setShowSettleExpensesModal(true)}
+              >
+                Settle open expenses
+              </button>
+            )}
 
             <div className="flex flex-row justify-between">
               <div>
@@ -143,6 +162,13 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
             </BillSplitAccordion>
           </GroupDetailsSection>
         )}
+
+        <SettleExpensesModal
+          expenses={openExpenses}
+          isOpen={showSettleExpensesModal}
+          onClose={() => setShowSettleExpensesModal(false)}
+          title={`Settle expenses for ${group.name}`}
+        />
       </div>
     </div>
   );
