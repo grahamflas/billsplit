@@ -42,6 +42,10 @@ RSpec.describe "Delete expense", type: :system, js: true do
         expect(page).to have_content("Jenna Maroney is settled up")
       end
 
+      within "#open-expenses" do
+        expect(page).to have_content(expense_1.reference)
+      end
+
       find("#edit-expense-#{expense_1.id}").click
 
       within "#expense-#{expense_1.id}" do
@@ -57,7 +61,11 @@ RSpec.describe "Delete expense", type: :system, js: true do
         "button[aria-label='Delete expense #{expense_1.reference}']"
       ).click
 
-      # expect(expense_1.reload.status).to eq("deleted")
+      expect(expense_1.reload.status).to eq("deleted")
+
+      within "#open-expenses" do
+        expect(page).not_to have_content(expense_1.reference)
+      end
     end
   end
 end
