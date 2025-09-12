@@ -4,6 +4,9 @@ import ExpensesRepository from "../repositories/ExpensesRepository";
 
 import { Expense, Group } from "../types/BaseInterfaces";
 
+interface EditExpenseFormValues
+  extends Pick<Expense, "reference" | "amount" | "userId"> {}
+
 interface Props {
   expense: Expense;
   group: Group;
@@ -11,7 +14,7 @@ interface Props {
 }
 
 const ExpenseEditForm = ({ expense, group, onCancel }: Props) => {
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values: EditExpenseFormValues) => {
     const expenseUpdated = await ExpensesRepository.update({
       ...values,
       id: expense.id,
@@ -21,15 +24,15 @@ const ExpenseEditForm = ({ expense, group, onCancel }: Props) => {
       window.location.href = `/groups/${group.id}`;
     }
   };
+
+  const initialValues: EditExpenseFormValues = {
+    reference: expense.reference,
+    amount: expense.amount,
+    userId: expense.userId,
+  };
+
   return (
-    <Formik
-      initialValues={{
-        reference: expense.reference,
-        amount: expense.amount,
-        userId: expense.userId,
-      }}
-      onSubmit={handleSubmit}
-    >
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <Form>
         <label htmlFor="reference" className="text-gray-500">
           Reference
