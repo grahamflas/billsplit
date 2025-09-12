@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_11_151510) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_12_191510) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -41,6 +41,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_11_151510) do
     t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
+  create_table "settlements", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.text "note"
+    t.jsonb "balances"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_settlements_on_group_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -59,4 +68,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_11_151510) do
   add_foreign_key "expenses", "users"
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
+  add_foreign_key "settlements", "groups"
 end

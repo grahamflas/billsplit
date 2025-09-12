@@ -3,6 +3,7 @@ class Expense < ApplicationRecord
 
   belongs_to :user
   belongs_to :group
+  belongs_to :settlement, optional: true
 
   validates :reference, presence: true
   validates :amount, numericality: true
