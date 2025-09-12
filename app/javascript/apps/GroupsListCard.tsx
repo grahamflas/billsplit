@@ -1,6 +1,7 @@
 import Avatar from "react-avatar";
 import { Group } from "../types/BaseInterfaces";
 import GroupedAvatars from "./GroupedAvatars";
+import { ExpenseStatus } from "../enums/ExpenseStatus";
 
 interface Props {
   group: Group;
@@ -8,8 +9,12 @@ interface Props {
 
 const GroupsListCard = ({ group }: Props) => {
   const renderExpensesCount = () => {
-    if (group.expenses.length) {
-      return <p className="text-gray-700">{group.expenses.length} expenses</p>;
+    const openExpenses = group.expenses.filter(
+      (expense) => expense.status === ExpenseStatus.Open
+    );
+
+    if (openExpenses.length) {
+      return <p className="text-gray-700">{openExpenses.length} expenses</p>;
     }
 
     return <p className="text-gray-700">No expenses yet</p>;
