@@ -7,7 +7,7 @@ interface Props {
 
 const Toaster = ({ toasts }: Props) => {
   useEffect(() => {
-    toasts.forEach(toast);
+    toasts.forEach((tst) => toast(tst));
   });
 
   return <ToastContainer />;

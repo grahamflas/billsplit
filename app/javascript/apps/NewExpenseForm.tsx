@@ -5,8 +5,14 @@ import NewExpenseFormUserSelect from "./NewExpenseFormUserSelect";
 
 import ExpensesRepository from "../repositories/ExpensesRepository";
 
-import { Group } from "../types/BaseInterfaces";
+import { Expense, Group } from "../types/BaseInterfaces";
 
+export interface NewExpenseFormValues {
+  reference: string | undefined;
+  amount: number | undefined;
+  groupId: number | undefined;
+  userId: number | undefined;
+}
 interface Props {
   groups: Group[];
   initialGroupId?: number;
@@ -16,18 +22,20 @@ const NewExpenseForm = ({ groups, initialGroupId }: Props) => {
   const fieldClasses =
     "border border-indigo-50 rounded-md bg-indigo-50 focus:outline-indigo-400 px-3 py-2 w-full mb-6";
 
+  const initialValues: NewExpenseFormValues = {
+    reference: undefined,
+    amount: undefined,
+    groupId: initialGroupId || groups[0]?.id || undefined,
+    userId: undefined,
+  };
+
   return (
     <div className="flex flex-col gap-6 p-6 max-w-2xl mx-auto">
       <h1 className="font-bold text-4xl">New Expense</h1>
 
       <GroupDetailsSection>
         <Formik
-          initialValues={{
-            reference: undefined,
-            amount: undefined,
-            groupId: initialGroupId || groups[0]?.id || undefined,
-            userId: undefined,
-          }}
+          initialValues={initialValues}
           onSubmit={async (values) => {
             const success = await ExpensesRepository.create(values);
 

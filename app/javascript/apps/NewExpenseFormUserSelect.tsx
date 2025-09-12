@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Field, useFormikContext } from "formik";
 
 import { Group } from "../types/BaseInterfaces";
+import { NewExpenseFormValues } from "./NewExpenseForm";
 
 interface Props {
   fieldClasses: string;
@@ -14,7 +15,7 @@ const NewExpenseFormUserSelect = ({ fieldClasses, groups, id }: Props) => {
   const {
     values: { groupId },
     setFieldValue,
-  } = useFormikContext();
+  } = useFormikContext<NewExpenseFormValues>();
 
   const selectedGroup = groups.find((group) => group.id == groupId);
 
