@@ -51,7 +51,7 @@ const EditPopoverTargetContent = ({ expense, onEdit, onDelete }: Props) => {
     <Target placement="bottomLeft">
       <div ref={popoverRef} className="bg-white shadow-lg rounded-2xl p-2">
         <ul className="flex flex-col gap-2 items-center">
-          <li className="w-full">
+          <li className="w-full border border-cream border-b border-x-0 border-t-0">
             <button
               id={`edit-expense-${expense.id}-button`}
               className="hover:bg-neutral-200 px-6 py-1 rounded w-full"
