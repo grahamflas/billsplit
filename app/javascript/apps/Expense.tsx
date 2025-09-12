@@ -8,6 +8,7 @@ import DeleteExpenseModal from "./DeleteExpenseModal";
 import GroupDetailsData from "./GroupDetailsData";
 
 import { Expense, Group } from "../types/BaseInterfaces";
+import { ExpenseStatus } from "../enums/ExpenseStatus";
 
 interface Props {
   expense: Expense;
@@ -19,6 +20,16 @@ const Expense = ({ expense, group, isInitialExpense }: Props) => {
   const [showEditExpenseModal, setShowEditExpenseModal] = useState(false);
   const [showDeleteExpenseModal, setShowDeleteExpenseModal] = useState(false);
 
+  const renderBadge = () => {
+    if (expense.status === ExpenseStatus.Deleted) {
+      return (
+        <span className="bg-rose-600 text-white text-xs text-bold px-2 rounded-xl">
+          Deleted
+        </span>
+      );
+    }
+  };
+
   return (
     <>
       {!isInitialExpense && <hr />}
@@ -28,7 +39,12 @@ const Expense = ({ expense, group, isInitialExpense }: Props) => {
         id={`expense-${expense.id}`}
       >
         <GroupDetailsData
-          headingData={expense.reference}
+          headingData={
+            <div className="flex flex-row items-center justify-start gap-2">
+              {expense.reference}
+              {renderBadge()}
+            </div>
+          }
           headingClasses="text-2xl"
           subHeadingData={`Paid by ${expense.user.firstName} ${
             expense.user.lastName

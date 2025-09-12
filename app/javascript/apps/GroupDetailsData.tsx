@@ -17,13 +17,13 @@ const GroupDetailsData = ({
   subHeadingData,
 }: Props) => {
   return (
-    <div id={id} className={containerClasses}>
+    <section id={id} className={containerClasses}>
       <h3 className={headingClasses || "text-xl text-neutral-500"}>
         {headingData}
       </h3>
 
-      <div className={subHeadingClasses || "text-xl"}>{subHeadingData}</div>
-    </div>
+      <p className={subHeadingClasses || "text-xl"}>{subHeadingData}</p>
+    </section>
   );
 };
 

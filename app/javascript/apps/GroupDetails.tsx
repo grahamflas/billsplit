@@ -1,6 +1,7 @@
 import { format, max } from "date-fns";
 
 import BalancesData from "./BalancesData";
+import BillSplitAccordion from "./BillSplitAccordion";
 import Expense from "./Expense";
 import GroupDetailsData from "./GroupDetailsData";
 import GroupDetailsSection from "./GroupDetailsSection";
@@ -22,6 +23,10 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
 
   const openExpenses = group.expenses.filter(
     (expense) => expense.status === ExpenseStatus.Open
+  );
+
+  const deletedExpenses = group.expenses.filter(
+    (expense) => expense.status === ExpenseStatus.Deleted
   );
 
   const latestDate = () => {
@@ -73,6 +78,7 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
               <div>
                 <GroupDetailsData
                   headingData="Members"
+                  id="group-members-count"
                   subHeadingData={group.users.length}
                 />
               </div>
@@ -80,13 +86,15 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
               <div>
                 <GroupDetailsData
                   headingData="Expenses"
-                  subHeadingData={group.expenses.length || "-"}
+                  id="open-expenses-count"
+                  subHeadingData={openExpenses.length || "-"}
                 />
               </div>
 
               <div>
                 <GroupDetailsData
                   headingData="Latest Activity"
+                  id="latest-activity"
                   subHeadingData={latestDate()}
                 />
               </div>
@@ -113,6 +121,26 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
                 />
               ))}
             </>
+          </GroupDetailsSection>
+        )}
+
+        {deletedExpenses.length > 0 && (
+          <GroupDetailsSection id="deleted-expenses">
+            <BillSplitAccordion
+              headingContent="Deleted Expenses"
+              triggerId="deleted-expenses-accordion"
+            >
+              <div className="flex flex-col gap-6 mt-6">
+                {deletedExpenses.map((expense, i) => (
+                  <Expense
+                    expense={expense}
+                    group={group}
+                    isInitialExpense={i === 0}
+                    key={expense.id}
+                  />
+                ))}
+              </div>
+            </BillSplitAccordion>
           </GroupDetailsSection>
         )}
       </div>

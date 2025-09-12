@@ -42,6 +42,10 @@ RSpec.describe "Delete expense", type: :system, js: true do
         expect(page).to have_content("Jenna Maroney is settled up")
       end
 
+      within "#open-expenses-count" do
+        expect(page).to have_content(2)
+      end
+
       within "#open-expenses" do
         expect(page).to have_content(expense_1.reference)
       end
@@ -63,8 +67,24 @@ RSpec.describe "Delete expense", type: :system, js: true do
 
       expect(expense_1.reload.status).to eq("deleted")
 
+      within "#balances" do
+        expect(page).to have_content("$1.00")
+        expect(page).to have_content("You owe $0.50")
+        expect(page).to have_content("Jenna Maroney receives $0.50")
+      end
+
+      within "#open-expenses-count" do
+        expect(page).to have_content(1)
+      end
+
       within "#open-expenses" do
         expect(page).not_to have_content(expense_1.reference)
+      end
+
+      click_button(id: "deleted-expenses-accordion")
+
+      within "#deleted-expenses" do
+        expect(page).to have_content(expense_1.reference)
       end
     end
   end
