@@ -3,12 +3,14 @@ import { PropsWithChildren, useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
 
 interface Props {
+  id?: string;
   isOpen: boolean;
   onCloseModal: () => void;
   title: string;
 }
 
 const Modal = ({
+  id,
   children,
   isOpen,
   onCloseModal,
@@ -64,7 +66,7 @@ const Modal = ({
       id="dialog"
       ref={dialogRef}
     >
-      <div className="flex flex-col">
+      <div id={id} className="flex flex-col">
         <header className="flex items-center justify-start gap-6 px-6 py-4 border border-cream border-b border-t-0 border-x-0">
           <button onClick={onCloseModal}>
             <IoMdClose size={18} />

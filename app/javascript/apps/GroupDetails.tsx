@@ -164,7 +164,9 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
         )}
 
         <SettleExpensesModal
-          expenses={openExpenses}
+          balances={balances}
+          currentUser={currentUser}
+          id="settle-expenses-modal"
           isOpen={showSettleExpensesModal}
           onClose={() => setShowSettleExpensesModal(false)}
           title={`Settle expenses for ${group.name}`}
