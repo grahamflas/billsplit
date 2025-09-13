@@ -3,7 +3,8 @@ class Api::SettlementsController < ApplicationController
   before_action :authorize_user
 
   def create
-    create_settlement = Settlements::Create.new(
+    binding.pry
+    create_settlement = ::Settlements::Create.new(
       balances: Balances.new(group:).compute,
       initiator: user,
       group:,

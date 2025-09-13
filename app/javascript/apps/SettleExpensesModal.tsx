@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { Balances, Expense, Group, User } from "../types/BaseInterfaces";
+
 import BalancesData from "./BalancesData";
 import GroupDetailsData from "./GroupDetailsData";
 import Modal from "./Modal";
 
+import SettlementsRepository from "../repositories/SettlementsRepository";
+
+import { Balances, Group, User } from "../types/BaseInterfaces";
 interface Props {
   balances: Balances;
   currentUser: User;
+  group: Group;
   id?: string;
   isOpen: boolean;
   onClose: () => void;
@@ -16,12 +20,25 @@ interface Props {
 const SettleExpensesModal = ({
   balances,
   currentUser,
+  group,
   id,
   isOpen,
   onClose,
   title,
 }: Props) => {
   const [note, setNote] = useState<string | undefined>(undefined);
+
+  const handleSettleClick = async () => {
+    const settled = await SettlementsRepository.create({
+      groupId: group.id,
+      note,
+      userId: currentUser.id,
+    });
+
+    if (settled) {
+      window.location.href = `/groups/${group.id}`;
+    }
+  };
 
   return (
     <Modal id={id} isOpen={isOpen} onCloseModal={onClose} title={title}>
@@ -77,7 +94,7 @@ const SettleExpensesModal = ({
 
           <button
             className="rounded-md px-3 py-1 bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-white text-center"
-            onClick={() => console.log("settling expenses")}
+            onClick={handleSettleClick}
           >
             settle
           </button>
