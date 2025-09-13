@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_12_194355) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_13_074529) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -49,7 +49,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_194355) do
     t.jsonb "balances"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.index ["group_id"], name: "index_settlements_on_group_id"
+    t.index ["user_id"], name: "index_settlements_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -72,4 +74,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_194355) do
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
   add_foreign_key "settlements", "groups"
+  add_foreign_key "settlements", "users"
 end
