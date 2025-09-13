@@ -56,6 +56,7 @@ describe Settlements::Create do
         group:,
         initiator: user,
         balances:,
+        note: "My new settlement",
       ).process
     end.to change(Settlement, :count).by(1)
 
@@ -64,6 +65,7 @@ describe Settlements::Create do
     expect(settlement.group).to eq(group)
     expect(settlement.user).to eq(user)
     expect(settlement.balances).to eq(balances.deep_stringify_keys)
+    expect(settlement.note).to eq("My new settlement")
 
     expect(expense_1.reload.settled?).to eq(true)
     expect(expense_2.reload.settled?).to eq(true)
