@@ -62,7 +62,12 @@ const SettlementDetails = ({ currentUser, settlement }: Props) => {
               >
                 <td className="px-2">{expense.reference}</td>
 
-                <td className="px-2">{expense.amount}</td>
+                <td className="px-2">
+                  {Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                  }).format(settlement.balances.totalExpenses)}
+                </td>
 
                 <td className="px-2">
                   {format(new Date(expense.createdAt), "MMM d, yyyy")}
