@@ -11,7 +11,7 @@ class Api::SettlementsController < ApplicationController
     )
 
     if create_settlement.process
-      flash[:success] = "Settled expenses for: #{group.name}"
+      flash[:success] = "Settled expenses for #{group.name}"
 
       render json: 'Settlement created', status: :ok
     else
