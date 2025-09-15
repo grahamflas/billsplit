@@ -87,6 +87,7 @@ const SettleExpensesModal = ({
         <div className="flex justify-between mt-10">
           <button
             className="rounded-md px-3 py-1 border border-indigo-400 hover:bg-neutral-100 focus:bg-neutral-300 text-indigo-500 text-center"
+            onClick={onClose}
             type="button"
           >
             cancel

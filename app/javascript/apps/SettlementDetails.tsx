@@ -67,7 +67,7 @@ const SettlementDetails = ({ currentUser, settlement }: Props) => {
                   {Intl.NumberFormat("en-US", {
                     style: "currency",
                     currency: "USD",
-                  }).format(settlement.balances.totalExpenses)}
+                  }).format(expense.amount)}
                 </td>
 
                 <td className="px-2">
