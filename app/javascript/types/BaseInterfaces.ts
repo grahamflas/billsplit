@@ -36,3 +36,13 @@ export interface Balances {
   totalExpenses: number;
   userBalances: UserBalance[];
 }
+
+export interface Settlement {
+  balances: Balances;
+  createdAt: string;
+  expenses: Expense[];
+  group: Group;
+  id: number;
+  note: number;
+  user: User;
+}

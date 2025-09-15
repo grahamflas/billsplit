@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { format, max } from "date-fns";
 
 import { FaArrowLeft } from "react-icons/fa";
@@ -8,19 +10,20 @@ import Expense from "./Expense";
 import GroupDetailsData from "./GroupDetailsData";
 import GroupDetailsSection from "./GroupDetailsSection";
 import GroupedAvatars from "./GroupedAvatars";
-
-import { Balances, Group, User } from "../types/BaseInterfaces";
-import { ExpenseStatus } from "../enums/ExpenseStatus";
-import { useState } from "react";
 import SettleExpensesModal from "./SettleExpensesModal";
+import SettledExpensesAccordionContent from "./SettledExpensesAccordionContent";
+
+import { Balances, Group, Settlement, User } from "../types/BaseInterfaces";
+import { ExpenseStatus } from "../enums/ExpenseStatus";
 
 interface Props {
   balances: Balances;
   currentUser: User;
   group: Group;
+  settlements: Settlement[];
 }
 
-const GroupDetails = ({ balances, currentUser, group }: Props) => {
+const GroupDetails = ({ balances, currentUser, group, settlements }: Props) => {
   const [showSettleExpensesModal, setShowSettleExpensesModal] = useState(false);
 
   const groupMembersList = () => {
@@ -140,6 +143,20 @@ const GroupDetails = ({ balances, currentUser, group }: Props) => {
                 />
               ))}
             </>
+          </GroupDetailsSection>
+        )}
+
+        {settlements.length > 0 && (
+          <GroupDetailsSection id="settlements">
+            <BillSplitAccordion
+              headingContent={"Settlements"}
+              triggerId="settlements-accordion"
+            >
+              <SettledExpensesAccordionContent
+                currentUser={currentUser}
+                settlements={settlements}
+              />
+            </BillSplitAccordion>
           </GroupDetailsSection>
         )}
 

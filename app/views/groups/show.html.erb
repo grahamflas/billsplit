@@ -1,8 +1,9 @@
 <%= mount_react_app(
   "GroupDetails", props: {
-    balances: @balances_by_member_email,
+    balances: @balances,
     currentUser: current_user.to_api.serializable_hash,
-    group: @group.to_api.serializable_hash
+    group: @group.to_api.serializable_hash,
+    settlements: @settlements.to_api.serializable_hash,
   })
 %>
 

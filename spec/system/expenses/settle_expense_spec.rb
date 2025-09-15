@@ -40,5 +40,13 @@ RSpec.describe "Settle Expenses", type: :system, js: true do
     fill_in("note", with: "Paid with cash")
 
     click_button "settle"
+
+    expect(page).to have_content("Settled expenses for #{group.name}")
+
+    click_button("Settlements")
+
+    within "#settlements" do
+      expect(page).to have_content "Settlements"
+    end
   end
 end

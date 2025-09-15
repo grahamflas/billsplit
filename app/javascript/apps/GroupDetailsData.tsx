@@ -3,10 +3,10 @@ import { JSX } from "react";
 interface Props {
   containerClasses?: string;
   headingClasses?: string;
-  headingData: string | JSX.Element;
+  headingData: string | number | JSX.Element;
   id?: string;
   subHeadingClasses?: string;
-  subHeadingData: string | number;
+  subHeadingData: string | number | JSX.Element;
 }
 const GroupDetailsData = ({
   containerClasses,

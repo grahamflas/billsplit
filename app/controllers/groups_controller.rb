@@ -5,7 +5,8 @@ class GroupsController < ApplicationController
     @group = Group.find_by(id: params[:id])
 
     if @group
-      @balances_by_member_email = Balances.new(group: @group).compute
+      @balances = Balances.new(group: @group).compute
+      @settlements = @group.settlements
     else
       redirect_to root_path
     end
