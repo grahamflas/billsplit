@@ -28,6 +28,7 @@ const SettlementDetails = ({ currentUser, settlement }: Props) => {
           <BalancesData
             balances={settlement.balances}
             currentUser={currentUser}
+            isForSettlement
           />
         </div>
       </div>

@@ -3,9 +3,14 @@ import { Balances, User, UserBalance } from "../types/BaseInterfaces";
 interface Props {
   balances: Balances;
   currentUser: User;
+  isForSettlement?: boolean;
 }
 
-const BalancesData = ({ balances, currentUser }: Props) => {
+const BalancesData = ({
+  balances,
+  currentUser,
+  isForSettlement = false,
+}: Props) => {
   const currentUserBalance = balances.userBalances.find(
     (userBalance) => userBalance.userId === currentUser.id
   );
@@ -21,6 +26,10 @@ const BalancesData = ({ balances, currentUser }: Props) => {
     }).format(Math.abs(userBalance.balance))}`;
 
     if (userBalance.balance > 0) {
+      if (isForSettlement) {
+        return `owed ${displayUserBalance}`;
+      }
+
       if (userBalance.userId === currentUser.id) {
         return `owe ${displayUserBalance}`;
       }
@@ -29,6 +38,9 @@ const BalancesData = ({ balances, currentUser }: Props) => {
     }
 
     if (userBalance.balance < 0) {
+      if (isForSettlement) {
+        return `received ${displayUserBalance}`;
+      }
       if (userBalance.userId === currentUser.id) {
         return `receive ${displayUserBalance}`;
       }
@@ -37,10 +49,13 @@ const BalancesData = ({ balances, currentUser }: Props) => {
     }
 
     if (userBalance.userId === currentUser.id) {
+      if (isForSettlement) {
+        return "were settled up";
+      }
       return "are settled up";
     }
 
-    return "is settled up";
+    return isForSettlement ? "is settled up" : "was settled up";
   };
 
   const balanceClassNames = (userBalance: UserBalance) => {
