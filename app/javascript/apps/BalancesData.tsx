@@ -55,7 +55,7 @@ const BalancesData = ({
       return "are settled up";
     }
 
-    return isForSettlement ? "is settled up" : "was settled up";
+    return isForSettlement ? "was settled up" : "is settled up";
   };
 
   const balanceClassNames = (userBalance: UserBalance) => {
