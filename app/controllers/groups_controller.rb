@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user!
+  before_action :addable_users, only: %i[new edit]
 
   def show
     @group = Group.find_by(id: params[:id])
@@ -15,23 +16,21 @@ class GroupsController < ApplicationController
 
   def new
     @group = Group.new
-    @addable_users = User.
-      joins(:groups).
-      merge(current_user.groups).
-      where.not(id: current_user.id).
-      distinct
   end
 
   def edit
     @group = Group.find_by(id: params[:id])
+  end
+
+  private
+
+  def addable_users
     @addable_users = User.
       joins(:groups).
       merge(current_user.groups).
       where.not(id: current_user.id).
       distinct
   end
-
-  private
 
   def group_params
     params.
