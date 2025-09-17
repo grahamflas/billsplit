@@ -22,18 +22,14 @@ RSpec.describe "Groups", type: :request do
     end
   end
 
-  describe "GET /create" do
+  describe "GET /edit" do
     it "returns http success" do
-      user = create(:user)
+      group = create(:group)
+      user = create(:user, groups: [ group ])
       sign_in user
 
-      post groups_path, params: {
-        group: {
-          name: "My Group"
-        }
-      }
-
-      expect(response).to redirect_to(group_path(Group.last))
+      get edit_group_path(group)
+      expect(response).to have_http_status(:success)
     end
   end
 end

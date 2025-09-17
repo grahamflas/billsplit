@@ -1,7 +1,6 @@
 // components/MultiSelectField.tsx
 import { FieldProps } from "formik";
-import React from "react";
-import Select from "react-select"; // Or your preferred multiselect library
+import Select from "react-select";
 
 interface Option {
   label: string;
@@ -43,6 +42,7 @@ const GroupFormUserSelect = ({
 
   return (
     <Select
+      id="group-member-select"
       name={field.name}
       value={getValue()}
       onChange={onChange}

@@ -64,6 +64,8 @@ const GroupDetails = ({ balances, currentUser, group, settlements }: Props) => {
                 <h2 className="text-4xl">{group.name}</h2>
 
                 <span className="text-neutral-500">{groupMembersList()}</span>
+
+                <a href={`/groups/${group.id}/edit`}>edit group</a>
               </div>
 
               <div className="flex flex-row -space-x-2">

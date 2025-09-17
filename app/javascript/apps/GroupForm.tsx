@@ -1,5 +1,7 @@
-import Select from "react-select";
 import { Field, Form, Formik } from "formik";
+
+import GroupsRepository from "../repositories/GroupsRepository";
+
 import { Group, User } from "../types/BaseInterfaces";
 import GroupFormUserSelect from "./GroupFormUserSelect";
 
@@ -29,13 +31,18 @@ const GroupForm = ({ addableUsers, group }: Props) => {
     });
   };
 
+  const handleSubmit = async (values: InitialGroupFormValues) => {
+    const response = await GroupsRepository.create(values);
+
+    if (response) {
+      window.location.href = `/groups/${response.group.id}`;
+    }
+  };
+
   return (
     <div className="flex items-center justify-center py-20">
       <div className="flex flex-col bg-white shadow rounded-lg p-8 max-w-md">
-        <Formik
-          initialValues={initialValues}
-          onSubmit={(values) => console.log(values)}
-        >
+        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           <Form>
             <div className="mb-6">
               <Field
@@ -45,11 +52,11 @@ const GroupForm = ({ addableUsers, group }: Props) => {
                 className="border border-indigo-50 rounded-md bg-indigo-50 focus:outline-indigo-400 px-3 py-2 w-full"
               />
               <label htmlFor="name" className="text-gray-500">
-                Group Name
+                Group name
               </label>
             </div>
 
-            {userOptions() && (
+            {userOptions().length > 0 && (
               <div className="mb-6">
                 <label htmlFor="userIds" className="text-gray-500">
                   Group Members

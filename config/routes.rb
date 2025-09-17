@@ -1,12 +1,11 @@
 Rails.application.routes.draw do
-
   devise_for :users, controllers: {
     registrations: "users/registrations",
   }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root "home#index"
 
-  resources :groups, only: %i[new show create]
+  resources :groups, only: %i[new show create edit]
   resources :expenses, only: %i[show new]
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -21,6 +20,7 @@ Rails.application.routes.draw do
   # root "posts#index"
   namespace :api, defaults: { format: :json } do
     resources :expenses, only: %i[create update destroy]
+    resources :groups, only: %i[create]
     resources :settlements, only: %i[create]
   end
 end

@@ -15,21 +15,20 @@ class GroupsController < ApplicationController
 
   def new
     @group = Group.new
-    @addable_users = User.where.not(id: current_user)
+    @addable_users = User.
+      joins(:groups).
+      merge(current_user.groups).
+      where.not(id: current_user.id).
+      distinct
   end
 
-  def create
-    @group = Group.new(group_params)
-
-    if @group.save
-      current_user.groups << @group
-
-      flash[:success] = "#{@group.name} created"
-
-      redirect_to @group
-    else
-      render :new, status: :unprocessable_content
-    end
+  def edit
+    @group = Group.find_by(id: params[:id])
+    @addable_users = User.
+      joins(:groups).
+      merge(current_user.groups).
+      where.not(id: current_user.id).
+      distinct
   end
 
   private
