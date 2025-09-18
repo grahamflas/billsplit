@@ -37,10 +37,30 @@ RSpec.describe "Api::Groups", type: :request do
           }
         end.not_to change(Group, :count)
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body["errors"]).to eq(["Name can't be blank"])
       end
     end
   end
 
+  describe "PUT /groups/:id" do
+    it "updates the group" do
+      group = create(:group, name: "My group")
+      user = create(:user, groups: [ group ])
+      other_user_1 = create(:user, groups: [ group ])
+      _other_user_2 = create(:user, groups: [ group ])
+
+      sign_in user
+
+      put api_group_path(group), params: {
+        group: {
+          name: "Updated name",
+          user_ids: [other_user_1.id]
+        }
+      }
+
+      expect(group.reload.name).to eq("Updated name")
+      expect(group.users).to match_array([other_user_1, user])
+    end
+  end
 end

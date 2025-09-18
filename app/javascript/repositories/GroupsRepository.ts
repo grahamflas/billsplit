@@ -44,6 +44,42 @@ class GroupsRepository {
       toast("Something went wrong");
     }
   }
+
+  static async update({
+    name,
+    groupId,
+    userIds,
+  }: {
+    name: string | undefined;
+    groupId: number | undefined;
+    userIds: number[] | undefined;
+  }): Promise<GroupResponse | void> {
+    try {
+      const data = {
+        group: {
+          name,
+          user_ids: userIds,
+        },
+      };
+
+      const response = await ajax.putGeneric<GroupResponse>(
+        `${this.baseUrl}/${groupId}`,
+        data
+      );
+
+      return response.data;
+    } catch (exception) {
+      const error = exception as AxiosError<GroupResponse>;
+
+      if (error.response && error.response.data.errors) {
+        error.response.data.errors.forEach((error) => toast(error));
+
+        return;
+      }
+
+      toast("Something went wrong");
+    }
+  }
 }
 
 export default GroupsRepository;

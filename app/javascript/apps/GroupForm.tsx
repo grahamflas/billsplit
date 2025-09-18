@@ -16,10 +16,12 @@ export interface InitialGroupFormValues {
 }
 interface Props {
   addableUsers: User[];
-  group: InitialGroup;
+  group: InitialGroup | Group;
 }
 
 const GroupForm = ({ addableUsers, group }: Props) => {
+  const isExistingGroup = !!group.id;
+
   const initialValues: InitialGroupFormValues = {
     name: group.name || "",
     userIds: group.users?.map((user) => user.id) || [],
@@ -32,11 +34,44 @@ const GroupForm = ({ addableUsers, group }: Props) => {
   };
 
   const handleSubmit = async (values: InitialGroupFormValues) => {
-    const response = await GroupsRepository.create(values);
+    const response = isExistingGroup
+      ? await GroupsRepository.update({ ...values, groupId: group.id })
+      : await GroupsRepository.create(values);
 
     if (response) {
       window.location.href = `/groups/${response.group.id}`;
     }
+  };
+
+  const renderButtons = () => {
+    if (isExistingGroup) {
+      return (
+        <div className="flex items-center justify-between">
+          <a
+            className="h-full rounded-md px-6 py-2 border border-indigo-400 hover:bg-neutral-100 focus:bg-neutral-300 text-indigo-500 text-center"
+            href={`/groups/${group.id}`}
+          >
+            Cancel
+          </a>
+
+          <button
+            type="submit"
+            className="bg-indigo-500 hover:bg-indigo-600 focus:outline-indigo-900 rounded-md text-white px-2 py-2 cursor:pointer"
+          >
+            Update group
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <button
+        type="submit"
+        className="w-full bg-indigo-500 hover:bg-indigo-600 focus:outline-indigo-900 rounded-md text-white py-2 mb-6 cursor:pointer"
+      >
+        Create Group
+      </button>
+    );
   };
 
   return (
@@ -72,12 +107,7 @@ const GroupForm = ({ addableUsers, group }: Props) => {
               </div>
             )}
 
-            <button
-              type="submit"
-              className="w-full bg-indigo-500 hover:bg-indigo-600 focus:outline-indigo-900 rounded-md text-white py-2 mb-6 cursor:pointer"
-            >
-              Create Group
-            </button>
+            {renderButtons()}
           </Form>
         </Formik>
       </div>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { format, max } from "date-fns";
 
 import { FaArrowLeft } from "react-icons/fa";
+import { GoGear } from "react-icons/go";
 
 import BalancesData from "./BalancesData";
 import BillSplitAccordion from "./BillSplitAccordion";
@@ -59,13 +60,20 @@ const GroupDetails = ({ balances, currentUser, group, settlements }: Props) => {
       <div className="flex flex-col gap-6 mt-6">
         <GroupDetailsSection>
           <>
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-col sm:flex-row justify-between gap-4">
               <div className="flex flex-col gap-1">
-                <h2 className="text-4xl">{group.name}</h2>
+                <div className="flex flex-row gap-2">
+                  <h2 className="text-4xl">{group.name}</h2>
+
+                  <a
+                    href={`/groups/${group.id}/edit`}
+                    aria-label={`Edit ${group.name}`}
+                  >
+                    <GoGear size={20} />
+                  </a>
+                </div>
 
                 <span className="text-neutral-500">{groupMembersList()}</span>
-
-                <a href={`/groups/${group.id}/edit`}>edit group</a>
               </div>
 
               <div className="flex flex-row -space-x-2">
