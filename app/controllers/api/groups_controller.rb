@@ -3,36 +3,40 @@ class Api::GroupsController < ApplicationController
   before_action :verify_current_user_is_in_group, only: :create
 
   def create
-    group = Group.new(group_params)
+    @group = Group.new(group_params)
 
-    if group.save
-      flash[:success] = "#{group.name} created"
+    if @group.save
+      create_invitations
+
+      flash[:success] = "#{@group.name} created"
 
       render json: {
         errors: nil,
-        group: group.reload.to_api.serializable_hash
+        group: @group.reload.to_api.serializable_hash
       }
     else
       render json: {
         group: nil,
-        errors: group.errors.full_messages,
+        errors: @group.errors.full_messages,
       }, status: :unprocessable_content
     end
   end
 
   def update
-    group = Group.find_by(id: params[:id])
+    @group = Group.find_by(id: params[:id])
 
-    if group.update(group_params)
-      flash[:success] = "Updated #{group.name}"
+    if @group.update(group_params)
+      create_invitations
+
+      flash[:success] = "Updated #{@group.name}"
 
       render json: {
         errors: nil,
-        group: group.reload.to_api.serializable_hash
+        group: @group.reload.to_api.serializable_hash
       }
     else
       render json: {
-        errors: group.errors.full_messages,
+        errors: @group.errors.full_messages,
         group: nil,
       }
     end
@@ -46,6 +50,16 @@ class Api::GroupsController < ApplicationController
         group: nil,
         errors: ["You must add yourself to the group"],
       }, status: :unprocessable_content
+    end
+  end
+
+  def create_invitations
+    params[:new_contacts].map do |invitee_email|
+      Invitations::Create.new(
+        creator: current_user,
+        invitee_email:,
+        group: @group,
+      ).process
     end
   end
 

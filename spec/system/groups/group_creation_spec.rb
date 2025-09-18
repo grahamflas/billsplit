@@ -171,6 +171,8 @@ RSpec.describe "Group Management", type: :system, js: true do
     expect do
       click_button "Create Group"
     end.to change(Invitation, :count).by(1)
+
+    # [TODO] test email sent
   end
 
 

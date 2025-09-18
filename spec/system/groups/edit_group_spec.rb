@@ -33,6 +33,35 @@ RSpec.describe "Edit Group", type: :system, js: true do
     expect(group.users).not_to include(other_user_1)
   end
 
+  scenario "can invite new contacts (people not in any existing groups) via email" do
+    group = create(:group)
+    user = create(:user, groups: [ group ])
+
+    sign_in user
+
+    visit group_path(group)
+
+    find("a[aria-label='Edit #{group.name}']").click
+
+    fill_in "Group name", with: "Edited Group Name"
+
+    click_button "Invite new contact"
+
+    fill_in "newContacts.0", with: "newContact0@email.com"
+
+    click_button "Invite new contact"
+
+    fill_in "newContacts.1", with: "newContact1@email.com"
+
+    find("button[aria-label='Remove New Contact 1']").click
+
+    expect(page).not_to have_field("newContacts.1")
+
+    expect do
+      click_button "Update group"
+    end.to change(Invitation, :count).by(1)
+  end
+
   def remove_user(user)
     find("div [aria-label='Remove #{user.full_name}']").click
   end
