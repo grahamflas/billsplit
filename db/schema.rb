@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_18_121608) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_18_201625) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -57,6 +57,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_18_121608) do
     t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "source_type", null: false
+    t.bigint "source_id", null: false
+    t.integer "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_type", "source_id"], name: "index_notifications_on_source"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "settlements", force: :cascade do |t|
     t.bigint "group_id", null: false
     t.text "note"
@@ -90,6 +101,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_18_121608) do
   add_foreign_key "invitations", "users", column: "invitee_id"
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "settlements", "groups"
   add_foreign_key "settlements", "users"
 end

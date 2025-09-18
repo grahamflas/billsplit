@@ -5,6 +5,8 @@ class Expense < ApplicationRecord
   belongs_to :group
   belongs_to :settlement, optional: true
 
+  has_many :notifications, as: :source
+
   validates :reference, presence: true
   validates :amount, numericality: true
 

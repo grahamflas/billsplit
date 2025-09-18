@@ -3,6 +3,8 @@ class Invitation < ApplicationRecord
   belongs_to :creator, class_name: "User"
   belongs_to :invitee, class_name: "User", optional: true
 
+  has_many :notifications, as: :source
+
   enum :status, {
     pending: 0,
     accepted: 1,
