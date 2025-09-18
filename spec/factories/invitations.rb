@@ -3,7 +3,7 @@ FactoryBot.define do
     group { nil }
     creator { nil }
     invitee { nil }
-    email { "MyString" }
+    invitee_email { "MyString" }
     status { 1 }
   end
 end
