@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_13_074529) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_18_121608) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -32,6 +32,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_13_074529) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "invitations", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.bigint "creator_id", null: false
+    t.bigint "invitee_id"
+    t.string "invitee_email", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_invitations_on_creator_id"
+    t.index ["group_id", "invitee_email"], name: "index_invitations_on_group_id_and_invitee_email", unique: true
+    t.index ["group_id"], name: "index_invitations_on_group_id"
+    t.index ["invitee_id"], name: "index_invitations_on_invitee_id"
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -71,6 +85,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_13_074529) do
   add_foreign_key "expenses", "groups"
   add_foreign_key "expenses", "settlements", on_delete: :nullify
   add_foreign_key "expenses", "users"
+  add_foreign_key "invitations", "groups", on_delete: :cascade
+  add_foreign_key "invitations", "users", column: "creator_id"
+  add_foreign_key "invitations", "users", column: "invitee_id"
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
   add_foreign_key "settlements", "groups"

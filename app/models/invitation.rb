@@ -1,0 +1,11 @@
+class Invitation < ApplicationRecord
+  belongs_to :group
+  belongs_to :creator, class_name: "User"
+  belongs_to :invitee, class_name: "User", optional: true
+
+  enum :status, {
+    pending: 0,
+    accepted: 1,
+    declined: 2
+  }
+end
