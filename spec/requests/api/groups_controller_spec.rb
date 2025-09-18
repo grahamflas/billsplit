@@ -18,7 +18,8 @@ RSpec.describe "Api::Groups", type: :request do
               other_user_1.id,
               other_user_2.id,
             ],
-          }
+          },
+          new_contacts: [],
         }
       end.to change(Group, :count).by(1)
 
@@ -81,7 +82,8 @@ RSpec.describe "Api::Groups", type: :request do
         group: {
           name: "Updated name",
           user_ids: [user.id, other_user_1.id]
-        }
+        },
+        new_contacts: [],
       }
 
       expect(group.reload.name).to eq("Updated name")
