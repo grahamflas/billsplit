@@ -16,15 +16,24 @@ export interface InitialGroupFormValues {
 }
 interface Props {
   addableUsers: User[];
+  currentUser: User;
   group: InitialGroup | Group;
 }
 
-const GroupForm = ({ addableUsers, group }: Props) => {
+const GroupForm = ({ addableUsers, currentUser, group }: Props) => {
   const isExistingGroup = !!group.id;
+
+  const initialUserIds = () => {
+    if (group.users.length > 0) {
+      return group.users.map((user) => user.id);
+    }
+
+    return [currentUser.id];
+  };
 
   const initialValues: InitialGroupFormValues = {
     name: group.name || "",
-    userIds: group.users?.map((user) => user.id) || [],
+    userIds: initialUserIds(),
   };
 
   const userOptions = () => {

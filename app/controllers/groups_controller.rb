@@ -28,7 +28,6 @@ class GroupsController < ApplicationController
     @addable_users = User.
       joins(:groups).
       merge(current_user.groups).
-      where.not(id: current_user.id).
       distinct
   end
 

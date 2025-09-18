@@ -32,13 +32,34 @@ RSpec.describe "Api::Groups", type: :request do
           post api_groups_path, params: {
             group: {
               name: "",
-              user_ids: [],
+              user_ids: [user.id],
             }
           }
         end.not_to change(Group, :count)
 
         expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body["errors"]).to eq(["Name can't be blank"])
+      end
+    end
+
+    context "when the current_user is not included in the group's members" do
+      it "returns unprocessable_content and an error" do
+        user = create(:user)
+        other_user = create(:user)
+
+        sign_in user
+
+        expect do
+          post api_groups_path, params: {
+            group: {
+              name: "Group without self",
+              user_ids: [other_user.id],
+            }
+          }
+        end.not_to change(Group, :count)
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(response.parsed_body["errors"]).to eq(["You must add yourself to the group"])
       end
     end
   end
@@ -55,7 +76,7 @@ RSpec.describe "Api::Groups", type: :request do
       put api_group_path(group), params: {
         group: {
           name: "Updated name",
-          user_ids: [other_user_1.id]
+          user_ids: [user.id, other_user_1.id]
         }
       }
 

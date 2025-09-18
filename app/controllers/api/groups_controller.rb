@@ -1,12 +1,11 @@
 class Api::GroupsController < ApplicationController
   before_action :authenticate_user!
+  before_action :verify_current_user_is_in_group, only: :create
 
   def create
     group = Group.new(group_params)
 
     if group.save
-      current_user.groups << group
-
       flash[:success] = "#{group.name} created"
 
       render json: {
@@ -25,8 +24,6 @@ class Api::GroupsController < ApplicationController
     group = Group.find_by(id: params[:id])
 
     if group.update(group_params)
-      group.users << current_user
-
       flash[:success] = "Updated #{group.name}"
 
       render json: {
@@ -42,6 +39,15 @@ class Api::GroupsController < ApplicationController
   end
 
   private
+
+  def verify_current_user_is_in_group
+    unless group_params[:user_ids].include?(current_user.id)
+      render json: {
+        group: nil,
+        errors: ["You must add yourself to the group"],
+      }, status: :unprocessable_content
+    end
+  end
 
   def group_params
     params.
