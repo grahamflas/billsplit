@@ -13,9 +13,11 @@ class GroupsRepository {
 
   static async create({
     name,
+    newContacts,
     userIds,
   }: {
     name: string | undefined;
+    newContacts: string[];
     userIds: number[] | undefined;
   }): Promise<GroupResponse | void> {
     try {
@@ -24,6 +26,7 @@ class GroupsRepository {
           name,
           user_ids: userIds,
         },
+        new_contacts: newContacts,
       };
 
       const response = await ajax.postGeneric<GroupResponse>(
@@ -46,11 +49,13 @@ class GroupsRepository {
   }
 
   static async update({
-    name,
     groupId,
+    name,
+    newContacts,
     userIds,
   }: {
     name: string | undefined;
+    newContacts: string[];
     groupId: number | undefined;
     userIds: number[] | undefined;
   }): Promise<GroupResponse | void> {
@@ -60,6 +65,7 @@ class GroupsRepository {
           name,
           user_ids: userIds,
         },
+        new_contacts: newContacts,
       };
 
       const response = await ajax.putGeneric<GroupResponse>(
