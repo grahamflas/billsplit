@@ -41,7 +41,7 @@ class Api::GroupsController < ApplicationController
   private
 
   def verify_current_user_is_in_group
-    unless group_params[:user_ids].include?(current_user.id)
+    unless group_params[:user_ids].map(&:to_i).include?(current_user.id)
       render json: {
         group: nil,
         errors: ["You must add yourself to the group"],

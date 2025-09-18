@@ -13,7 +13,11 @@ RSpec.describe "Api::Groups", type: :request do
         post api_groups_path, params: {
           group: {
             name: "Berlin trip group",
-            user_ids: [other_user_1.id, other_user_2.id],
+            user_ids: [
+              user.id,
+              other_user_1.id,
+              other_user_2.id,
+            ],
           }
         }
       end.to change(Group, :count).by(1)
