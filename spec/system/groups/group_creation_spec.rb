@@ -115,4 +115,67 @@ RSpec.describe "Group Management", type: :system, js: true do
       )
     end
   end
+
+  context "when the user doesn't add themselves to the group" do
+    it "flashes an error" do
+      group = create(:group)
+
+      user = create(:user, groups: [ group ])
+      other_user = create(:user, groups: [ group ])
+
+      sign_in user
+
+      visit new_group_path
+
+      fill_in "Group name", with: "My group"
+
+      group_members_select = find("#group-member-select")
+
+      within group_members_select do
+        fill_in with: other_user.full_name
+
+        group_members_select.send_keys(:enter)
+      end
+
+      remove_user(user)
+
+      expect do
+        click_button "Create Group"
+      end.not_to change(Group, :count)
+
+      expect(page).to have_content("You must add yourself to the group")
+    end
+  end
+
+  scenario "can invite new contacts (people not in any existing groups) via email" do
+    user = create(:user)
+
+    sign_in user
+
+    visit new_group_path
+
+    fill_in "Group name", with: "My group"
+
+    click_button "Invite new contact"
+
+    fill_in "newContacts.0", with: "newContact0@email.com"
+
+    click_button "Invite new contact"
+
+    fill_in "newContacts.1", with: "newContact1@email.com"
+
+    find("button[aria-label='Remove New Contact 1']").click
+
+    expect(page).not_to have_field("newContacts.1")
+
+    expect do
+      click_button "Create Group"
+    end.to change(Invitation, :count).by(1)
+  end
+
+
+
+  def remove_user(user)
+    find("div [aria-label='Remove #{user.full_name}']").click
+  end
 end
