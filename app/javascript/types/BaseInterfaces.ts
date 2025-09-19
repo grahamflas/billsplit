@@ -51,6 +51,7 @@ export interface Settlement {
 export interface Invitation {
   creator: User;
   group: Group;
+  id: number;
   invitee: User | undefined;
   inviteeEmail: string;
 }

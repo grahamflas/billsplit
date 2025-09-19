@@ -12,7 +12,7 @@ class NotificationSerializer < ApplicationSerializer
 
   def link
     case object.source
-    when Expense, Settlement
+    when Expense, Settlement, Invitation
       group_path(object.source.group)
     end
   end

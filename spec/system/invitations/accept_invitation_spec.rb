@@ -34,11 +34,11 @@ RSpec.describe "Accept invitation", type: :system, js: true do
 
     click_button("Accept")
 
-    expect(invitation.accepted?).to eq(true)
+    expect(invitation.reload.accepted?).to eq(true)
 
     expect(page).to have_content(group.name)
     expect(page).to have_content("Total Expenses")
 
-    expect(group.reload.members).to include(invitee)
+    expect(group.reload.users).to include(invitee)
   end
 end

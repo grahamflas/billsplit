@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { IoMdCloseCircleOutline } from "react-icons/io";
 
-import { Expense, Notification } from "../../types/BaseInterfaces";
+import { Notification } from "../../types/BaseInterfaces";
 
 interface Props {
   destroyNotification: (notification: Notification) => void;

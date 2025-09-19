@@ -3,5 +3,5 @@ class InvitationSerializer < ApplicationSerializer
   belongs_to :group
   belongs_to :invitee
 
-  attribute :invitee_email
+  attributes [:id, :invitee_email]
 end
