@@ -8,5 +8,6 @@ class Notification < ApplicationRecord
     settlement_created: 2,
     invitation_created: 3,
     member_added_to_group: 4,
+    invitation_declined: 5
   }
 end
