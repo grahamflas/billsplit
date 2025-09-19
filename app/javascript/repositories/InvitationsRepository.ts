@@ -17,6 +17,19 @@ class InvitationsRepository {
       return false;
     }
   }
+
+  static async decline(
+    invitation: Invitation
+  ): Promise<boolean> {
+    try {
+
+      await ajax.put(`${this.baseUrl}/${invitation.id}/decline`);
+
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }
 
 export default InvitationsRepository;

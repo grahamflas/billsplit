@@ -34,10 +34,15 @@ const InformationalNotification = ({
     switch (notification.category) {
       case "expense_added":
         return "border-emerald-500";
+
       case "expense_updated":
         return "border-yellow-500";
+
       case "settlement_created":
         return "border-indigo-400";
+
+      case "member_added_to_group":
+      case "invitation_declined":
       default:
         "border-neutral-800";
     }

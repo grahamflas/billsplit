@@ -4,11 +4,11 @@ import { Invitation, Notification } from "../../types/BaseInterfaces";
 import InvitationsRepository from "../../repositories/InvitationsRepository";
 
 interface Props {
-  notification: Notification;
   invitation: Invitation;
+  notification: Notification;
 }
 
-const InvitationCreatedNotification = ({ notification, invitation }: Props) => {
+const InvitationCreatedNotification = ({ invitation, notification }: Props) => {
   const [showNotification, setShowNotification] = useState(true);
 
   const handleAcceptClick = async () => {
@@ -17,6 +17,14 @@ const InvitationCreatedNotification = ({ notification, invitation }: Props) => {
     if (success) {
       setShowNotification(false);
       window.location.href = notification.link;
+    }
+  };
+
+  const handleDeclineClick = async () => {
+    const success = await InvitationsRepository.decline(invitation);
+
+    if (success) {
+      setShowNotification(false);
     }
   };
 
@@ -35,7 +43,10 @@ const InvitationCreatedNotification = ({ notification, invitation }: Props) => {
             Accept
           </button>
 
-          <button className="rounded-md px-3 py-1 border border-rose-500 hover:bg-neutral-100 focus:bg-neutral-300 text-rose-500 text-center">
+          <button
+            onClick={handleDeclineClick}
+            className="rounded-md px-3 py-1 border border-rose-500 hover:bg-neutral-100 focus:bg-neutral-300 text-rose-500 text-center"
+          >
             Decline
           </button>
         </div>

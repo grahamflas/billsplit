@@ -86,6 +86,18 @@ const NotificationsMenuItem = ({
       );
     }
 
+    case "invitation_declined": {
+      const invitation = notification.source as Invitation;
+
+      return (
+        <InformationalNotification
+          destroyNotification={destroyNotification}
+          mainText={`${invitation.invitee?.firstName} declined to join ${invitation.group.name}`}
+          notification={notification}
+        />
+      );
+    }
+
     default:
       null;
   }
