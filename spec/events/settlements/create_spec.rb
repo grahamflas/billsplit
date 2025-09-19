@@ -82,6 +82,62 @@ describe Settlements::Create do
     ).to eq(other_group_balances)
   end
 
+  it "notifies users in the group of the settlement" do
+    group = create(:group)
+
+    user_1 = create(
+      :user,
+      first_name: "User 1",
+      groups: [ group ]
+    )
+    _user_2 = create(
+      :user,
+      first_name: "User 2",
+      groups: [ group ]
+    )
+    _user_3 = create(
+      :user,
+      first_name: "User 3",
+      groups: [ group ]
+    )
+    _user_4 = create(
+      :user,
+      first_name: "User 4",
+      groups: [ group ]
+    )
+    _user_5 = create(
+      :user,
+      first_name: "User 5",
+      groups: [ group ]
+    )
+
+    create(
+      :expense,
+      amount: 10,
+      group:,
+      user: user_1
+    )
+
+    balances = Balances.new(group:).compute
+
+    settlement = Settlements::Create.new(
+      group:,
+      initiator: user_1,
+      balances:,
+      note: "My new settlement",
+    ).process
+
+    group.users.each do |user|
+      expect(
+        Notification.find_by(
+          source: settlement,
+          user:,
+          category: :settlement_created
+        ),
+      ).to be_present, "No settlement notification found for user #{user.first_name}"
+    end
+  end
+
   it "runs the process in a transaction" do
     group = create(:group)
 

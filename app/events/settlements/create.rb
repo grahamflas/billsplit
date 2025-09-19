@@ -11,6 +11,10 @@ module Settlements
       ApplicationRecord.transaction do
         settle_expenses
       end
+
+      notify_users
+
+      settlement
     rescue
       false
     end
@@ -39,6 +43,16 @@ module Settlements
         balances:,
         note:
       )
+    end
+
+    def notify_users
+      group.users.each do |user|
+        Notification.create!(
+          user:,
+          source: settlement,
+          category: :settlement_created,
+        )
+      end
     end
   end
 end

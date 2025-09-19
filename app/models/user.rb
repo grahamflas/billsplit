@@ -15,6 +15,8 @@ class User < ApplicationRecord
   has_many :created_invitations, class_name: "Invitation", foreign_key: :creator_id
   has_many :received_invitations, class_name: "Invitation", foreign_key: :invitee_id
 
+  has_many :notifications
+
   def full_name
     "#{first_name} #{last_name}"
   end
