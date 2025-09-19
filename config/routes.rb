@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root "home#index"
 
-  resources :groups, only: %i[new show create edit]
   resources :expenses, only: %i[show new]
+  resources :groups, only: %i[new show create edit]
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balan cers and uptime monitors to verify that the app is live.
@@ -19,8 +19,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   namespace :api, defaults: { format: :json } do
-    resources :expenses, only: %i[create update destroy]
-    resources :groups, only: %i[create update]
-    resources :settlements, only: %i[create]
+    resources :expenses, only: %i[ create update destroy ]
+    resources :groups, only: %i[ create update ]
+    resources :notifications, only: %i[ destroy ]
+    resources :settlements, only: %i[ create ]
   end
 end

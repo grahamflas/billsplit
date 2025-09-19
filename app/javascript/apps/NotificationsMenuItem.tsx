@@ -9,32 +9,40 @@ import {
   Notification,
   Settlement,
 } from "../types/BaseInterfaces";
+import NotificationsRepository from "../repositories/NotificationsRepository";
 
 interface Props {
   notification: Notification;
 }
 
 const NotificationsMenuItem = ({ notification }: Props) => {
+  const destroyNotification = () => {
+    NotificationsRepository.destroy(notification);
+  };
+
   switch (notification.category) {
     case "expense_added":
       return (
         <ExpenseAddedNotification
-          notification={notification}
+          destroyNotification={destroyNotification}
           expense={notification.source as Expense}
+          notification={notification}
         />
       );
 
     case "expense_updated":
       return (
         <ExpenseUpdatedNotification
-          notification={notification}
+          destroyNotification={destroyNotification}
           expense={notification.source as Expense}
+          notification={notification}
         />
       );
 
     case "settlement_created":
       return (
         <SettlementCreatedNotification
+          destroyNotification={destroyNotification}
           notification={notification}
           settlement={notification.source as Settlement}
         />
