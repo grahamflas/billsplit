@@ -23,5 +23,10 @@ Rails.application.routes.draw do
     resources :groups, only: %i[ create update ]
     resources :notifications, only: %i[ destroy ]
     resources :settlements, only: %i[ create ]
+    resources :invitations, only: [] do
+      member do
+        put :accept
+      end
+    end
   end
 end

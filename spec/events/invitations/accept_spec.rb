@@ -14,7 +14,7 @@ describe Invitations::Accept do
     ).process
 
     Invitations::Accept.new(
-      invitation_id: invitation.id
+      invitation:,
     ).process
 
     expect(invitation.reload.status).to eq("accepted")
@@ -67,7 +67,7 @@ describe Invitations::Accept do
   end
 
   context "when the invite has already been accepted" do
-    it "noops" do
+    it "no-ops" do
       group = create(:group)
       inviter = create(:user, groups: [ group ])
       other_group_member = create(:user, groups: [ group ])
@@ -80,14 +80,24 @@ describe Invitations::Accept do
       ).process
 
       Invitations::Accept.new(
-        invitation_id: invitation.id
+        invitation:,
       ).process
 
       second_invocation = Invitations::Accept.new(
-        invitation_id: invitation.id
+        invitation:,
       ).process
 
       expect(second_invocation).to be_nil
+    end
+  end
+
+  context "when the invitation doesn't exist" do
+    it "no-ops" do
+      result = Invitations::Accept.new(
+        invitation: nil,
+      ).process
+
+      expect(result).to be_nil
     end
   end
 end

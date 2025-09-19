@@ -1,11 +1,11 @@
 module Invitations
   class Accept
-    def initialize(invitation_id:)
-      @invitation_id = invitation_id
+    def initialize(invitation:)
+      @invitation = invitation
     end
 
     def process
-      if invitation.pending?
+      if invitation&.pending?
         ApplicationRecord.transaction do
           invitation.accept
 
@@ -18,11 +18,7 @@ module Invitations
 
     private
 
-    attr_reader :invitation_id
-
-    def invitation
-      @invitation ||= Invitation.find_by(id: invitation_id)
-    end
+    attr_reader :invitation
 
     def destroy_invitee_notification
       Notification.
