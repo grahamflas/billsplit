@@ -65,13 +65,26 @@ const NotificationsMenuItem = ({
       );
     }
 
-    case "invitation_created":
+    case "invitation_created": {
       return (
         <InvitationCreatedNotification
           notification={notification}
           invitation={notification.source as Invitation}
         />
       );
+    }
+
+    case "member_added_to_group": {
+      const invitation = notification.source as Invitation;
+
+      return (
+        <InformationalNotification
+          destroyNotification={destroyNotification}
+          mainText={`${invitation.invitee?.firstName} joined ${invitation.group.name}`}
+          notification={notification}
+        />
+      );
+    }
 
     default:
       null;

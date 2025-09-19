@@ -60,7 +60,9 @@ export type NotificationCategory =
   | "expense_added"
   | "expense_updated"
   | "settlement_created"
-  | "invitation_created";
+  | "invitation_created"
+  | "member_added_to_group"
+  | "invitation_declined";
 
 export interface Notification {
   category: NotificationCategory;

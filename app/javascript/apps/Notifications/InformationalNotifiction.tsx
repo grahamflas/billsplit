@@ -8,7 +8,7 @@ interface Props {
   destroyNotification: (notification: Notification) => void;
   mainText: string;
   notification: Notification;
-  subText: string;
+  subText?: string;
 }
 
 const InformationalNotification = ({
@@ -39,7 +39,7 @@ const InformationalNotification = ({
       case "settlement_created":
         return "border-indigo-400";
       default:
-        "border-neutral-500";
+        "border-neutral-800";
     }
   };
 
@@ -51,7 +51,7 @@ const InformationalNotification = ({
         <a onClick={handleLinkClick} href={notification.link}>
           <div className="text-sm font-bold">{mainText}</div>
 
-          <div className="text-xs">{subText}</div>
+          {subText && <div className="text-xs">{subText}</div>}
         </a>
 
         <IoMdCloseCircleOutline onClick={handleDismissClick} size={20} />

@@ -40,5 +40,23 @@ RSpec.describe "Accept invitation", type: :system, js: true do
     expect(page).to have_content("Total Expenses")
 
     expect(group.reload.users).to include(invitee)
+
+    sign_out invitee
+
+    sign_in other_group_member
+
+    visit root_path
+
+    notifications_button.click
+
+    within notifications_dropdown do
+      find_link("#{invitee.first_name} joined #{group.name}").click
+    end
+
+    expect(page).to have_content(group.name)
+
+    group.reload.users.each do |user|
+      expect(page).to have_content(user.first_name)
+    end
   end
 end
