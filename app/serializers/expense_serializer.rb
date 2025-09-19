@@ -1,4 +1,6 @@
 class ExpenseSerializer < ApplicationSerializer
+  belongs_to :group
+
   attributes %i[
     amount
     created_at

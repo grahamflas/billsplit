@@ -1,13 +1,15 @@
 import { CiUser } from "react-icons/ci";
-import { DropdownMenu } from "radix-ui";
 
-import { User } from "../types/BaseInterfaces";
 import BillSplitDropdown from "./BillSplitDropdown";
+import NotificationsDropdown from "./NotificationsDropdown";
+
+import { Notification, User } from "../types/BaseInterfaces";
 
 interface Props {
   currentUser: User | undefined;
   editPath: string;
   logoutPath: string;
+  notifications: Notification[];
   rootPath: string;
   signInPath: string;
   signUpPath: string;
@@ -17,6 +19,7 @@ const TopNav = ({
   currentUser,
   editPath,
   logoutPath,
+  notifications,
   rootPath,
   signInPath,
   signUpPath,
@@ -49,6 +52,8 @@ const TopNav = ({
     if (currentUser) {
       return (
         <div className="flex flex-row items-center gap-8">
+          <NotificationsDropdown notifications={notifications} />
+
           <a href={rootPath}>My Groups</a>
 
           <BillSplitDropdown

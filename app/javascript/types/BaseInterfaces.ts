@@ -19,6 +19,7 @@ export interface Expense {
   amount: number;
   createdAt: string;
   groupId: number;
+  group: Group;
   id: number;
   reference: string;
   status: ExpenseStatus;
@@ -44,5 +45,28 @@ export interface Settlement {
   group: Group;
   id: number;
   note: number;
+  user: User;
+}
+
+export interface Invitation {
+  creator: User;
+  group: Group;
+  invitee: User | undefined;
+  inviteeEmail: string;
+}
+
+export type NotificationCategory =
+  | "expense_added"
+  | "expense_updated"
+  | "settlement_created"
+  | "invitation_created";
+
+export interface Notification {
+  category: NotificationCategory;
+  createdAt: string;
+  id: number;
+  link: string;
+  source_type: "Expense" | "Settlement" | "Invitation";
+  source: Expense | Settlement | Invitation;
   user: User;
 }
