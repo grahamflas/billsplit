@@ -6,6 +6,16 @@ class Api::InvitationsController < ApplicationController
     Invitations::Accept.new(
       invitation:,
     ).process
+
+    head :ok
+  end
+
+  def decline
+    Invitations::Decline.new(
+      invitation:,
+    ).process
+
+    head :ok
   end
 
   private

@@ -18,6 +18,8 @@ RSpec.describe "Api::Invitations", type: :request do
       put accept_api_invitation_path(invitation)
 
       expect(invitation.reload.status).to eq("accepted")
+
+      expect(response).to have_http_status(:ok)
     end
 
     it "only allows invitee to accept the invite" do
@@ -56,9 +58,11 @@ RSpec.describe "Api::Invitations", type: :request do
         group:,
       ).process
 
-      put accept_api_invitation_path(invitation)
+      put decline_api_invitation_path(invitation)
 
-      expect(invitation.reload.status).to eq("accepted")
+      expect(invitation.reload.status).to eq("declined")
+
+      expect(response).to have_http_status(:ok)
     end
 
     it "only allows invitee to accept the invite" do
@@ -75,7 +79,7 @@ RSpec.describe "Api::Invitations", type: :request do
         group:,
       ).process
 
-      put accept_api_invitation_path(invitation)
+      put decline_api_invitation_path(invitation)
 
       expect(invitation.reload.status).to eq("pending")
 
