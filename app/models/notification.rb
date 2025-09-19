@@ -4,7 +4,8 @@ class Notification < ApplicationRecord
 
   enum :category, {
     expense_added: 0,
-    settlement_created: 1,
-    invitation_created: 2,
+    expense_updated: 1,
+    settlement_created: 2,
+    invitation_created: 3,
   }
 end

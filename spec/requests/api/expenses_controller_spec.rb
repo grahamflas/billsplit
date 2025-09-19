@@ -21,6 +21,38 @@ RSpec.describe Api::ExpensesController, type: :request do
         }
       end.to change(Expense, :count).by(1)
     end
+
+    it "creates a notification of the expense for all group users" do
+      group = create(:group)
+      user = create(:user, groups: [ group ])
+      other_user = create(:user, groups: [ group ])
+
+      sign_in user
+
+      new_expense_data = {
+        amount: 500,
+        reference: "Rent",
+        user_id: user.id,
+        group_id: group.id,
+      }
+
+      post api_expenses_path, params: {
+        expense: new_expense_data
+      }
+
+      new_expense = Expense.find_by(id: response.parsed_body[:id])
+
+
+      group.users.each do |user|
+        expect(
+          Notification.find_by(
+            user:,
+            source: new_expense,
+            category: :expense_added,
+          ),
+        ).to be_present, "No notification for user #{user.id}"
+      end
+    end
   end
 
   describe "PUT /api/expenses/:id" do
@@ -50,6 +82,39 @@ RSpec.describe Api::ExpensesController, type: :request do
 
         expect(expense.reload.reference).to eq("Updated Reference")
         expect(expense.amount).to eq(100)
+      end
+
+      it "creates a notification of the update for all group users" do
+        group = create(:group)
+        user = create(:user, groups: [ group ])
+        _other_user = create(:user, groups: [ group ])
+
+        expense = create(
+          :expense,
+          amount: 1,
+          user:,
+          group:,
+        )
+
+        sign_in user
+
+        put api_expense_path(expense.id), params: {
+          expense: {
+            id: expense.id,
+            reference: "Updated Reference",
+            amount: 100,
+          }
+        }
+
+        group.users.each do |user|
+          expect(
+            Notification.find_by(
+              user:,
+              source: expense,
+              category: :expense_updated,
+            ),
+          ).to be_present, "No notification for user #{user.id}"
+        end
       end
     end
 

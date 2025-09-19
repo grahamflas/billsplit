@@ -7,7 +7,10 @@ class Api::ExpensesController < Api::BaseController
     expense = Expense.new(expense_params)
 
     if expense.save
+      notify_users(expense:)
+
       flash[:success] = "Added #{expense.reference}"
+
       render json: expense
     else
       render json: {
@@ -18,7 +21,10 @@ class Api::ExpensesController < Api::BaseController
 
   def update
     if expense.update(expense_params)
+      notify_users(expense:)
+
       flash[:success] = "Updated expense: #{expense.reference}"
+
       render json: expense
     else
       render json: {
@@ -30,9 +36,9 @@ class Api::ExpensesController < Api::BaseController
   def destroy
     if expense.update(status: :deleted)
       flash[:success] = "Deleted expense: #{expense.reference}"
-      render json: {status: "deleted"}
+      render json: {status: "deleted" }
     else
-      errors = ["Something went wrong"]
+      errors = ["Something went wrong" ]
       errors << expense.errors.full_messages
 
       render json: {
@@ -68,5 +74,24 @@ class Api::ExpensesController < Api::BaseController
         :user_id,
         :group_id,
       )
+  end
+
+  def notify_users(expense:)
+    category = if expense.previously_new_record?
+      :expense_added
+    else
+      :expense_updated
+    end
+
+    expense.
+      group.
+      users.
+      each do |user|
+        Notification.create!(
+          user:,
+          source: expense,
+          category:,
+        )
+      end
   end
 end
