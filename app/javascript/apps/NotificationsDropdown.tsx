@@ -26,16 +26,24 @@ const NotificationsDropdown = ({ notifications }: Props) => {
   };
 
   const renderMenuItems = () => {
-    return notifications.map((notification) => {
-      return (
-        <MenuItem key={notification.id}>
-          <NotificationsMenuItem
-            destroyNotification={destroyNotification}
-            notification={notification}
-          />
-        </MenuItem>
-      );
-    });
+    if (notifications.length > 0) {
+      return notifications.map((notification) => {
+        return (
+          <MenuItem key={notification.id}>
+            <NotificationsMenuItem
+              destroyNotification={destroyNotification}
+              notification={notification}
+            />
+          </MenuItem>
+        );
+      });
+    }
+
+    return (
+      <MenuItem>
+        <div>You don't have any notifications</div>
+      </MenuItem>
+    );
   };
 
   return (
