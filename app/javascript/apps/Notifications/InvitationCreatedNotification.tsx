@@ -9,7 +9,8 @@ const InvitationCreatedNotification = ({ notification, invitation }: Props) => {
   return (
     <div className="flex gap-6 justify-between items-center border-l-2 border-neutral-800  h-10 p-2 mb-2">
       <div className="text-sm font-bold">
-        {invitation.creator.firstName} invited you to {invitation.group.name}
+        {invitation.creator.firstName} invited you to join{" "}
+        {invitation.group.name}
       </div>
       <div className="flex gap-2">
         <button className="rounded-md px-3 py-1 bg-emerald-500 hover:bg-emerald-600 focus:bg-emerald-600 text-white text-center">
