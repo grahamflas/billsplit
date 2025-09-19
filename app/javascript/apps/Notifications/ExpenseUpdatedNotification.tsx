@@ -5,7 +5,7 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { Expense, Notification } from "../../types/BaseInterfaces";
 
 interface Props {
-  destroyNotification: () => void;
+  destroyNotification: (notification: Notification) => void;
   expense: Expense;
   notification: Notification;
 }
@@ -17,15 +17,21 @@ const ExpenseUpdatedNotification = ({
 }: Props) => {
   const [showNotification, setShowNotification] = useState(true);
 
-  const handleDismissClick = () => {
+  const handleDismissClick = async () => {
+    await destroyNotification(notification);
     setShowNotification(false);
-    destroyNotification();
+  };
+
+  const handleLinkClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    destroyNotification(notification);
+    window.location.href = notification.link;
   };
 
   if (showNotification) {
     return (
       <div className="flex gap-2 justify-between items-center items-start border-l-2 border-yellow-500  h-10 p-2 mb-2">
-        <a onClick={destroyNotification} href={notification.link}>
+        <a onClick={handleLinkClick} href={notification.link}>
           <div className="text-sm font-bold">
             Expense updated for{" "}
             <span className="text-bold">{expense.group.name}</span>

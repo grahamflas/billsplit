@@ -9,17 +9,16 @@ import {
   Notification,
   Settlement,
 } from "../types/BaseInterfaces";
-import NotificationsRepository from "../repositories/NotificationsRepository";
 
 interface Props {
+  destroyNotification: (notification: Notification) => void;
   notification: Notification;
 }
 
-const NotificationsMenuItem = ({ notification }: Props) => {
-  const destroyNotification = () => {
-    NotificationsRepository.destroy(notification);
-  };
-
+const NotificationsMenuItem = ({
+  destroyNotification,
+  notification,
+}: Props) => {
   switch (notification.category) {
     case "expense_added":
       return (

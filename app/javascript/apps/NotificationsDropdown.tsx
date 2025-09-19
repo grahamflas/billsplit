@@ -1,6 +1,10 @@
+import { useState } from "react";
+
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
 import NotificationsMenuItem from "./NotificationsMenuItem";
+
+import NotificationsRepository from "../repositories/NotificationsRepository";
 
 import { Notification } from "../types/BaseInterfaces";
 
@@ -9,11 +13,26 @@ interface Props {
 }
 
 const NotificationsDropdown = ({ notifications }: Props) => {
+  const [notificationsCount, setNotificationsCount] = useState(
+    notifications.length
+  );
+
+  const destroyNotification = async (notification: Notification) => {
+    const destroyed = await NotificationsRepository.destroy(notification);
+
+    if (destroyed) {
+      setNotificationsCount((prevCount) => prevCount - 1);
+    }
+  };
+
   const renderMenuItems = () => {
     return notifications.map((notification) => {
       return (
-        <MenuItem>
-          <NotificationsMenuItem notification={notification} />
+        <MenuItem key={notification.id}>
+          <NotificationsMenuItem
+            destroyNotification={destroyNotification}
+            notification={notification}
+          />
         </MenuItem>
       );
     });
@@ -24,9 +43,9 @@ const NotificationsDropdown = ({ notifications }: Props) => {
       <MenuButton data-test={`notifications-button`}>
         <div className="flex gap-2 items-center">
           <span>Notifications</span>
-          {notifications.length > 0 ? (
+          {notificationsCount > 0 ? (
             <span className="w-6 h-6 rounded-full flex justify-center items-center bg-rose-500 p-2">
-              {notifications.length}
+              {notificationsCount}
             </span>
           ) : null}
         </div>
