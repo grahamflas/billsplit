@@ -19,10 +19,18 @@ describe Settlements::Create do
       invitee_email: "invitee@email.com",
       status: "pending",
     })
+
+    expect(
+      Notification.find_by(
+        user: invitee,
+        source: invitation,
+        category: :invitation_created,
+      ),
+    ).to be_present
   end
 
   context "when there is no user with the invitee email" do
-    it "creates the invitation with invitee_id of nil" do
+    it "creates the invitation with invitee_id of nil, does not create notification (defer this until user signs up)" do
       group = create(:group)
       user = create(:user, groups: [ group ])
 
@@ -39,6 +47,8 @@ describe Settlements::Create do
         invitee_email: "does-not-exist-yet@mail.com",
         status: "pending",
       })
+
+      expect(invitation.notifications&.invitation_created).to be_empty
     end
   end
 end

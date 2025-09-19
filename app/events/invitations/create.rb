@@ -11,6 +11,20 @@ module Invitations
     end
 
     def process
+      @invitation = create_invitation
+
+      if invitee
+        notify
+      end
+
+      @invitation
+    end
+
+    private
+
+    attr_reader :creator, :invitee_email, :group
+
+    def create_invitation
       Invitation.create!(
         creator:,
         invitee:,
@@ -20,12 +34,16 @@ module Invitations
       )
     end
 
-    private
-
-    attr_reader :creator, :invitee_email, :group
-
     def invitee
-      User.find_by(email: invitee_email)
+      @invitee ||= User.find_by(email: invitee_email)
+    end
+
+    def notify
+      Notification.create!(
+        user: invitee,
+        source: @invitation,
+        category: :invitation_created,
+      )
     end
   end
 end
