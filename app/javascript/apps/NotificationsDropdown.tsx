@@ -55,7 +55,7 @@ const NotificationsDropdown = ({ notifications }: Props) => {
         transition
         anchor="bottom end"
         data-test={`notifications-dropdown`}
-        className="flex flex-col gap-2 origin-top-right rounded-xl bg-white p-4 transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0"
+        className="shadow-2xl flex flex-col gap-2 origin-top-right rounded-xl bg-white p-4 transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0"
       >
         {renderMenuItems()}
       </MenuItems>

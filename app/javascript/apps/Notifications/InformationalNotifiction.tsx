@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { IoMdCloseCircleOutline } from "react-icons/io";
 
@@ -6,14 +6,16 @@ import { Expense, Notification } from "../../types/BaseInterfaces";
 
 interface Props {
   destroyNotification: (notification: Notification) => void;
-  expense: Expense;
+  mainText: string;
   notification: Notification;
+  subText: string;
 }
 
-const ExpenseUpdatedNotification = ({
+const InformationalNotification = ({
   destroyNotification,
-  expense,
+  mainText,
   notification,
+  subText,
 }: Props) => {
   const [showNotification, setShowNotification] = useState(true);
 
@@ -28,22 +30,28 @@ const ExpenseUpdatedNotification = ({
     window.location.href = notification.link;
   };
 
+  const borderColor = () => {
+    switch (notification.category) {
+      case "expense_added":
+        return "border-emerald-500";
+      case "expense_updated":
+        return "border-yellow-500";
+      case "settlement_created":
+        return "border-indigo-400";
+      default:
+        "border-neutral-500";
+    }
+  };
+
   if (showNotification) {
     return (
-      <div className="flex gap-2 justify-between items-center items-start border-l-2 border-yellow-500  h-10 p-2 mb-2">
+      <div
+        className={`flex gap-2 justify-between items-center border-2 ${borderColor()} border-y-0 border-r-0 h-10 p-2 mb-2`}
+      >
         <a onClick={handleLinkClick} href={notification.link}>
-          <div className="text-sm font-bold">
-            Expense updated for{" "}
-            <span className="text-bold">{expense.group.name}</span>
-          </div>
+          <div className="text-sm font-bold">{mainText}</div>
 
-          <div className="text-xs">
-            {expense.reference}:
-            {Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "USD",
-            }).format(expense.amount)}
-          </div>
+          <div className="text-xs">{subText}</div>
         </a>
 
         <IoMdCloseCircleOutline onClick={handleDismissClick} size={20} />
@@ -54,4 +62,4 @@ const ExpenseUpdatedNotification = ({
   return null;
 };
 
-export default ExpenseUpdatedNotification;
+export default InformationalNotification;
