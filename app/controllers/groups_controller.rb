@@ -8,6 +8,7 @@ class GroupsController < ApplicationController
     if @group
       @balances = Balances.new(group: @group).compute
       @settlements = @group.settlements
+      @pending_invitations = @group.invitations.pending
     else
       redirect_to root_path
     end

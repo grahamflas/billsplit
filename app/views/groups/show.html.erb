@@ -3,6 +3,7 @@
     balances: @balances,
     currentUser: current_user.to_api.serializable_hash,
     group: @group.to_api.serializable_hash,
+    pendingInvitations: @pending_invitations.to_api.serializable_hash,
     settlements: @settlements.to_api.serializable_hash,
   })
 %>

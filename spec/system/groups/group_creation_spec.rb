@@ -147,8 +147,9 @@ RSpec.describe "Group Management", type: :system, js: true do
     end
   end
 
-  scenario "can invite new contacts (people not in any existing groups) via email" do
+  scenario "can invite new contacts (people not in any existing groups) via email, displays pending invitations on group page" do
     user = create(:user)
+    other_user = create(:user)
 
     sign_in user
 
@@ -168,11 +169,23 @@ RSpec.describe "Group Management", type: :system, js: true do
 
     expect(page).not_to have_field("newContacts.1")
 
+    click_button "Invite new contact"
+
+    fill_in "newContacts.1", with: other_user.email
+
     expect do
       click_button "Create Group"
-    end.to change(Invitation, :count).by(1)
+    end.to change(Invitation, :count).by(2)
 
     # [TODO] test email sent
+    group = Group.find_by(name: "My group")
+
+    expect(page).to have_current_path(group_path(group))
+
+    click_button("Pending invitations")
+
+    expect(page).to have_content("#{user.first_name} invited newContact0@email.com to join")
+    expect(page).to have_content("#{user.first_name} invited #{other_user.full_name} to join")
   end
 
 

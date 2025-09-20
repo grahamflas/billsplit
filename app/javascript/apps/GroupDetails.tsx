@@ -14,17 +14,31 @@ import GroupedAvatars from "./GroupedAvatars";
 import SettleExpensesModal from "./SettleExpensesModal";
 import SettledExpensesAccordionContent from "./SettledExpensesAccordionContent";
 
-import { Balances, Group, Settlement, User } from "../types/BaseInterfaces";
+import {
+  Balances,
+  Group,
+  Invitation,
+  Settlement,
+  User,
+} from "../types/BaseInterfaces";
 import { ExpenseStatus } from "../enums/ExpenseStatus";
 
 interface Props {
   balances: Balances;
   currentUser: User;
   group: Group;
+  pendingInvitations: Invitation[];
   settlements: Settlement[];
 }
 
-const GroupDetails = ({ balances, currentUser, group, settlements }: Props) => {
+const GroupDetails = ({
+  balances,
+  currentUser,
+  group,
+  pendingInvitations,
+  settlements,
+}: Props) => {
+  const [showPendingInvitations, setShowPendingInvitations] = useState(false);
   const [showSettleExpensesModal, setShowSettleExpensesModal] = useState(false);
 
   const groupMembersList = () => {
@@ -80,6 +94,33 @@ const GroupDetails = ({ balances, currentUser, group, settlements }: Props) => {
                 <GroupedAvatars users={group.users} />
               </div>
             </div>
+
+            {pendingInvitations.length > 0 && (
+              <div id="pending-invitations" className="self-start w-full">
+                <button
+                  className="text-indigo-500"
+                  onClick={() =>
+                    setShowPendingInvitations(!showPendingInvitations)
+                  }
+                >
+                  Pending invitations
+                </button>
+
+                {showPendingInvitations && (
+                  <ul className="w-full list-disc ml-8 text-neutral-500">
+                    {pendingInvitations.map((invitation) => (
+                      <li key={invitation.id}>{`${
+                        invitation.creator.firstName
+                      } invited ${
+                        invitation.invitee
+                          ? `${invitation.invitee.firstName} ${invitation.invitee.lastName}`
+                          : invitation.inviteeEmail
+                      } to join`}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
 
             <div id="balances" className="rounded-2xl bg-neutral-100 p-6 mx-4">
               <GroupDetailsData
