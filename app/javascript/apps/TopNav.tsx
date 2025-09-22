@@ -52,7 +52,7 @@ const TopNav = ({
     if (currentUser) {
       return (
         <div className="flex flex-row items-center gap-8">
-          <NotificationsDropdown notifications={notifications} />
+          <NotificationsDropdown />
 
           <a href={rootPath}>My Groups</a>
 

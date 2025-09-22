@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
@@ -8,20 +8,31 @@ import NotificationsRepository from "../repositories/NotificationsRepository";
 
 import { Notification } from "../types/BaseInterfaces";
 
-interface Props {
-  notifications: Notification[];
-}
+const NotificationsDropdown = () => {
+  const [notificationsCount, setNotificationsCount] = useState<
+    number | undefined
+  >(undefined);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
-const NotificationsDropdown = ({ notifications }: Props) => {
-  const [notificationsCount, setNotificationsCount] = useState(
-    notifications.length
-  );
+  const getNotifications = async () => {
+    const fetchedNotifications =
+      await NotificationsRepository.getNotifications();
+
+    if (fetchedNotifications) {
+      setNotificationsCount(fetchedNotifications.count);
+      setNotifications([...fetchedNotifications.notifications]);
+    }
+  };
+
+  useEffect(() => {
+    getNotifications();
+  }, []);
 
   const destroyNotification = async (notification: Notification) => {
     const destroyed = await NotificationsRepository.destroy(notification);
 
     if (destroyed) {
-      setNotificationsCount((prevCount) => prevCount - 1);
+      getNotifications();
     }
   };
 
@@ -48,10 +59,10 @@ const NotificationsDropdown = ({ notifications }: Props) => {
 
   return (
     <Menu>
-      <MenuButton data-test={`notifications-button`}>
+      <MenuButton onClick={getNotifications} data-test={`notifications-button`}>
         <div className="flex gap-2 items-center">
           <span>Notifications</span>
-          {notificationsCount > 0 ? (
+          {notificationsCount && notificationsCount > 0 ? (
             <span className="w-6 h-6 rounded-full flex justify-center items-center bg-rose-500 p-2">
               {notificationsCount}
             </span>
