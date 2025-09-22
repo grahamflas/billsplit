@@ -3,7 +3,6 @@ class ExpenseSerializer < ApplicationSerializer
 
   attributes %i[
     amount
-    created_at
     group_id
     id
     reference
@@ -12,6 +11,7 @@ class ExpenseSerializer < ApplicationSerializer
   ]
 
   attribute :user
+  attribute :created_at
 
   def status
     Expense.statuses[object.status]
@@ -19,7 +19,11 @@ class ExpenseSerializer < ApplicationSerializer
 
   def user
     unless without?(:user)
-      object.user.to_api
+      object.user.to_api.serializable_hash
     end
+  end
+
+  def created_at
+    object.created_at.to_s
   end
 end

@@ -1,6 +1,13 @@
 class Api::NotificationsController < Api::BaseController
   before_action :authenticate_user!
-  before_action :authorize_user
+  before_action :authorize_user, only: :destroy
+
+  def index
+    render json: {
+      count: notifications.count,
+      notifications:,
+    }
+  end
 
   def destroy
     notification&.destroy!
@@ -18,5 +25,12 @@ class Api::NotificationsController < Api::BaseController
 
   def notification
     @notification ||= Notification.find_by(id: params[:id])
+  end
+
+  def notifications
+    @notifications ||= current_user.
+        notifications.
+        to_api.
+        serializable_hash
   end
 end

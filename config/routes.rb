@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     resources :expenses, only: %i[ create update destroy ]
     resources :groups, only: %i[ create update ]
-    resources :notifications, only: %i[ destroy ]
+    resources :notifications, only: %i[ index destroy ]
     resources :settlements, only: %i[ create ]
     resources :invitations, only: [] do
       member do
