@@ -21,7 +21,7 @@ const GroupsListCard = ({ group }: Props) => {
   };
 
   return (
-    <div className="p-4 rounded-2xl shadow-sm hover:shadow-md transition bg-white max-w-xs sm:max-w-none">
+    <div className="flex flex-col p-4 rounded-2xl shadow-sm hover:shadow-md transition bg-white w-full min-w-[220px] max-w-small">
       <a href={`/groups/${group.id}`}>
         <div id={`group-${group.id}`} className="flex flex-col flex-1 gap-6">
           <h2 className="text-2xl font-bold truncate">{group.name}</h2>
