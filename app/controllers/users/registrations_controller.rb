@@ -10,9 +10,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+
+    if resource.persisted?
+      Invitations::LinkPendingInvitations.new(
+        new_user: resource,
+      ).process
+    end
+  end
 
   # GET /resource/edit
   # def edit
