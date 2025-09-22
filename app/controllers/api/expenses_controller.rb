@@ -86,6 +86,7 @@ class Api::ExpensesController < Api::BaseController
     expense.
       group.
       users.
+      where.not(id: current_user.id).
       each do |user|
         Notification.create!(
           user:,

@@ -22,17 +22,18 @@ RSpec.describe Api::ExpensesController, type: :request do
       end.to change(Expense, :count).by(1)
     end
 
-    it "creates a notification of the expense for all group users" do
+    it "creates a notification of the expense for all group users except current_user", :aggregate_failures do
       group = create(:group)
-      user = create(:user, groups: [ group ])
-      other_user = create(:user, groups: [ group ])
+      current_user = create(:user, groups: [ group ])
+      other_user_1 = create(:user, groups: [ group ])
+      other_user_2 = create(:user, groups: [ group ])
 
-      sign_in user
+      sign_in current_user
 
       new_expense_data = {
         amount: 500,
         reference: "Rent",
-        user_id: user.id,
+        user_id: current_user.id,
         group_id: group.id,
       }
 
@@ -42,16 +43,21 @@ RSpec.describe Api::ExpensesController, type: :request do
 
       new_expense = Expense.find_by(id: response.parsed_body[:id])
 
+      notifications = new_expense.notifications.expense_added
 
-      group.users.each do |user|
-        expect(
-          Notification.find_by(
-            user:,
-            source: new_expense,
-            category: :expense_added,
-          ),
-        ).to be_present, "No notification for user #{user.id}"
-      end
+      expect(notifications.count).to eq(2)
+
+      expect(
+        notifications.find_by(user: current_user),
+      ).not_to be_present
+
+      expect(
+        notifications.find_by(user: other_user_1),
+      ).to be_present
+
+      expect(
+        notifications.find_by(user: other_user_2),
+      ).to be_present
     end
   end
 
@@ -84,19 +90,20 @@ RSpec.describe Api::ExpensesController, type: :request do
         expect(expense.amount).to eq(100)
       end
 
-      it "creates a notification of the update for all group users" do
+      it "creates a notification of the update for all group users except the current_user" do
         group = create(:group)
-        user = create(:user, groups: [ group ])
-        _other_user = create(:user, groups: [ group ])
+        current_user = create(:user, groups: [ group ])
+        other_user_1 = create(:user, groups: [ group ])
+        other_user_2 = create(:user, groups: [ group ])
 
         expense = create(
           :expense,
           amount: 1,
-          user:,
+          user: current_user,
           group:,
         )
 
-        sign_in user
+        sign_in current_user
 
         put api_expense_path(expense.id), params: {
           expense: {
@@ -106,15 +113,21 @@ RSpec.describe Api::ExpensesController, type: :request do
           }
         }
 
-        group.users.each do |user|
-          expect(
-            Notification.find_by(
-              user:,
-              source: expense,
-              category: :expense_updated,
-            ),
-          ).to be_present, "No notification for user #{user.id}"
-        end
+        notifications = expense.notifications.expense_updated
+
+        expect(notifications.count).to eq(2)
+
+        expect(
+          notifications.find_by(user: current_user),
+        ).not_to be_present
+
+        expect(
+          notifications.find_by(user: other_user_1),
+        ).to be_present
+
+        expect(
+          notifications.find_by(user: other_user_2),
+        ).to be_present
       end
     end
 
