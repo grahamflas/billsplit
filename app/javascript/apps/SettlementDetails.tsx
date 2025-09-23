@@ -33,7 +33,7 @@ const SettlementDetails = ({ currentUser, settlement }: Props) => {
         </div>
       </div>
 
-      <table className="table-auto border-spacing-2">
+      <table className="text-xs sm:text-sm table-auto border-spacing-2">
         <thead>
           <tr>
             <th className="text-left px-2" scope="col">
