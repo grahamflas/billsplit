@@ -78,20 +78,22 @@ const BalancesData = ({
         </div>
 
         {otherUserBalances.length > 0 && (
-          <div className="mx-8">
+          <ul className="mx-8 list-disc sm:list-none">
             {otherUserBalances.map((otherUserBalance) => {
               return (
-                <div
-                  className={`${balanceClassNames(otherUserBalance)}`}
+                <li
+                  className={`mb-2 sm:mb-0 ${balanceClassNames(
+                    otherUserBalance
+                  )}`}
                   key={otherUserBalance.userId}
                 >
                   {`${otherUserBalance.firstName} ${
                     otherUserBalance.lastName
                   } ${oweOrReceive(otherUserBalance)}`}
-                </div>
+                </li>
               );
             })}
-          </div>
+          </ul>
         )}
       </div>
     );
