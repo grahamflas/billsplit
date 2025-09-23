@@ -147,7 +147,7 @@ const GroupDetails = ({
               </button>
             )}
 
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-0 justify-between">
               <div>
                 <GroupDetailsData
                   headingData="Members"
