@@ -96,7 +96,7 @@ const TopNav = ({
         signUpPath={signUpPath}
       />
 
-      <div className="hidden sm:block flex mr-6 gap-4">
+      <div className="hidden sm:inline-flex mr-6 gap-4">
         {renderGuestActions()}
 
         {renderLoggedInActions()}
