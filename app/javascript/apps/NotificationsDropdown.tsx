@@ -8,7 +8,11 @@ import NotificationsRepository from "../repositories/NotificationsRepository";
 
 import { Notification } from "../types/BaseInterfaces";
 
-const NotificationsDropdown = () => {
+interface Props {
+  setMobileMenuNotificationsCount?: (count: number | undefined) => void;
+}
+
+const NotificationsDropdown = ({ setMobileMenuNotificationsCount }: Props) => {
   const [notificationsCount, setNotificationsCount] = useState<
     number | undefined
   >(undefined);
@@ -20,6 +24,7 @@ const NotificationsDropdown = () => {
 
     if (fetchedNotifications) {
       setNotificationsCount(fetchedNotifications.count);
+      setMobileMenuNotificationsCount?.(fetchedNotifications.count);
       setNotifications([...fetchedNotifications.notifications]);
     }
   };

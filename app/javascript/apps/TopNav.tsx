@@ -3,13 +3,13 @@ import { CiUser } from "react-icons/ci";
 import BillSplitDropdown from "./BillSplitDropdown";
 import NotificationsDropdown from "./NotificationsDropdown";
 
-import { Notification, User } from "../types/BaseInterfaces";
+import { User } from "../types/BaseInterfaces";
+import MobileNav from "./MobileNav";
 
 interface Props {
   currentUser: User | undefined;
   editPath: string;
   logoutPath: string;
-  notifications: Notification[];
   rootPath: string;
   signInPath: string;
   signUpPath: string;
@@ -19,7 +19,6 @@ const TopNav = ({
   currentUser,
   editPath,
   logoutPath,
-  notifications,
   rootPath,
   signInPath,
   signUpPath,
@@ -88,7 +87,16 @@ const TopNav = ({
         Bill÷Split
       </a>
 
-      <div className="flex mr-6 gap-4">
+      <MobileNav
+        currentUser={currentUser}
+        editPath={editPath}
+        logoutPath={logoutPath}
+        rootPath={rootPath}
+        signInPath={signInPath}
+        signUpPath={signUpPath}
+      />
+
+      <div className="hidden sm:block flex mr-6 gap-4">
         {renderGuestActions()}
 
         {renderLoggedInActions()}
