@@ -17,12 +17,12 @@
 
       <div class="actions">
         <%= f.submit "Send me reset password instructions",
-          class: "w-full bg-indigo-500 hover:bg-indigo-600 focus:outline-indigo-900 rounded-md text-white py-2 mb-6 cursor:pointer"
+          class: "w-full bg-indigo-500 hover:bg-indigo-600 focus:outline-indigo-900 rounded-md text-white text-sm sm:text-base py-2 mb-6 cursor:pointer"
         %>
       </div>
     <% end %>
 
-   <div class="mb-2 text-gray-500">
+   <div class="mb-4 text-gray-500 text-sm sm:text-base">
       Already have an account?
       <%= link_to "Sign in",
         new_session_path(resource_name),
@@ -30,7 +30,7 @@
       %> now
     </div>
 
-    <div class="mb-6 text-gray-500">
+    <div class="text-gray-500 text-sm sm:text-base">
       Don't have an account?
       <%= link_to "Sign up",
         new_registration_path(resource_name),
