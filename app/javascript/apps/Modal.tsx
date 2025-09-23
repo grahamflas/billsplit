@@ -62,7 +62,7 @@ const Modal = ({
 
   return (
     <dialog
-      className="rounded-2xl max-h-none w-full max-w-full md:max-w-none md:w-fit"
+      className="rounded-2xl max-h-screen w-full max-w-2xl mx-auto md:max-w-none md:w-fit overflow-y-auto"
       id="dialog"
       ref={dialogRef}
     >
