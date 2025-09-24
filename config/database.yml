@@ -82,14 +82,16 @@ production:
   primary: &primary_production
     <<: *default
     database: billsplit_production
-    username: billsplit
-    password: <%= ENV["BILLSPLIT_DATABASE_PASSWORD"] %>
+    # username: billsplit
+    # password: <%= ENV["BILLSPLIT_DATABASE_PASSWORD"] %>
+    url: <%= ENV["DATABASE_URL"] %>
   cache:
     <<: *primary_production
     database: billsplit_production_cache
     migrations_paths: db/cache_migrate
   queue:
-    <<: *primary_production
+    <<: *primary_productio
+    n
     database: billsplit_production_queue
     migrations_paths: db/queue_migrate
   cable:
