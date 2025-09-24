@@ -15,6 +15,13 @@ module Invitations
 
       if invitee
         notify
+      else
+        InvitationMailer.with(
+          creator:,
+          invitee_email:,
+          group:,
+        ).invitation_for_non_user_email.
+        deliver_later
       end
 
       @invitation

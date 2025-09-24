@@ -50,5 +50,24 @@ describe Settlements::Create do
 
       expect(invitation.notifications&.invitation_created).to be_empty
     end
+
+    it "enqueues an email to the invitee notifying them of the invitation" do
+      group = create(:group)
+      creator = create(:user, groups: [ group ])
+
+      invitee_email = "does-not-exist-yet@mail.com"
+
+      expect do
+        Invitations::Create.new(
+          creator:,
+          invitee_email:,
+          group:,
+        ).process
+      end.to have_enqueued_mail(
+        InvitationMailer,
+        :invitation_for_non_user_email,
+      ).with(params: {creator:, invitee_email:, group:}, args: [])
+
+    end
   end
 end

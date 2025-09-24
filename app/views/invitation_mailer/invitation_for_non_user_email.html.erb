@@ -1,0 +1,15 @@
+<h1>You've been invited to join BillSplit!</h1>
+
+<p>
+  Hi! You've been invited by <strong><%= @creator.full_name %></strong> to join the group <strong><%= @group.name %></strong> on BillSplit.
+</p>
+
+<p>BillSplit is an application that allows you to share expenses between group members.</p>
+
+<strong>Step 1:</strong>
+
+<p>You can sign up for BillSplit <%= link_to("here", new_user_registration_url) %>.</p>
+
+<strong>Step 2:</strong>
+
+<p>Once you have created an account, check your notifications to accept the group invite.</p>
