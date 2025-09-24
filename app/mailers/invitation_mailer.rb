@@ -9,6 +9,6 @@ class InvitationMailer < ApplicationMailer
     @invitee_email = params[:invitee_email]
     @group = params[:group]
 
-    mail to: @invitee_email, subject: "You've been invited to BillSplit!"
+    mail to: @invitee_email, subject: "You've been invited to join BillSplit!"
   end
 end
