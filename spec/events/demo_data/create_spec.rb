@@ -15,15 +15,15 @@ describe DemoData::Create do
 
     # Create demo users the new_user can log in as
     demo_user_1 = User.find_by(
-      email: "#{new_user.email_prefix}-demo-1@demo.com",
+      email: "#{new_user.email_prefix}-demo-1@mail.com",
       demo: true,
     )
     demo_user_2 = User.find_by(
-      email: "#{new_user.email_prefix}-demo-2@demo.com",
+      email: "#{new_user.email_prefix}-demo-2@mail.com",
       demo: true,
     )
     demo_user_3 = User.find_by(
-      email: "#{new_user.email_prefix}-demo-3@demo.com",
+      email: "#{new_user.email_prefix}-demo-3@mail.com",
       demo: true,
     )
 

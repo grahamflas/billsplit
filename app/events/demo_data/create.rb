@@ -37,7 +37,7 @@ module DemoData
       @demo_user_1 = User.create!(
         first_name: "Al",
         last_name: "Gorithm",
-        email: "#{new_user.email_prefix}-demo-1@demo.com",
+        email: "#{new_user.email_prefix}-demo-1@#{new_user.email_domain}",
         password:,
         password_confirmation: password,
         demo: true,
@@ -46,7 +46,7 @@ module DemoData
       @demo_user_2 = User.create!(
         first_name: "Sabrina",
         last_name: "Sample",
-        email: "#{new_user.email_prefix}-demo-2@demo.com",
+        email: "#{new_user.email_prefix}-demo-2@#{new_user.email_domain}",
         password:,
         password_confirmation: password,
         demo: true,
@@ -55,7 +55,7 @@ module DemoData
       @demo_user_3 = User.create!(
         first_name: "Faira",
         last_name: "Share",
-        email: "#{new_user.email_prefix}-demo-3@demo.com",
+        email: "#{new_user.email_prefix}-demo-3@#{new_user.email_domain}",
         password:,
         password_confirmation: password,
         demo: true,

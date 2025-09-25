@@ -24,4 +24,8 @@ class User < ApplicationRecord
   def email_prefix
     email.split("@").first
   end
+
+  def email_domain
+    email.split("@").second
+  end
 end

@@ -29,4 +29,21 @@ RSpec.describe User, type: :model do
       expect(user.email_prefix).to eq("prefix")
     end
   end
+
+  describe "email_domain" do
+    it "returns the part of the user's email after the @" do
+      user = create(
+        :user,
+        email: "prefix@mail.com",
+      )
+
+      other_user = create(
+        :user,
+        email: "username@sub.domain.co.uk",
+      )
+
+      expect(user.email_domain).to eq("mail.com")
+      expect(other_user.email_domain).to eq("sub.domain.co.uk")
+    end
+  end
 end
