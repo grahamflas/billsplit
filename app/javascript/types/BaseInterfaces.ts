@@ -8,6 +8,7 @@ export interface User {
 }
 
 export interface Group {
+  demo: boolean;
   expenses: Expense[];
   id: number;
   name: string;

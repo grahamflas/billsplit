@@ -1,7 +1,7 @@
 class GroupSerializer < ApplicationSerializer
   include ActionView::Helpers::DateHelper
 
-  attributes(:id, :name, )
+  attributes(:id, :name, :demo)
 
   attribute :readable_created_at,
     unless: :without_readable_created_at?

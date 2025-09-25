@@ -24,7 +24,16 @@ const GroupsListCard = ({ group }: Props) => {
     <div className="flex flex-col p-4 rounded-2xl shadow-sm hover:shadow-md transition bg-white w-full min-w-[220px] max-w-small">
       <a href={`/groups/${group.id}`}>
         <div id={`group-${group.id}`} className="flex flex-col flex-1 gap-6">
-          <h2 className="text-2xl font-bold truncate">{group.name}</h2>
+          <h2 className="flex text-2xl font-bold items-center gap-1">
+            <span>
+              {group.name}
+              {group.demo ? (
+                <span className="bg-rose-600 text-white text-base text-bold px-2 rounded-xl ml-2">
+                  Demo
+                </span>
+              ) : null}
+            </span>
+          </h2>
 
           <div className="flex flex-col gap-1">
             <div className="flex -space-x-2">
