@@ -97,3 +97,8 @@ production:
     <<: *primary_production
     database: billsplit_production_cable
     migrations_paths: db/cable_migrate
+
+production_remote:
+  <<: *default
+  database: billsplit_production
+  url: <%= ENV["PRODUCTION_DATABASE_URL"] %>

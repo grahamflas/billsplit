@@ -46,7 +46,7 @@ gem "devise", "~> 4.9"
 # gem "tailwindcss-rails", "~> 4.3"
 gem "vite_rails", "~> 3.0"
 
-group :development, :test do
+group :development, :test, :production_remote do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
