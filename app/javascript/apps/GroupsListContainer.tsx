@@ -1,4 +1,5 @@
 import { Group } from "../types/BaseInterfaces";
+import GroupDetailsSection from "./GroupDetailsSection";
 import GroupsListCard from "./GroupsListCard";
 
 interface Props {
@@ -21,11 +22,28 @@ const GroupsListContainer = ({ groups }: Props) => {
         </a>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr justify-center">
-        {groups.map((group) => (
-          <GroupsListCard group={group} key={group.id} />
-        ))}
-      </div>
+      {groups.length > 0 && (
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr justify-center">
+          {groups.map((group) => (
+            <GroupsListCard group={group} key={group.id} />
+          ))}
+        </div>
+      )}
+
+      {groups.length === 0 && (
+        <GroupDetailsSection>
+          <div className="text-center">
+            <h2 className="text-2xl mb-6">
+              Welcome to <span className="text-indigo-500">Bill÷Split</span>!
+            </h2>
+
+            <p>
+              To get started, create a Group by clicking the{" "}
+              <strong>+ Add Group</strong> button
+            </p>
+          </div>
+        </GroupDetailsSection>
+      )}
     </div>
   );
 };
