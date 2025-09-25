@@ -18,4 +18,15 @@ RSpec.describe User, type: :model do
       expect(user.full_name).to eq("Liz Lemon")
     end
   end
+
+  describe "email_prefix" do
+    it "returns the part of the user's email before the @" do
+      user = create(
+        :user,
+        email: "prefix@mail.com",
+      )
+
+      expect(user.email_prefix).to eq("prefix")
+    end
+  end
 end

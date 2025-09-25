@@ -17,6 +17,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       Invitations::LinkPendingInvitations.new(
         new_user: resource,
       ).process
+
+      DemoData::Create.new(
+        new_user: resource
+      ).process
     end
   end
 

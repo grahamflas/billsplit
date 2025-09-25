@@ -23,4 +23,24 @@ class Expense < ApplicationRecord
       errors.add(:user, MUST_BELONG_TO_SELECTED_GROUP_ERROR)
     end
   end
+
+  def notify_other_group_users(current_user:)
+    category = if previously_new_record?
+      :expense_added
+    else
+      :expense_updated
+    end
+
+    group.
+      users.
+      where.not(id: current_user.id).
+      each do |user|
+        Notification.create!(
+          user:,
+          source: self,
+          category:,
+        )
+      end
+  end
+
 end

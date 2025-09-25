@@ -54,5 +54,99 @@ RSpec.describe Expense, type: :model do
         expect(invalid_expense_2).not_to be_valid
       end
     end
+
+    describe "#notify_other_group_users" do
+      context "when it's a new expense" do
+        it "creates an expense_added notification for group users other than the current_user" do
+          group = create(:group)
+
+          current_user = create(:user, groups: [ group ])
+          other_user_1 = create(:user, groups: [ group ])
+          other_user_2 = create(:user, groups: [ group ])
+
+          expense = build(
+            :expense,
+            reference: "New expense",
+            amount: 1,
+            user: current_user,
+            group:
+          )
+
+          expense.save
+
+          expense.notify_other_group_users(current_user:)
+
+          expect(
+            Notification.find_by(
+              user: other_user_1,
+              source: expense,
+              category: :expense_added,
+            )
+          ).to be_present
+
+          expect(
+            Notification.find_by(
+              user: other_user_2,
+              source: expense,
+              category: :expense_added,
+            )
+          ).to be_present
+
+          expect(
+            Notification.find_by(
+              user: current_user,
+              source: expense,
+              category: :expense_added,
+            )
+          ).not_to be_present
+        end
+      end
+
+      context "when it's an existing expense" do
+        it "creates an expense_updated notification for group users other than the current_user" do
+          group = create(:group)
+
+          current_user = create(:user, groups: [ group ])
+          other_user_1 = create(:user, groups: [ group ])
+          other_user_2 = create(:user, groups: [ group ])
+
+          expense = create(
+            :expense,
+            reference: "New expense",
+            amount: 1,
+            user: other_user_1,
+            group:
+          )
+
+          expense.update!(reference: "Updated expense")
+
+          expense.notify_other_group_users(current_user:)
+
+          expect(
+            Notification.find_by(
+              user: other_user_1,
+              source: expense,
+              category: :expense_updated,
+            )
+          ).to be_present
+
+          expect(
+            Notification.find_by(
+              user: other_user_2,
+              source: expense,
+              category: :expense_updated,
+            )
+          ).to be_present
+
+          expect(
+            Notification.find_by(
+              user: current_user,
+              source: expense,
+              category: :expense_updated,
+            )
+          ).not_to be_present
+        end
+      end
+    end
   end
 end

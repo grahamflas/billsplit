@@ -7,7 +7,7 @@ class Api::ExpensesController < Api::BaseController
     expense = Expense.new(expense_params)
 
     if expense.save
-      notify_users(expense:)
+      expense.notify_other_group_users(current_user:)
 
       flash[:success] = "Added #{expense.reference}"
 
@@ -21,7 +21,7 @@ class Api::ExpensesController < Api::BaseController
 
   def update
     if expense.update(expense_params)
-      notify_users(expense:)
+      expense.notify_other_group_users(current_user:)
 
       flash[:success] = "Updated expense: #{expense.reference}"
 
@@ -74,25 +74,5 @@ class Api::ExpensesController < Api::BaseController
         :user_id,
         :group_id,
       )
-  end
-
-  def notify_users(expense:)
-    category = if expense.previously_new_record?
-      :expense_added
-    else
-      :expense_updated
-    end
-
-    expense.
-      group.
-      users.
-      where.not(id: current_user.id).
-      each do |user|
-        Notification.create!(
-          user:,
-          source: expense,
-          category:,
-        )
-      end
   end
 end
