@@ -1,13 +1,17 @@
+import { useState } from "react";
+
 import { CiUser } from "react-icons/ci";
 
 import BillSplitDropdown from "./BillSplitDropdown";
+import DemoModal from "./DemoModal";
+import MobileNav from "./MobileNav";
 import NotificationsDropdown from "./NotificationsDropdown";
 
 import { User } from "../types/BaseInterfaces";
-import MobileNav from "./MobileNav";
 
 interface Props {
   currentUser: User | undefined;
+  demoUsers: User[] | undefined;
   editPath: string;
   logoutPath: string;
   rootPath: string;
@@ -17,12 +21,15 @@ interface Props {
 
 const TopNav = ({
   currentUser,
+  demoUsers,
   editPath,
   logoutPath,
   rootPath,
   signInPath,
   signUpPath,
 }: Props) => {
+  const [showDemoModal, setShowDemoModal] = useState(false);
+
   const renderGuestActions = () => {
     if (!currentUser) {
       return (
@@ -51,6 +58,13 @@ const TopNav = ({
     if (currentUser) {
       return (
         <div className="flex flex-row items-center gap-8">
+          <button
+            className="rounded-xl px-5 py-1 text-white bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-center"
+            onClick={() => setShowDemoModal(!showDemoModal)}
+          >
+            About this demo
+          </button>
+
           <NotificationsDropdown />
 
           <a href={rootPath}>My Groups</a>
@@ -78,6 +92,7 @@ const TopNav = ({
       );
     }
   };
+
   return (
     <nav className="flex items-center justify-between bg-gray-800 text-white">
       <a
@@ -101,6 +116,15 @@ const TopNav = ({
 
         {renderLoggedInActions()}
       </div>
+
+      {currentUser && demoUsers && showDemoModal && (
+        <DemoModal
+          currentUser={currentUser}
+          demoUsers={demoUsers}
+          handleModalClose={() => setShowDemoModal(false)}
+          isOpen={showDemoModal}
+        />
+      )}
     </nav>
   );
 };

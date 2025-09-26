@@ -67,7 +67,10 @@ const GroupDetails = ({
 
   return (
     <div className="p-6 max-w-2xl mx-auto">
-      <a className="flex items-center gap-1 text-indigo-600 text-xl" href="/">
+      <a
+        className="flex items-center gap-1 text-indigo-600 text-xl mb-6"
+        href="/"
+      >
         <FaArrowLeft /> Back to My Groups
       </a>
 

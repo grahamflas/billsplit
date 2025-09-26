@@ -3,6 +3,7 @@ import { ExpenseStatus } from "../enums/ExpenseStatus";
 export interface User {
   email: string;
   firstName: string;
+  fullName: string;
   id: number;
   lastName: string;
 }

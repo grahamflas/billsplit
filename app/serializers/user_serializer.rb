@@ -5,4 +5,10 @@ class UserSerializer < ActiveModel::Serializer
     :id,
     :last_name,
   )
+
+  attribute :full_name
+
+  def full_name
+    object.full_name
+  end
 end

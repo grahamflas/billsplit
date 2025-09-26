@@ -25,8 +25,6 @@ const NewExpenseModal = ({ group, handleModalClose, isOpen }: Props) => {
       groupId: group.id,
     });
 
-    debugger;
-
     if (newExpenseCreated) {
       window.location.href = `/groups/${group.id}`;
     }
