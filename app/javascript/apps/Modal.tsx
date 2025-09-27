@@ -68,7 +68,7 @@ const Modal = ({
     >
       <div id={id} className="flex flex-col">
         <header className="flex items-center justify-start gap-6 px-6 py-4 border border-cream border-b border-t-0 border-x-0">
-          <button onClick={onCloseModal}>
+          <button aria-label="close modal" onClick={onCloseModal}>
             <IoMdClose size={18} />
           </button>
 

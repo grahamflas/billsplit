@@ -8,6 +8,7 @@ import MobileNav from "./MobileNav";
 import NotificationsDropdown from "./NotificationsDropdown";
 
 import { User } from "../types/BaseInterfaces";
+import UsersRepository from "../repositories/UsersRepository";
 
 interface Props {
   currentUser: User | undefined;
@@ -31,6 +32,14 @@ const TopNav = ({
   const [showDemoModal, setShowDemoModal] = useState(
     !currentUser?.hasSeenDemoModal
   );
+
+  const handleDismissDemoModal = async () => {
+    setShowDemoModal(false);
+
+    if (currentUser && !currentUser.hasSeenDemoModal) {
+      UsersRepository.viewedDemoModal({ currentUser });
+    }
+  };
 
   const renderGuestActions = () => {
     if (!currentUser) {
@@ -124,7 +133,7 @@ const TopNav = ({
         <DemoModal
           currentUser={currentUser}
           demoUsers={demoUsers}
-          handleModalClose={() => setShowDemoModal(false)}
+          handleModalClose={handleDismissDemoModal}
           isOpen={showDemoModal}
         />
       )}

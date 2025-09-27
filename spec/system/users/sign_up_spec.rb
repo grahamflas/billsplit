@@ -18,6 +18,8 @@ RSpec.describe "User sign up", type: :system, js: true do
 
       user = User.find_by(email:)
 
+      expect(user.reload.has_seen_demo_modal).to be(false)
+
       within "#about-this-demo-modal" do
         expect(page).to have_content("About this demo")
         expect(page).to have_content("Hi, #{user.first_name}. Welcome to BillSplit!")
@@ -25,11 +27,14 @@ RSpec.describe "User sign up", type: :system, js: true do
         find("button[aria-label='close modal']").click
       end
 
+      expect(user.reload.has_seen_demo_modal).to be(true)
+
       visit group_path(user.groups.first)
 
       expect(page).not_to have_content("Hi, #{user.first_name}. Welcome to BillSplit!")
 
       find("[data-test='user-menu-button']").click
+
       click_link("Sign out")
 
       sign_in(user)

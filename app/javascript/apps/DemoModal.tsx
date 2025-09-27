@@ -36,6 +36,7 @@ const DemoModal = ({
 
   return (
     <Modal
+      id="about-this-demo-modal"
       isOpen={isOpen}
       onCloseModal={handleModalClose}
       title={"About this demo"}

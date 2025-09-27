@@ -29,5 +29,6 @@ Rails.application.routes.draw do
         put :decline
       end
     end
+    resources :users, only: %i[ update ]
   end
 end
