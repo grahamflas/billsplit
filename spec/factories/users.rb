@@ -4,5 +4,6 @@ FactoryBot.define do
     password { "password" }
     sequence(:first_name) { |n| "User#{n} First Name" }
     sequence(:last_name) { |n| "User#{n} Last Name" }
+    has_seen_demo_modal { true }
   end
 end

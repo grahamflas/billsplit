@@ -45,5 +45,3 @@ RSpec.describe "User sign up", type: :system, js: true do
     end
   end
 end
-
-
