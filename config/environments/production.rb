@@ -76,7 +76,7 @@ Rails.application.configure do
     user_name:       ENV["EMAIL_USERNAME"],
     password:        ENV["EMAIL_APP_PASSWORD"],
     authentication:  "plain",
-    enable_starttls: true,
+    enable_starttls_auto: true,
     open_timeout:    5,
     read_timeout:    5
   }
