@@ -5,6 +5,7 @@ export interface User {
   firstName: string;
   fullName: string;
   id: number;
+  hasSeenDemoModal: boolean;
   lastName: string;
 }
 

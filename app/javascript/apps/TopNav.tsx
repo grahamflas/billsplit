@@ -28,7 +28,9 @@ const TopNav = ({
   signInPath,
   signUpPath,
 }: Props) => {
-  const [showDemoModal, setShowDemoModal] = useState(false);
+  const [showDemoModal, setShowDemoModal] = useState(
+    !currentUser?.hasSeenDemoModal
+  );
 
   const renderGuestActions = () => {
     if (!currentUser) {
