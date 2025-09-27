@@ -106,6 +106,7 @@ const TopNav = ({
         currentUser={currentUser}
         editPath={editPath}
         logoutPath={logoutPath}
+        handleDemoModalButtonClick={() => setShowDemoModal(!showDemoModal)}
         rootPath={rootPath}
         signInPath={signInPath}
         signUpPath={signUpPath}

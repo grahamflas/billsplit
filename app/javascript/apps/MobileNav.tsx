@@ -12,6 +12,7 @@ import { User } from "../types/BaseInterfaces";
 interface Props {
   currentUser: User | undefined;
   editPath: string;
+  handleDemoModalButtonClick: () => void;
   logoutPath: string;
   rootPath: string;
   signInPath: string;
@@ -21,6 +22,7 @@ interface Props {
 const MobileNav = ({
   currentUser,
   editPath,
+  handleDemoModalButtonClick,
   logoutPath,
   rootPath,
   signInPath,
@@ -71,6 +73,12 @@ const MobileNav = ({
     if (currentUser) {
       return (
         <>
+          <button
+            className="rounded-xl px-5 py-1 text-white bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-center"
+            onClick={handleDemoModalButtonClick}
+          >
+            About this demo
+          </button>
           <NotificationsDropdown
             setMobileMenuNotificationsCount={setMobileMenuNotificationsCount}
           />
@@ -96,6 +104,7 @@ const MobileNav = ({
               {mobileMenuNotificationsCount}
             </span>
           ) : null}
+
           <RxHamburgerMenu size={25} />
         </div>
       </button>
