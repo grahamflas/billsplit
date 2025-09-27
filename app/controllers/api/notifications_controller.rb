@@ -5,7 +5,7 @@ class Api::NotificationsController < Api::BaseController
   def index
     render json: {
       count: notifications.count,
-      notifications:,
+      notifications: notifications&.to_api.serializable_hash,
     }
   end
 
@@ -28,9 +28,6 @@ class Api::NotificationsController < Api::BaseController
   end
 
   def notifications
-    @notifications ||= current_user.
-        notifications.
-        to_api.
-        serializable_hash
+    @notifications ||= current_user.notifications
   end
 end
