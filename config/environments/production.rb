@@ -81,6 +81,7 @@ Rails.application.configure do
   #   read_timeout:    5
   # }
 
+  config.action_mailer.default_url_options = { host: "billsplit-lylg.onrender.com", protocol: "https" }
   config.action_mailer.default_options = { from: ENV['EMAIL_USERNAME'] }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
