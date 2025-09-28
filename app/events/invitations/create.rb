@@ -20,7 +20,7 @@ module Invitations
           creator:,
           invitee_email:,
           group:,
-        ).invitation_for_non_user_email
+        ).invitation_for_non_user_email.deliver_now
       end
 
       @invitation
