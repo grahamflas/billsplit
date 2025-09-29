@@ -62,7 +62,7 @@ const Modal = ({
 
   return (
     <dialog
-      className="rounded-2xl max-h-screen w-full max-w-2xl mx-auto md:max-w-none md:w-fit overflow-y-auto"
+      className="rounded-2xl max-h-[90vh] my-4 w-full max-w-2xl mx-auto md:max-w-none md:w-fit overflow-y-auto"
       id="dialog"
       ref={dialogRef}
     >
@@ -75,7 +75,7 @@ const Modal = ({
           <h2 className="text-2xl text-center flex-grow">{title}</h2>
         </header>
 
-        <div className="px-6 py-8 overflow-auto">{children}</div>
+        <div className="px-6 py-8 overflow-auto flex-1">{children}</div>
       </div>
     </dialog>
   );
