@@ -4,4 +4,8 @@ class SettlementSerializer < ApplicationSerializer
   has_many :expenses
 
   attributes(:id, :note, :balances, :created_at)
+
+  def created_at
+    object.created_at.iso8601
+  end
 end

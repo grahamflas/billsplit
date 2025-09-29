@@ -24,6 +24,6 @@ class ExpenseSerializer < ApplicationSerializer
   end
 
   def created_at
-    object.created_at.to_s
+    object.created_at.iso8601
   end
 end
