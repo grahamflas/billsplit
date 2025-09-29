@@ -64,7 +64,7 @@ describe Settlements::Create do
 
     expect(settlement.group).to eq(group)
     expect(settlement.user).to eq(user)
-    expect(settlement.balances).to eq(balances.deep_stringify_keys)
+    expect(settlement.balances).to eq(balances.as_json)
     expect(settlement.note).to eq("My new settlement")
 
     expect(expense_1.reload.settled?).to eq(true)

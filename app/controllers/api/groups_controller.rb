@@ -26,7 +26,9 @@ class Api::GroupsController < ApplicationController
     @group = Group.find_by(id: params[:id])
 
     if @group.update(group_params)
-      create_invitations
+      if new_contacts.any?
+        create_invitations
+      end
 
       flash[:success] = "Updated #{@group.name}"
 
@@ -53,8 +55,12 @@ class Api::GroupsController < ApplicationController
     end
   end
 
+  def new_contacts
+    params[:new_contacts].reject(&:blank?)
+  end
+
   def create_invitations
-    params[:new_contacts].map do |invitee_email|
+    new_contacts.map do |invitee_email|
       Invitations::Create.new(
         creator: current_user,
         invitee_email:,
