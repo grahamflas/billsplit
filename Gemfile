@@ -45,6 +45,7 @@ gem "devise", "~> 4.9"
 # gem "tailwindcss-ruby", "~> 4.1"
 # gem "tailwindcss-rails", "~> 4.3"
 gem "vite_rails", "~> 3.0"
+gem 'sendgrid-actionmailer'
 
 group :development, :test, :production_remote do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

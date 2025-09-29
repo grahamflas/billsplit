@@ -45,19 +45,24 @@ Rails.application.configure do
   # }
 # Set localhost to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
-  config.action_mailer.default_options = { from: ENV['EMAIL_USERNAME'] }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    user_name: 'apikey',
-    password: ENV['SENDGRID_API_KEY'],
-    domain: 'billsplit-lylg.onrender.com', # use your app domain
-    address: 'smtp.sendgrid.net',
-    port: 587,
-    authentication: :plain,
-    enable_starttls_auto: true
+  # config.action_mailer.default_options = { from: ENV['EMAIL_USERNAME'] }
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   user_name: 'apikey',
+  #   password: ENV['SENDGRID_API_KEY'],
+  #   domain: 'billsplit-lylg.onrender.com', # use your app domain
+  #   address: 'smtp.sendgrid.net',
+  #   port: 587,
+  #   authentication: :plain,
+  #   enable_starttls_auto: true
+  # }
+  # config.action_mailer.perform_deliveries = true
+  # config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :sendgrid_actionmailer
+  config.action_mailer.sendgrid_actionmailer_settings = {
+    api_key: ENV['SENDGRID_API_KEY'],
+    raise_delivery_errors: true
   }
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.raise_delivery_errors = true
 
 
 
