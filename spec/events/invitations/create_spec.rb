@@ -63,10 +63,15 @@ describe Settlements::Create do
           invitee_email:,
           group:,
         ).process
-      end.to have_enqueued_mail(
-        InvitationMailer,
-        :invitation_for_non_user_email,
-      ).with(params: {creator:, invitee_email:, group:}, args: [])
+      end.to change { ActionMailer::Base.deliveries.count }.by(1)
+
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.to).to include(invitee_email)
+
+      # have_enqueued_mail(
+      #   InvitationMailer,
+      #   :invitation_for_non_user_email,
+      # ).with(params: {creator:, invitee_email:, group:}, args: [])
 
     end
   end

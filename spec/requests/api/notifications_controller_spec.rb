@@ -53,17 +53,17 @@ RSpec.describe "Api::Notifications", type: :request do
           "category" => expense_added_notification.category,
           "id" => expense_added_notification.id,
           "link" => group_path(expense_added_notification.source.group),
-          "source" => expense_added_notification.source.to_api.serializable_hash.deep_stringify_keys,
+          "source" => expense_added_notification.source.to_api.serializable_hash.as_json,
           "sourceType" => "Expense",
-          "user" => current_user.to_api.serializable_hash.deep_stringify_keys
+          "user" => current_user.to_api.serializable_hash.as_json
         },
         {
           "category" => expense_updated_notification.category,
           "id" => expense_updated_notification.id,
           "link" => group_path(expense_updated_notification.source.group),
-          "source" => expense_updated_notification.source.to_api.serializable_hash.deep_stringify_keys,
+          "source" => expense_updated_notification.source.to_api.serializable_hash.as_json,
           "sourceType" => "Expense",
-          "user" => current_user.to_api.serializable_hash.deep_stringify_keys
+          "user" => current_user.to_api.serializable_hash.as_json
         },
       ])
 
