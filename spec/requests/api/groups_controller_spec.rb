@@ -89,5 +89,29 @@ RSpec.describe "Api::Groups", type: :request do
       expect(group.reload.name).to eq("Updated name")
       expect(group.users).to match_array([other_user_1, user])
     end
+
+    context "when the user is not a member of the group" do
+      it "returns unauthorized" do
+        group = create(:group, name: "My group")
+        other_group = create(:group, name: "Other Group")
+
+        user = create(:user, first_name: "User", groups: [ group ])
+        _other_user = create(:user, first_name: "Other User", groups: [ other_group ])
+
+
+        sign_in user
+
+        put api_group_path(other_group), params: {
+          group: {
+            name: "Updated name",
+            user_ids: [ user.id ],
+          },
+          new_contacts: [],
+        }
+
+        expect(other_group.reload.name).to eq("Other Group")
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
   end
 end
