@@ -28,4 +28,8 @@ class User < ApplicationRecord
   def email_domain
     email.split("@").second
   end
+
+  def destroy_demo_data
+    DemoData::Destroy.new(user: self).process
+  end
 end
