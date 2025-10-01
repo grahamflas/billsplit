@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_01_051517) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_01_060831) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -45,6 +45,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_01_051517) do
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_invitations_on_creator_id"
     t.index ["group_id"], name: "index_invitations_on_group_id"
+    t.index ["invitee_email", "group_id"], name: "index_invitations_on_invitee_email_and_group_id_pending", unique: true, where: "(status = 0)"
     t.index ["invitee_id"], name: "index_invitations_on_invitee_id"
   end
 
