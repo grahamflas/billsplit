@@ -1,5 +1,7 @@
 module Invitations
   class Create
+    class InvitationAlreadyExistsError < StandardError; end
+
     def initialize(
       creator:,
       invitee_email:,
@@ -11,19 +13,23 @@ module Invitations
     end
 
     def process
-      @invitation = create_invitation
+      begin
+        @invitation = create_invitation
 
-      if invitee
-        notify
-      else
-        InvitationMailer.with(
-          creator:,
-          invitee_email:,
-          group:,
-        ).invitation_for_non_user_email.deliver_now
+        if invitee
+          notify
+        else
+          InvitationMailer.with(
+            creator:,
+            invitee_email:,
+            group:,
+          ).invitation_for_non_user_email.deliver_now
+        end
+
+        @invitation
+      rescue ActiveRecord::RecordNotUnique
+        InvitationAlreadyExistsError.new("#{invitee_email} has already been invited to join")
       end
-
-      @invitation
     end
 
     private

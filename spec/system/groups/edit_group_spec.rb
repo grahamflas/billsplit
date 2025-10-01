@@ -62,6 +62,63 @@ RSpec.describe "Edit Group", type: :system, js: true do
     end.to change(Invitation, :count).by(1)
   end
 
+  context "when a pending invitation already exists for the email" do
+    scenario "it flashes an error" do
+      group = create(:group)
+      user = create(:user, groups: [ group ])
+      other_user = create(:user, groups: [ group ])
+
+      new_contact_email = "new_contact@email.com"
+      other_new_contact_email = "other_new_contact@email.com"
+
+      sign_in user
+
+      visit group_path(group)
+
+      find("a[aria-label='Edit #{group.name}']").click
+
+      fill_in "Group name", with: "Edited Group Name"
+
+      # Invite new contacts the first time
+      click_button "Invite new contact"
+
+      fill_in "newContacts.0", with: new_contact_email
+
+      click_button "Invite new contact"
+
+      fill_in "newContacts.1", with: other_new_contact_email
+
+      click_button "Update group"
+
+      sign_out user
+
+      # Sign in as other group user and invite the same people
+      sign_in other_user
+
+      visit group_path(group.reload)
+
+      find("a[aria-label='Edit #{group.name}']").click
+
+      # Invite new contacts again
+      click_button "Invite new contact"
+
+      fill_in "newContacts.0", with: new_contact_email
+
+      click_button "Invite new contact"
+
+      fill_in "newContacts.1", with: other_new_contact_email
+
+      expect do
+        click_button "Update group"
+      end.not_to change(Invitation, :count)
+
+      expect(page).to have_current_path(group_path(group))
+
+      expect(page).to have_content("#{new_contact_email} has already been invited to join")
+      expect(page).to have_content("#{other_new_contact_email} has already been invited to join")
+    end
+  end
+
   def remove_user(user)
     find("div [aria-label='Remove #{user.full_name}']").click
   end

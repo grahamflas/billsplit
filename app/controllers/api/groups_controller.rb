@@ -70,11 +70,19 @@ class Api::GroupsController < ApplicationController
 
   def create_invitations(group:)
     new_contacts.map do |invitee_email|
-      Invitations::Create.new(
+      result = Invitations::Create.new(
         creator: current_user,
         invitee_email:,
         group:,
       ).process
+
+      if result.is_a?(Invitations::Create::InvitationAlreadyExistsError)
+        if flash[:error]
+          flash[:error] << result.message
+        else
+          flash[:error] = Array.wrap(result.message)
+        end
+      end
     end
   end
 

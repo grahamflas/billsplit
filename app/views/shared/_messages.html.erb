@@ -1,7 +1,11 @@
 <% toasts = [] %>
 
 <% flash.each do |message_type, message| %>
-  <% toasts << message %>
+  <% if message.is_a?(String) %>
+    <% toasts << message %>
+  <% else %>
+    <% message.each { |m| toasts << m } %>
+  <% end %>
 <% end %>
 
 <%= mount_react_app("Toaster", props: { toasts: }) %>
