@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import { format } from "date-fns";
 
+import { formatCurrency } from "../utils/formatCurrency";
+
 import GroupDetailsData from "./GroupDetailsData";
 import SettlementDetails from "./SettlementDetails";
 
@@ -28,10 +30,7 @@ const SettlementContainer = ({
         <div className="flex justify-between">
           <GroupDetailsData
             headingClasses="text-2xl"
-            headingData={Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "USD",
-            }).format(settlement.balances.totalExpenses)}
+            headingData={formatCurrency(settlement.balances.totalExpenses)}
             subHeadingClasses="text-neutral-500"
             subHeadingData={`${
               settlement.expenses.length

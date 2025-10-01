@@ -1,5 +1,7 @@
 import { format } from "date-fns";
 
+import { formatCurrency } from "../utils/formatCurrency";
+
 import BalancesData from "./BalancesData";
 import GroupDetailsData from "./GroupDetailsData";
 
@@ -17,10 +19,7 @@ const SettlementDetails = ({ currentUser, settlement }: Props) => {
         <GroupDetailsData
           headingData="Total Expenses"
           id={"total-expenses"}
-          subHeadingData={Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-          }).format(settlement.balances.totalExpenses)}
+          subHeadingData={formatCurrency(settlement.balances.totalExpenses)}
           subHeadingClasses="text-3xl mt-2"
         />
 
@@ -63,12 +62,7 @@ const SettlementDetails = ({ currentUser, settlement }: Props) => {
               >
                 <td className="px-2">{expense.reference}</td>
 
-                <td className="px-2">
-                  {Intl.NumberFormat("en-US", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(expense.amount)}
-                </td>
+                <td className="px-2">{formatCurrency(expense.amount)}</td>
 
                 <td className="px-2">
                   {format(new Date(expense.createdAt), "MMM d, yyyy")}

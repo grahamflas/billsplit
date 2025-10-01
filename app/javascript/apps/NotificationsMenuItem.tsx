@@ -1,3 +1,5 @@
+import { formatCurrency } from "../utils/formatCurrency";
+
 import InformationalNotification from "./Notifications/InformationalNotifiction";
 import InvitationCreatedNotification from "./Notifications/InvitationCreatedNotification";
 
@@ -26,10 +28,7 @@ const NotificationsMenuItem = ({
           destroyNotification={destroyNotification}
           mainText={`Expense added to ${expense.group.name}`}
           notification={notification}
-          subText={`${expense.reference}: ${Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-          }).format(expense.amount)}`}
+          subText={`${expense.reference}: ${formatCurrency(expense.amount)}`}
         />
       );
     }
@@ -42,10 +41,7 @@ const NotificationsMenuItem = ({
           destroyNotification={destroyNotification}
           mainText={`Expense updated for ${expense.group.name}`}
           notification={notification}
-          subText={`${expense.reference}: ${Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-          }).format(expense.amount)}`}
+          subText={`${expense.reference}: ${formatCurrency(expense.amount)}`}
         />
       );
     }
@@ -57,10 +53,9 @@ const NotificationsMenuItem = ({
           destroyNotification={destroyNotification}
           mainText={`Settlement created for ${settlement.group.name}`}
           notification={notification}
-          subText={`Total expenses: ${Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-          }).format(settlement.balances.totalExpenses)}`}
+          subText={`Total expenses: ${formatCurrency(
+            settlement.balances.totalExpenses
+          )}`}
         />
       );
     }

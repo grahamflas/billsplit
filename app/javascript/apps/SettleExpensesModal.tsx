@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { formatCurrency } from "../utils/formatCurrency";
+
 import BalancesData from "./BalancesData";
 import GroupDetailsData from "./GroupDetailsData";
 import Modal from "./Modal";
@@ -7,6 +9,7 @@ import Modal from "./Modal";
 import SettlementsRepository from "../repositories/SettlementsRepository";
 
 import { Balances, Group, User } from "../types/BaseInterfaces";
+
 interface Props {
   balances: Balances;
   currentUser: User;
@@ -59,10 +62,7 @@ const SettleExpensesModal = ({
           <GroupDetailsData
             headingData="Total Expenses"
             id={"total-expenses-to-settle"}
-            subHeadingData={Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "USD",
-            }).format(balances.totalExpenses)}
+            subHeadingData={formatCurrency(balances.totalExpenses)}
             subHeadingClasses="text-3xl mt-2"
           />
 
