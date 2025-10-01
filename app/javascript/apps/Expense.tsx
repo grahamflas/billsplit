@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import { format } from "date-fns";
 
+import { formatCurrency } from "../utils/formatCurrency";
+
 import ExpenseEditPopover from "./ExpenseEditPopover";
 import EditExpenseModal from "./EditExpenseModal";
 import DeleteExpenseModal from "./DeleteExpenseModal";
@@ -53,7 +55,7 @@ const Expense = ({ expense, group, isInitialExpense }: Props) => {
         />
 
         <div className="flex gap-4">
-          <div className="text-2xl">${expense.amount}</div>
+          <div className="text-2xl">{formatCurrency(expense.amount)}</div>
 
           <ExpenseEditPopover
             expense={expense}

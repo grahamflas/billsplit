@@ -1,3 +1,5 @@
+import { formatCurrency } from "../utils/formatCurrency";
+
 import { Balances, User, UserBalance } from "../types/BaseInterfaces";
 
 interface Props {
@@ -20,10 +22,7 @@ const BalancesData = ({
   );
 
   const oweOrReceive = (userBalance: UserBalance) => {
-    const displayUserBalance = `${Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(Math.abs(userBalance.balance))}`;
+    const displayUserBalance = formatCurrency(userBalance.balance);
 
     if (userBalance.balance > 0) {
       if (isForSettlement) {

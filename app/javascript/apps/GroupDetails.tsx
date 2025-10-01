@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import { format, max } from "date-fns";
 
+import { formatCurrency } from "../utils/formatCurrency";
+
 import { FaArrowLeft } from "react-icons/fa";
 import { GoGear } from "react-icons/go";
 
@@ -129,10 +131,7 @@ const GroupDetails = ({
               <GroupDetailsData
                 headingData="Total Expenses"
                 id={"total-expenses"}
-                subHeadingData={Intl.NumberFormat("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                }).format(balances.totalExpenses)}
+                subHeadingData={formatCurrency(balances.totalExpenses)}
                 subHeadingClasses="text-3xl mt-2"
               />
 

@@ -5,6 +5,7 @@ import GroupDetailsData from "./GroupDetailsData";
 
 import { Expense } from "../types/BaseInterfaces";
 import ExpensesRepository from "../repositories/ExpensesRepository";
+import { formatCurrency } from "../utils/formatCurrency";
 
 interface Props {
   expense: Expense;
@@ -45,7 +46,7 @@ const DeleteExpenseModal = ({ expense, isOpen, onClose }: Props) => {
             subHeadingClasses="text-neutral-500"
           />
 
-          <h4 className="text-4xl">${expense.amount}</h4>
+          <h4 className="text-4xl">{formatCurrency(expense.amount)}</h4>
         </div>
 
         <div className="flex justify-between w-full">
