@@ -1,11 +1,12 @@
 import { format } from "date-fns";
 
+import { formatCurrency } from "../utils/formatCurrency";
+
 import Modal from "./Modal";
 import GroupDetailsData from "./GroupDetailsData";
 
 import { Expense } from "../types/BaseInterfaces";
 import ExpensesRepository from "../repositories/ExpensesRepository";
-import { formatCurrency } from "../utils/formatCurrency";
 
 interface Props {
   expense: Expense;
@@ -42,7 +43,7 @@ const DeleteExpenseModal = ({ expense, isOpen, onClose }: Props) => {
             headingClasses="text-2xl"
             subHeadingData={`Paid by ${expense.user.firstName} ${
               expense.user.lastName
-            } on ${format(new Date(expense.createdAt), "MMM d, yyyy")}`}
+            } on ${format(new Date(expense.createdAt), "d MMM yyyy")}`}
             subHeadingClasses="text-neutral-500"
           />
 

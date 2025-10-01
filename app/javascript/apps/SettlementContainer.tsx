@@ -36,7 +36,7 @@ const SettlementContainer = ({
               settlement.expenses.length
             } expenses | Settled on ${format(
               new Date(settlement.createdAt),
-              "MMM d, yyyy"
+              "d MMM yyyy"
             )}`}
           />
 

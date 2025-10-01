@@ -61,7 +61,7 @@ const GroupDetails = ({
         (expense) => new Date(expense.createdAt)
       );
 
-      return format(max(dates), "MMM d, yyyy");
+      return format(max(dates), "d MMM yyyy");
     }
 
     return "-";

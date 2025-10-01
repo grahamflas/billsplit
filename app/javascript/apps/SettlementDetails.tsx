@@ -65,7 +65,7 @@ const SettlementDetails = ({ currentUser, settlement }: Props) => {
                 <td className="px-2">{formatCurrency(expense.amount)}</td>
 
                 <td className="px-2">
-                  {format(new Date(expense.createdAt), "MMM d, yyyy")}
+                  {format(new Date(expense.createdAt), "d MMM yyyy")}
                 </td>
                 <td className="px-2">{`${expense.user.firstName} ${expense.user.lastName}`}</td>
               </tr>
