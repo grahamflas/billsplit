@@ -69,4 +69,40 @@ RSpec.describe Group, type: :model do
       expect(group.reload.archived_on).to be_nil
     end
   end
+
+  describe "#archived?" do
+    context "when the group is archived" do
+      it "returns true" do
+        group = create(:group, :archived)
+
+        expect(group.archived?).to eq(true)
+      end
+    end
+
+    context "when the group is active" do
+      it "returns false" do
+        group = create(:group, archived_on: nil)
+
+        expect(group.archived?).to eq(false)
+      end
+    end
+  end
+
+  describe "#active?" do
+    context "when the group is active" do
+      it "returns true" do
+        group = create(:group, archived_on: nil)
+
+        expect(group.active?).to eq(true)
+      end
+    end
+
+    context "when the group is archived" do
+      it "returns false" do
+        group = create(:group, :archived)
+
+        expect(group.active?).to eq(false)
+      end
+    end
+  end
 end

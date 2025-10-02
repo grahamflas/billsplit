@@ -11,6 +11,8 @@ RSpec.describe "Group Management", type: :system, js: true do
 
     fill_in "Group name", with: name
 
+    expect(page).not_to have_selector("#archive-group")
+
     expect do
       click_button "Create Group"
     end.to change(Group, :count).by(1)

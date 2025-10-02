@@ -19,4 +19,12 @@ class Group < ApplicationRecord
   def restore
     update!(archived_on: nil)
   end
+
+  def archived?
+    archived_on.present?
+  end
+
+  def active?
+    archived_on.nil?
+  end
 end
