@@ -14,6 +14,8 @@ class NotificationSerializer < ApplicationSerializer
     case object.source
     when Expense, Settlement, Invitation
       group_path(object.source.group)
+    when Group
+      group_path(object.source)
     end
   end
 end

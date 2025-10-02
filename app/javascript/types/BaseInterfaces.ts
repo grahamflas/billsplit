@@ -10,6 +10,7 @@ export interface User {
 }
 
 export interface Group {
+  archivedOn: string;
   demo: boolean;
   expenses: Expense[];
   id: number;
@@ -65,14 +66,15 @@ export type NotificationCategory =
   | "settlement_created"
   | "invitation_created"
   | "member_added_to_group"
-  | "invitation_declined";
+  | "invitation_declined"
+  | "group_archived";
 
 export interface Notification {
   category: NotificationCategory;
   createdAt: string;
   id: number;
   link: string;
-  source_type: "Expense" | "Settlement" | "Invitation";
-  source: Expense | Settlement | Invitation;
+  source_type: "Expense" | "Settlement" | "Invitation" | "Group";
+  source: Expense | Settlement | Invitation | Group;
   user: User;
 }

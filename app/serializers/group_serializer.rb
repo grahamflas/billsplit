@@ -1,7 +1,7 @@
 class GroupSerializer < ApplicationSerializer
   include ActionView::Helpers::DateHelper
 
-  attributes(:id, :name, :demo)
+  attributes(:id, :name, :demo, :archived_on)
 
   attribute :readable_created_at,
     unless: :without_readable_created_at?
@@ -19,5 +19,9 @@ class GroupSerializer < ApplicationSerializer
 
   def without_readable_created_at?
     without?(:readable_created_at)
+  end
+
+  def archived_on
+    object.archived_on&.iso8601
   end
 end

@@ -4,8 +4,6 @@ RSpec.describe "Archive Group", type: :system, js: true do
   scenario "user can archive a group" do
     group = create(:group, name: "Roomies")
     user = create(:user, groups: [ group ])
-    other_user_1 = create(:user, groups: [ group ])
-    other_user_2 = create(:user, groups: [ group ])
 
     sign_in user
 
@@ -60,5 +58,13 @@ RSpec.describe "Archive Group", type: :system, js: true do
     expect(
       other_user_2.notifications.group_archived.where(source: group)
     ).to be_present
+
+    click_button("Notifications")
+
+    within "[data-test='notifications-dropdown']" do
+      click_link("#{group.reload.name} was archived on #{group.archived_on.strftime("%-d %b %Y")}")
+    end
+
+    expect(page).to have_current_path(group_path(group))
   end
 end

@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 import { formatCurrency } from "../utils/formatCurrency";
 
 import InformationalNotification from "./Notifications/InformationalNotifiction";
@@ -5,6 +7,7 @@ import InvitationCreatedNotification from "./Notifications/InvitationCreatedNoti
 
 import {
   Expense,
+  Group,
   Invitation,
   Notification,
   Settlement,
@@ -88,6 +91,21 @@ const NotificationsMenuItem = ({
         <InformationalNotification
           destroyNotification={destroyNotification}
           mainText={`${invitation.invitee?.firstName} declined to join ${invitation.group.name}`}
+          notification={notification}
+        />
+      );
+    }
+
+    case "group_archived": {
+      const group = notification.source as Group;
+
+      return (
+        <InformationalNotification
+          destroyNotification={destroyNotification}
+          mainText={`${group.name} was archived on ${format(
+            group.archivedOn,
+            "d MMM yyyy"
+          )}`}
           notification={notification}
         />
       );
