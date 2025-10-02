@@ -15,6 +15,7 @@ export interface Group {
   expenses: Expense[];
   id: number;
   name: string;
+  readableArchivedOn: string | null;
   readableCreatedAt: string;
   users: User[];
 }

@@ -3,10 +3,14 @@ Rails.application.routes.draw do
     registrations: "users/registrations",
   }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  root "home#index"
+  root "groups#index"
 
   resources :expenses, only: %i[show new]
-  resources :groups, only: %i[new show create edit]
+  resources :groups, only: %i[index new show create edit] do
+    collection do
+      get :archived
+    end
+  end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balan cers and uptime monitors to verify that the app is live.

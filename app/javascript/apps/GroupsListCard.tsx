@@ -27,9 +27,16 @@ const GroupsListCard = ({ group }: Props) => {
           <h2 className="flex text-2xl font-bold items-center gap-1">
             <span>
               {group.name}
+
               {group.demo ? (
-                <span className="bg-rose-600 text-white text-base text-bold px-2 rounded-xl ml-2">
+                <span className="bg-indigo-500 text-white text-base text-bold px-2 rounded-xl ml-2">
                   Demo
+                </span>
+              ) : null}
+
+              {group.archivedOn ? (
+                <span className="bg-rose-600 text-white text-base text-bold px-2 rounded-xl ml-2">
+                  Archived
                 </span>
               ) : null}
             </span>
@@ -44,7 +51,11 @@ const GroupsListCard = ({ group }: Props) => {
 
             {renderExpensesCount()}
 
-            <p className="text-gray-400">Created {group.readableCreatedAt}</p>
+            <p className="text-gray-400">
+              {group.archivedOn
+                ? `Archived ${group.readableArchivedOn}`
+                : `Created ${group.readableCreatedAt}`}
+            </p>
           </div>
         </div>
       </a>

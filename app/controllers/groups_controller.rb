@@ -3,6 +3,20 @@ class GroupsController < ApplicationController
   before_action :authorize_user, only: %i[ show edit ]
   before_action :addable_users, only: %i[ new edit ]
 
+  def index
+    @groups = base_groups.
+      active.
+      to_api.
+      serializable_hash
+  end
+
+  def archived
+    @archived_groups = base_groups.
+      archived.
+      to_api.
+      serializable_hash
+  end
+
   def show
     @group = Group.find_by(id: params[:id])
 
@@ -24,6 +38,13 @@ class GroupsController < ApplicationController
   end
 
   private
+
+  def base_groups
+    current_user.
+      groups.
+      includes(:users).
+      includes(:expenses)
+  end
 
   def group
     @group ||= Group.find_by(id: params[:id])
