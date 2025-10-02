@@ -45,4 +45,28 @@ RSpec.describe "Home Page", type: :system, js: true do
 
     expect(page).to have_content("My New Group created")
   end
+
+  scenario "does not include archived groups" do
+    active_group_1 = create(:group, name: "Active Group 1")
+    active_group_2 = create(:group, name: "Active Group 2")
+
+    archived_group = create(:group, :archived, name: "Archived Group")
+
+    user = create(
+      :user,
+      groups: [
+        active_group_1,
+        active_group_2,
+        archived_group,
+      ]
+    )
+
+    sign_in user
+
+    visit root_path
+
+    expect(page).to have_content(active_group_1.name)
+    expect(page).to have_content(active_group_2.name)
+    expect(page).not_to have_content(archived_group.name)
+  end
 end
