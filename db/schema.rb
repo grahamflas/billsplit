@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_01_060831) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_02_052851) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -33,6 +33,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_01_060831) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "demo", default: false, null: false
+    t.date "archived_on"
+    t.index ["archived_on"], name: "index_groups_on_archived_on"
   end
 
   create_table "invitations", force: :cascade do |t|
