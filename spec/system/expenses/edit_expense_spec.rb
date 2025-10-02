@@ -37,7 +37,7 @@ RSpec.describe "Edit expense", type: :system, js: true do
       visit group_path(group)
 
       within "#balances" do
-        expect(page).to have_content("$2.00")
+        expect(page).to have_content("2,00 €")
         expect(page).to have_content("You are settled up")
         expect(page).to have_content("Jenna Maroney is settled up")
       end
@@ -60,13 +60,13 @@ RSpec.describe "Edit expense", type: :system, js: true do
 
       expect(page).to have_content("Updated expense: #{expense_1.reference}")
 
-      expect(page).to have_content("$11.00")
-      expect(page).to have_content("You receive $4.50")
-      expect(page).to have_content("Jenna Maroney owes $4.50")
+      expect(page).to have_content("11,00 €")
+      expect(page).to have_content("You receive 4,50 €")
+      expect(page).to have_content("Jenna Maroney owes 4,50 €")
 
       within "#expense-#{expense_1.id}" do
         expect(page).to have_content("Expense 1 - updated")
-        expect(page).to have_content("$10")
+        expect(page).to have_content("10,00 €")
       end
     end
   end

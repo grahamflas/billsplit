@@ -37,7 +37,7 @@ RSpec.describe "Delete expense", type: :system, js: true do
       visit group_path(group)
 
       within "#balances" do
-        expect(page).to have_content("$2.00")
+        expect(page).to have_content("2,00 €")
         expect(page).to have_content("You are settled up")
         expect(page).to have_content("Jenna Maroney is settled up")
       end
@@ -68,9 +68,9 @@ RSpec.describe "Delete expense", type: :system, js: true do
       expect(expense_1.reload.status).to eq("deleted")
 
       within "#balances" do
-        expect(page).to have_content("$1.00")
-        expect(page).to have_content("You owe $0.50")
-        expect(page).to have_content("Jenna Maroney receives $0.50")
+        expect(page).to have_content("1,00 €")
+        expect(page).to have_content("You owe 0,50 €")
+        expect(page).to have_content("Jenna Maroney receives 0,50 €")
       end
 
       within "#open-expenses-count" do

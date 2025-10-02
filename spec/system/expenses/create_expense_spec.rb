@@ -79,7 +79,7 @@ RSpec.describe "Create Expense", type: :system, js: true do
         # expect(page).to have_content("Added expense: #{expense.reference}")
 
         within "#expense-#{expense.id}" do
-          expect(page).to have_content(expense.amount)
+          expect(page).to have_content("20,00 €")
           expect(page).to have_content("Paid by #{user_2.first_name} #{user_2.last_name}")
         end
       end

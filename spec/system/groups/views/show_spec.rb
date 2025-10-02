@@ -45,7 +45,7 @@ RSpec.describe "Group Show Page", :aggregate_failures, type: :system, js: true  
     expect(page).to have_content(user_2.full_name)
 
     expect(page).to have_content("Total Expenses")
-    expect(page).to have_content("$1,340.00")
+    expect(page).to have_content("1.340,00 €")
 
     expect(page).to have_content(rent.reference)
     expect(page).to have_content(utilities.reference)
@@ -53,7 +53,7 @@ RSpec.describe "Group Show Page", :aggregate_failures, type: :system, js: true  
     expect(page).to have_content(groceries.reference)
 
     within "#expense-#{rent.id}" do
-      expect(page).to have_content(rent.amount)
+      expect(page).to have_content("1.000,00 €")
       expect(page).to have_content("Paid by #{rent.user.full_name}")
     end
   end
@@ -89,8 +89,8 @@ RSpec.describe "Group Show Page", :aggregate_failures, type: :system, js: true  
 
       visit group_path(group_1)
 
-      expect(page).to have_content("You receive $42.50")
-      expect(page).to have_content("#{group_1_user_2.full_name} owes $42.50")
+      expect(page).to have_content("You receive 42,50 €")
+      expect(page).to have_content("#{group_1_user_2.full_name} owes 42,50 €")
     end
   end
 
@@ -171,7 +171,7 @@ RSpec.describe "Group Show Page", :aggregate_failures, type: :system, js: true  
     visit group_path(group)
 
     within "#total-expenses" do
-      expect(page).to have_content("$1.00")
+      expect(page).to have_content("1,00 €")
     end
 
     within "#open-expenses" do

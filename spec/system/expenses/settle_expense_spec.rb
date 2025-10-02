@@ -19,8 +19,6 @@ RSpec.describe "Settle Expenses", type: :system, js: true do
       group:
     )
 
-    balances = Balances.new(group:).compute
-
     sign_in user
 
     visit group_path(group)
@@ -34,7 +32,7 @@ RSpec.describe "Settle Expenses", type: :system, js: true do
     end
 
     within "#total-expenses-to-settle" do
-      expect(page).to have_content(balances[:totalExpenses])
+      expect(page).to have_content("30,00 €")
     end
 
     fill_in("note", with: "Paid with cash")
