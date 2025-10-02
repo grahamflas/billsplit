@@ -44,7 +44,7 @@ class Api::GroupsController < ApplicationController
   end
 
   def archive
-    group.archive
+    Groups::Archive.new(group:).process
 
     head :ok
   end

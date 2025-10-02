@@ -4,6 +4,8 @@ RSpec.describe "Archive Group", type: :system, js: true do
   scenario "user can archive a group" do
     group = create(:group, name: "Roomies")
     user = create(:user, groups: [ group ])
+    other_user_1 = create(:user, groups: [ group ])
+    other_user_2 = create(:user, groups: [ group ])
 
     sign_in user
 
@@ -30,5 +32,33 @@ RSpec.describe "Archive Group", type: :system, js: true do
 
     expect(group.reload.archived?).to eq(true)
     expect(page).to have_current_path(root_path)
+  end
+
+  scenario "it notifies all group members" do
+    group = create(:group, name: "Roomies")
+    user = create(:user, groups: [ group ])
+    other_user_1 = create(:user, groups: [ group ])
+    other_user_2 = create(:user, groups: [ group ])
+
+    sign_in user
+
+    visit group_path(group)
+
+    edit_link = find("a[aria-label='Edit #{group.name}']")
+    edit_link.click
+
+    click_button("Archive Roomies")
+    click_button "archive"
+
+    expect(
+      user.notifications.group_archived.where(source: group)
+    ).to be_present
+
+    expect(
+      other_user_1.notifications.group_archived.where(source: group)
+    ).to be_present
+    expect(
+      other_user_2.notifications.group_archived.where(source: group)
+    ).to be_present
   end
 end
