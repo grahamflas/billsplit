@@ -24,6 +24,7 @@ import {
   User,
 } from "../types/BaseInterfaces";
 import { ExpenseStatus } from "../enums/ExpenseStatus";
+import GroupsRepository from "../repositories/GroupsRepository";
 
 interface Props {
   balances: Balances;
@@ -44,6 +45,14 @@ const GroupDetails = ({
   const [showSettleExpensesModal, setShowSettleExpensesModal] = useState(false);
 
   const archivedGroup = !!group.archivedOn;
+
+  const handleRestoreClick = async () => {
+    const success = await GroupsRepository.restore(group);
+
+    if (success) {
+      window.location.href = `/groups/${group.id}`;
+    }
+  };
 
   const renderBackLink = () => {
     let href = "/";
@@ -91,7 +100,10 @@ const GroupDetails = ({
   const renderAddExpenseOrRestoreGroup = () => {
     if (archivedGroup) {
       return (
-        <button className="rounded-md px-3 py-2 bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-white text-2xl text-center">
+        <button
+          className="rounded-md px-3 py-2 bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-white text-2xl text-center"
+          onClick={handleRestoreClick}
+        >
           Restore this group
         </button>
       );

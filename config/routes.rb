@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :groups, only: %i[ create update ] do
       member do
         put :archive
+        put :restore
       end
     end
     resources :notifications, only: %i[ index destroy ]

@@ -87,9 +87,20 @@ class GroupsRepository {
     }
   }
 
-  static async archive(groupId: number): Promise<boolean> {
+  static async archive(group: Group): Promise<boolean> {
     try {
-      await ajax.put(`${this.baseUrl}/${groupId}/archive`);
+      await ajax.put(`${this.baseUrl}/${group.id}/archive`);
+
+      return true;
+    } catch (error) {
+      toast("Something went wrong");
+      return false;
+    }
+  }
+
+  static async restore(group: Group): Promise<boolean> {
+    try {
+      await ajax.put(`${this.baseUrl}/${group.id}/restore`);
 
       return true;
     } catch (error) {

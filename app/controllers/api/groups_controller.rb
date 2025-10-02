@@ -1,6 +1,6 @@
 class Api::GroupsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authorize_user, only: %i[update archive]
+  before_action :authorize_user, only: %i[update archive restore]
   before_action :verify_current_user_is_in_group, only: :create
 
   def create
@@ -45,6 +45,12 @@ class Api::GroupsController < ApplicationController
 
   def archive
     Groups::Archive.new(group:).process
+
+    head :ok
+  end
+
+  def restore
+    Groups::Restore.new(group:).process
 
     head :ok
   end

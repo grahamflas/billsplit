@@ -16,10 +16,10 @@ const ArchiveGroupModal = ({
   onClose,
 }: Props) => {
   const handleArchive = async () => {
-    const success = await GroupsRepository.archive(group.id);
+    const success = await GroupsRepository.archive(group);
 
     if (success) {
-      window.location.href = "/";
+      window.location.href = "/groups/archived";
     }
   };
 

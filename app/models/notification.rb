@@ -10,5 +10,6 @@ class Notification < ApplicationRecord
     member_added_to_group: 4,
     invitation_declined: 5,
     group_archived: 6,
+    group_restored: 7,
   }
 end

@@ -29,7 +29,7 @@ RSpec.describe "Archive Group", type: :system, js: true do
     click_button "archive"
 
     expect(group.reload.archived?).to eq(true)
-    expect(page).to have_current_path(root_path)
+    expect(page).to have_current_path(archived_groups_path)
   end
 
   scenario "it notifies all group members" do
