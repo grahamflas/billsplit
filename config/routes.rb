@@ -20,7 +20,11 @@ Rails.application.routes.draw do
   # root "posts#index"
   namespace :api, defaults: { format: :json } do
     resources :expenses, only: %i[ create update destroy ]
-    resources :groups, only: %i[ create update ]
+    resources :groups, only: %i[ create update ] do
+      member do
+        put :archive
+      end
+    end
     resources :notifications, only: %i[ index destroy ]
     resources :settlements, only: %i[ create ]
     resources :invitations, only: [] do

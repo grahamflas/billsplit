@@ -114,4 +114,36 @@ RSpec.describe "Api::Groups", type: :request do
       end
     end
   end
+
+  describe "PUT /groups/:id/archive" do
+    it "archives the group and returns head :ok" do
+      group = create(:group)
+      user = create(:user, groups: [ group ])
+
+      sign_in user
+
+      put archive_api_group_path(group)
+
+      expect(group.reload.archived?).to eq(true)
+      expect(response).to have_http_status(:ok)
+    end
+
+    context "when the current_user is not a group member" do
+      it "does not archive the group and returns unauthorized" do
+        group = create(:group)
+        _user = create(:user, groups: [ group ])
+
+        other_group = create(:group)
+        other_user = create(:user, groups: [ other_group ])
+
+
+        sign_in other_user
+
+        put archive_api_group_path(group)
+
+        expect(group.reload.archived?).to eq(false)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 end

@@ -1,3 +1,4 @@
+import GroupsRepository from "../repositories/GroupsRepository";
 import { Group } from "../types/BaseInterfaces";
 import Modal from "./Modal";
 
@@ -14,6 +15,14 @@ const ArchiveGroupModal = ({
   isOpen,
   onClose,
 }: Props) => {
+  const handleArchive = async () => {
+    const success = await GroupsRepository.archive(group.id);
+
+    if (success) {
+      window.location.href = "/";
+    }
+  };
+
   return (
     <Modal
       id="archive-group-modal"
@@ -42,8 +51,8 @@ const ArchiveGroupModal = ({
           <button
             className="rounded-md px-3 py-1 bg-rose-400 hover:bg-rose-500 focus:bg-rose-500 text-white text-center"
             type="button"
-            // onClick={handleDelete}
-            // aria-label={`Delete expense ${expense.reference}`}
+            onClick={handleArchive}
+            aria-label={`Archive ${group.name}`}
           >
             archive
           </button>

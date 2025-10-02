@@ -86,6 +86,17 @@ class GroupsRepository {
       toast("Something went wrong");
     }
   }
+
+  static async archive(groupId: number): Promise<boolean> {
+    try {
+      await ajax.put(`${this.baseUrl}/${groupId}/archive`);
+
+      return true;
+    } catch (error) {
+      toast("Something went wrong");
+      return false;
+    }
+  }
 }
 
 export default GroupsRepository;
