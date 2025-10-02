@@ -13,6 +13,7 @@ interface Props {
   currentUser: User | undefined;
   editPath: string;
   handleDemoModalButtonClick: () => void;
+  hasArchivedGroups: boolean;
   logoutPath: string;
   rootPath: string;
   signInPath: string;
@@ -23,8 +24,8 @@ const MobileNav = ({
   currentUser,
   editPath,
   handleDemoModalButtonClick,
+  hasArchivedGroups,
   logoutPath,
-  rootPath,
   signInPath,
   signUpPath,
 }: Props) => {
@@ -83,7 +84,9 @@ const MobileNav = ({
             setMobileMenuNotificationsCount={setMobileMenuNotificationsCount}
           />
 
-          <a href={rootPath}>My Groups</a>
+          <a href="/groups">Active Groups</a>
+
+          {hasArchivedGroups && <a href="/groups/archived">Archived Groups</a>}
 
           <a href={editPath}>Edit Profile</a>
 

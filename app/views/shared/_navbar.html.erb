@@ -2,6 +2,7 @@
   currentUser: current_user&.to_api&.serializable_hash,
   demoUsers: current_user_demo_users&.to_api&.serializable_hash,
   editPath: edit_user_registration_path,
+  hasArchivedGroups: current_user&.groups&.archived&.any?,
   logoutPath: destroy_user_session_path,
   rootPath: root_path,
   signInPath: new_user_session_path,

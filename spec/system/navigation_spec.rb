@@ -13,7 +13,16 @@ RSpec.describe "Navigation", type: :system, js: true do
         within "nav" do
           expect(page).to have_content("Bill÷Split")
 
-          expect(page).to have_link("My Groups", href: root_path)
+          find("[data-test='my-groups-button']").click
+        end
+
+        within "[data-test='my-groups-dropdown']" do
+          expect(page).to have_link("Active Groups", href: groups_path)
+          expect(page).to have_link("Archived Groups", href: archived_groups_path)
+        end
+
+        within "nav" do
+          find("[data-test='my-groups-button']").click
 
           find("[data-test='user-menu-button']").click
         end

@@ -9,11 +9,13 @@ import NotificationsDropdown from "./NotificationsDropdown";
 
 import { User } from "../types/BaseInterfaces";
 import UsersRepository from "../repositories/UsersRepository";
+import MyGroupsDropdown from "./MyGroupsDropdown";
 
 interface Props {
   currentUser: User | undefined;
   demoUsers: User[] | undefined;
   editPath: string;
+  hasArchivedGroups: boolean;
   logoutPath: string;
   rootPath: string;
   signInPath: string;
@@ -24,6 +26,7 @@ const TopNav = ({
   currentUser,
   demoUsers,
   editPath,
+  hasArchivedGroups,
   logoutPath,
   rootPath,
   signInPath,
@@ -78,7 +81,7 @@ const TopNav = ({
 
           <NotificationsDropdown />
 
-          <a href={rootPath}>My Groups</a>
+          <MyGroupsDropdown />
 
           <BillSplitDropdown
             buttonContent={<CiUser size={25} />}
@@ -116,6 +119,7 @@ const TopNav = ({
       <MobileNav
         currentUser={currentUser}
         editPath={editPath}
+        hasArchivedGroups={hasArchivedGroups}
         logoutPath={logoutPath}
         handleDemoModalButtonClick={() => setShowDemoModal(!showDemoModal)}
         rootPath={rootPath}

@@ -43,6 +43,27 @@ const GroupDetails = ({
   const [showPendingInvitations, setShowPendingInvitations] = useState(false);
   const [showSettleExpensesModal, setShowSettleExpensesModal] = useState(false);
 
+  const archivedGroup = !!group.archivedOn;
+
+  const renderBackLink = () => {
+    let href = "/";
+    let backToCopy = "Back to My Groups";
+
+    if (archivedGroup) {
+      href = "/groups/archived";
+      backToCopy = "Back to My Archived Groups";
+    }
+
+    return (
+      <a
+        className="flex items-center gap-1 text-indigo-600 text-xl mb-6"
+        href={href}
+      >
+        <FaArrowLeft /> {backToCopy}
+      </a>
+    );
+  };
+
   const groupMembersList = () => {
     return group.users.map((user) => user.firstName).join(", ");
   };
@@ -67,14 +88,28 @@ const GroupDetails = ({
     return "-";
   };
 
+  const renderAddExpenseOrRestoreGroup = () => {
+    if (archivedGroup) {
+      return (
+        <button className="rounded-md px-3 py-2 bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-white text-2xl text-center">
+          Restore this group
+        </button>
+      );
+    }
+
+    return (
+      <a
+        className="rounded-md px-3 py-2 bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-white text-2xl text-center"
+        href={`/expenses/new?group_id=${group.id}`}
+      >
+        + Add Expense
+      </a>
+    );
+  };
+
   return (
     <div className="p-6 max-w-2xl mx-auto">
-      <a
-        className="flex items-center gap-1 text-indigo-600 text-xl mb-6"
-        href="/"
-      >
-        <FaArrowLeft /> Back to My Groups
-      </a>
+      {renderBackLink()}
 
       <div className="flex flex-col gap-6 mt-6">
         <GroupDetailsSection>
@@ -91,6 +126,14 @@ const GroupDetails = ({
                     <GoGear size={20} />
                   </a>
                 </div>
+
+                {archivedGroup && (
+                  <div>
+                    <span className="bg-rose-600 text-white text-base text-bold px-2 rounded-xl">
+                      Archived
+                    </span>
+                  </div>
+                )}
 
                 <span className="text-neutral-500">{groupMembersList()}</span>
               </div>
@@ -177,12 +220,7 @@ const GroupDetails = ({
           </>
         </GroupDetailsSection>
 
-        <a
-          className="rounded-md px-3 py-2 bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-white text-2xl text-center"
-          href={`/expenses/new?group_id=${group.id}`}
-        >
-          + Add Expense
-        </a>
+        {renderAddExpenseOrRestoreGroup()}
 
         {openExpenses.length > 0 && (
           <GroupDetailsSection id="open-expenses">
