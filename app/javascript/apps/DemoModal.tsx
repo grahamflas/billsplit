@@ -36,7 +36,6 @@ const DemoModal = ({
 
   return (
     <Modal
-      id="about-this-demo-modal"
       isOpen={isOpen}
       onCloseModal={handleModalClose}
       title={"About this demo"}
@@ -76,27 +75,37 @@ const DemoModal = ({
 
         <ul className="ml-4">
           <li className="mb-1">
-            <span className="text-xl">&#9989;</span> Add new expenses
+            <span className="text-2xl ml-2">&#9989;</span> Add new expenses
           </li>
 
           <li className="mb-1">
-            <span className="text-xl">&#x1F527;</span> Update existing expenses
+            <span className="text-2xl ml-2">&#x1F527;</span> Update existing
+            expenses
           </li>
 
           <li className="mb-1">
-            <span className="text-xl">&#x1F4B8;</span> Settle open expenses to
-            reset the group's balances
+            <span className="text-2xl ml-2">&#x1F4B8;</span> Settle open
+            expenses to reset the group's balances
           </li>
 
           <li className="mb-1">
-            <span className="text-xl">&#x1F50D;</span> Review past settlements
+            <span className="text-2xl ml-2">&#x1F50D;</span> Review past
+            settlements
           </li>
 
           <li className="mb-1">
-            <span className="text-xl">&#x1F48C; &#x1F464; </span> Invite new
-            group members, even if they don't have a{" "}
-            <span className="font-bold text-indigo-500">BillSplit</span> account
-            yet
+            <span className="text-2xl ml-2">&#x1F5C4; &#x1F512;</span> Archive
+            groups
+          </li>
+
+          <li className="mb-1">
+            <span className="text-2xl ml-2">&#x1F48C; &#x1F464; </span> Invite
+            new group members,{" "}
+            <span className="italic">
+              even if they don't have a{" "}
+              <span className="font-bold text-indigo-500">BillSplit</span>{" "}
+              account yet
+            </span>
           </li>
         </ul>
 
