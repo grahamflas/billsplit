@@ -1,6 +1,6 @@
 <%= mount_react_app("GroupForm", props: {
   addableUsers: @addable_users.to_api.serializable_hash,
   currentUser: current_user.to_api.serializable_hash,
-  group: @group.to_api(without: %i(expenses readable_created_at)).serializable_hash,
+  group: @group.to_api(without: %i(readable_created_at)).serializable_hash,
 }) %>
 

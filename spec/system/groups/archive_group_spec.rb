@@ -67,4 +67,40 @@ RSpec.describe "Archive Group", type: :system, js: true do
 
     expect(page).to have_current_path(group_path(group))
   end
+
+  context "when a group has open expenses" do
+    scenario "user is directed to settle expenses before archiving" do
+      group = create(:group)
+
+      user_1 = create(:user, groups: [ group ])
+      user_2 = create(:user, groups: [ group ])
+
+      expense_1 = create(
+        :expense,
+        user: user_1,
+        group:,
+      )
+      expense_2 = create(
+        :expense,
+        user: user_1,
+        group:,
+      )
+
+      sign_in user_1
+
+      visit group_path(group)
+
+      edit_link = find("a[aria-label='Edit #{group.name}']")
+      edit_link.click
+
+      visit edit_group_path(group)
+
+      click_button("Archive #{group.name}")
+
+      within "#archive-group-modal" do
+        expect(page).to have_content("#{group.name} still has open expenses")
+        expect(page).to have_link("Back to #{group.name}", href: group_path(group))
+      end
+    end
+  end
 end

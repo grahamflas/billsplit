@@ -51,6 +51,7 @@ RSpec.describe "Api::Notifications", type: :request do
       expect(json_response["notifications"]).to eq([
         {
           "category" => expense_added_notification.category,
+          "createdAt" => expense_added_notification.created_at.iso8601,
           "id" => expense_added_notification.id,
           "link" => group_path(expense_added_notification.source.group),
           "source" => expense_added_notification.source.to_api.serializable_hash.as_json,
@@ -59,6 +60,7 @@ RSpec.describe "Api::Notifications", type: :request do
         },
         {
           "category" => expense_updated_notification.category,
+          "createdAt" => expense_added_notification.created_at.iso8601,
           "id" => expense_updated_notification.id,
           "link" => group_path(expense_updated_notification.source.group),
           "source" => expense_updated_notification.source.to_api.serializable_hash.as_json,

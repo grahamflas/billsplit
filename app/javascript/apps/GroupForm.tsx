@@ -32,6 +32,7 @@ const GroupForm = ({ addableUsers, currentUser, group }: Props) => {
   const isExistingGroup = !!group.id;
 
   const hasOpenExpenses = () => {
+    debugger;
     if ("expenses" in group) {
       return group.expenses.some(
         (expense) => expense.status === ExpenseStatus.Open

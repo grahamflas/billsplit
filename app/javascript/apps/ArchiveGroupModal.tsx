@@ -1,3 +1,4 @@
+import { FaArrowLeft } from "react-icons/fa";
 import GroupsRepository from "../repositories/GroupsRepository";
 import { Group } from "../types/BaseInterfaces";
 import Modal from "./Modal";
@@ -23,23 +24,37 @@ const ArchiveGroupModal = ({
     }
   };
 
-  return (
-    <Modal
-      id="archive-group-modal"
-      isOpen={isOpen}
-      onCloseModal={onClose}
-      title={`Archive ${group.name}`}
-    >
-      <div className="flex flex-col items-center gap-6">
+  const renderModalContent = () => {
+    if (hasOpenExpenses) {
+      return (
         <div className="flex flex-col items-center">
-          <h1 className="text-2xl text-rose-600">Are you sure?</h1>
+          <h1 className="text-2xl text-rose-600 mb-6">
+            {group.name} still has open expenses
+          </h1>
+
+          <p>Before archiving this group, please settle all open expenses.</p>
+
+          <a
+            className="mt-6 text-lg text-indigo-400 hover:text-indigo-500 focus:text-indigo-500"
+            href={`/groups/${group.id}`}
+          >
+            Back to {group.name}
+          </a>
+        </div>
+      );
+    }
+
+    return (
+      <>
+        <div className="flex flex-col items-center">
+          <h1 className="text-2xl text-rose-600 mb-6">Are you sure?</h1>
 
           <p>
             You're about to archive this group for you and all other members
           </p>
         </div>
 
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full mt-6">
           <button
             className="rounded-md px-3 py-1 border border-indigo-400 hover:bg-neutral-100 focus:bg-neutral-300 text-indigo-500 text-center"
             type="button"
@@ -57,6 +72,19 @@ const ArchiveGroupModal = ({
             archive
           </button>
         </div>
+      </>
+    );
+  };
+
+  return (
+    <Modal
+      id="archive-group-modal"
+      isOpen={isOpen}
+      onCloseModal={onClose}
+      title={`Archive ${group.name}`}
+    >
+      <div className="flex flex-col items-center gap-6">
+        {renderModalContent()}
       </div>
     </Modal>
   );
