@@ -101,7 +101,7 @@ const GroupDetails = ({
     if (archivedGroup) {
       return (
         <button
-          className="rounded-md px-3 py-2 bg-indigo-400 hover:bg-indigo-500 focus:bg-indigo-500 text-white text-2xl text-center"
+          className="rounded-md px-3 py-2 bg-emerald-500 hover:bg-emerald-600 focus:bg-emerald-600 text-white text-2xl text-center"
           onClick={handleRestoreClick}
         >
           Restore this group
