@@ -14,6 +14,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     super
 
     if resource.persisted?
+      resource.log_event(:sign_up)
+
       Invitations::LinkPendingInvitations.new(
         new_user: resource,
       ).process

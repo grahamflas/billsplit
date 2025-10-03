@@ -17,6 +17,8 @@ class User < ApplicationRecord
 
   has_many :notifications
 
+  has_many :user_events
+
   def full_name
     "#{first_name} #{last_name}"
   end
@@ -31,5 +33,12 @@ class User < ApplicationRecord
 
   def destroy_demo_data
     DemoData::Destroy.new(user: self).process
+  end
+
+  def log_event(category)
+    UserEvent.create(
+      category:,
+      user: self,
+    )
   end
 end

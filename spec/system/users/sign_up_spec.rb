@@ -17,7 +17,7 @@ RSpec.describe "User sign up", type: :system, js: true do
       click_button "Sign up"
 
       user = User.find_by(email:)
-
+binding.pry
       expect(user.reload.has_seen_demo_modal).to be(false)
 
       within "#about-this-demo-modal" do
@@ -42,6 +42,30 @@ RSpec.describe "User sign up", type: :system, js: true do
       visit root_path
 
       expect(page).not_to have_content("Hi, #{user.first_name}. Welcome to BillSplit!")
+    end
+
+    scenario "creates a sign_up event" do
+      email = "user@mail.com"
+      password = "password"
+
+      visit new_user_registration_path
+
+      fill_in "First name", with: "Liz"
+      fill_in "Last name", with: "Lemon"
+      fill_in "Email", with: email
+      fill_in "Password", with: password
+      fill_in "Password confirmation", with: password
+
+      click_button "Sign up"
+
+      user = User.find_by(email:)
+
+      expect(
+        UserEvent.find_by(
+          user:,
+          category: :sign_up,
+        )
+      ).to be_present
     end
   end
 end

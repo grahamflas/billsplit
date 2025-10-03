@@ -85,4 +85,27 @@ RSpec.describe User, type: :model do
       ).to be_empty
     end
   end
+
+  describe "#log_event" do
+    it "creates a UserEvent for the given event_type" do
+      user = create(:user)
+
+      user.log_event(:sign_up)
+      user.log_event(:log_in)
+
+      expect(
+        UserEvent.find_by(
+          category: :sign_up,
+          user:,
+        )
+      ).to be_present
+
+      expect(
+        UserEvent.find_by(
+          category: :log_in,
+          user:,
+        )
+      ).to be_present
+    end
+  end
 end
