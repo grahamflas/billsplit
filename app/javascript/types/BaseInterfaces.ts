@@ -68,7 +68,8 @@ export type NotificationCategory =
   | "invitation_created"
   | "member_added_to_group"
   | "invitation_declined"
-  | "group_archived";
+  | "group_archived"
+  | "group_restored";
 
 export interface Notification {
   category: NotificationCategory;

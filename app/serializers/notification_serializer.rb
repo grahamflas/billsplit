@@ -1,7 +1,7 @@
 class NotificationSerializer < ApplicationSerializer
   belongs_to :user
 
-  attributes(:id, :source_type, :category)
+  attributes(:id, :source_type, :category, :created_at)
 
   attribute :source
   attribute :link
@@ -17,5 +17,9 @@ class NotificationSerializer < ApplicationSerializer
     when Group
       group_path(object.source)
     end
+  end
+
+  def created_at
+    object.created_at.iso8601
   end
 end

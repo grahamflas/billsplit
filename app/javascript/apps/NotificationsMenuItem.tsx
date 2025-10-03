@@ -111,6 +111,21 @@ const NotificationsMenuItem = ({
       );
     }
 
+    case "group_restored": {
+      const group = notification.source as Group;
+
+      return (
+        <InformationalNotification
+          destroyNotification={destroyNotification}
+          mainText={`${group.name} was restored on ${format(
+            notification.createdAt,
+            "d MMM yyyy"
+          )}`}
+          notification={notification}
+        />
+      );
+    }
+
     default:
       null;
   }
