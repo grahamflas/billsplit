@@ -9,7 +9,9 @@ A modern full-stack expense splitting application built with Rails 8 and React. 
 
 ## 🚀 Live Demo
 
-**[View Live Application](https://billsplit-lylg.onrender.com/)**
+**[View Live Application here](https://billsplit-lylg.onrender.com/)**
+
+https://github.com/user-attachments/assets/8e2cb75c-7290-4ac1-8263-8a4fb7bd5a50
 
 ## ✨ Key Features
 
