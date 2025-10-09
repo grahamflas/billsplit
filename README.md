@@ -75,6 +75,8 @@ Custom notification framework that:
 - Provides in-app notification management
 
 ### Invitation Workflow
+[`app/events/invitations`](https://github.com/grahamflas/billsplit/tree/main/app/events/invitations)
+
 Invitation system featuring:
 - Email-based invitations with accept/decline functionality
 - User creation for new members
